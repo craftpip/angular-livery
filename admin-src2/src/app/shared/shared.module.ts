@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
- import { CommonModule } from "@angular/common";
- import { RouterModule } from "@angular/router";
+import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {RouterModule} from "@angular/router";
 
- import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { FooterComponent } from "./footer/footer.component";
-import { NavbarComponent } from "./navbar/navbar.component";
-import { SidebarComponent } from "./sidebar/sidebar.component";
-import { ToggleFullscreenDirective } from "./directives/toggle-fullscreen.directive";
+import {FooterComponent} from "./footer/footer.component";
+import {NavbarComponent} from "./navbar/navbar.component";
+import {SidebarComponent} from "./sidebar/sidebar.component";
+import {ToggleFullscreenDirective} from "./directives/toggle-fullscreen.directive";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
 
 
 @NgModule({
@@ -19,20 +18,21 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         NavbarComponent,
         SidebarComponent,
         ToggleFullscreenDirective,
-        NgbModule
+        NgbModule,
     ],
-    imports:[
+    imports: [
         RouterModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule
+        NgbModule,
     ],
     declarations: [
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
         ToggleFullscreenDirective
-        ]
+    ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

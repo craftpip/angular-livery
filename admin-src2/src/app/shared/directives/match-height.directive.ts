@@ -9,14 +9,14 @@ import {
 export class MatchHeightDirective implements AfterViewChecked {
     // class name to match height
     @Input()
-    matchHeight : string;
+    matchHeight: string;
 
     constructor(private el: ElementRef) {
     }
 
     ngAfterViewChecked() {
         // call our matchHeight function here
-        this.matchHeights(this.el.nativeElement, this.matchHeight );
+        this.matchHeights(this.el.nativeElement, this.matchHeight);
     }
 
     matchHeights(parent: HTMLElement, className: string) {
@@ -50,7 +50,7 @@ export class MatchHeightDirective implements AfterViewChecked {
     @HostListener('window:resize')
     onResize() {
         // call our matchHeight function here
-        this.matchHeights(this.el.nativeElement, this.matchHeight );
+        this.matchHeights(this.el.nativeElement, this.matchHeight);
     }
 }
 
@@ -59,4 +59,5 @@ export class MatchHeightDirective implements AfterViewChecked {
     exports: [MatchHeightDirective]
 })
 
-export class MatchHeightModule { }
+export class MatchHeightModule {
+}

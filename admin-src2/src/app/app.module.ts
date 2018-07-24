@@ -23,6 +23,7 @@ import {FlatpickrModule} from "angularx-flatpickr";
 import {CalendarModule} from "angular-calendar";
 import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
+import {CardCollapseDirective} from "./shared/directives/card-collapse.directive";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-butto
         LoginComponent,
         TableCellDeleteButtonComponent,
         TableCellEditButtonComponent,
+        CardCollapseDirective,
     ],
     imports: [
         BrowserAnimationsModule,

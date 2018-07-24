@@ -28,6 +28,23 @@
     height: auto;
   }
 
+  .card-header.hide-block + .card-block, .card-block.hide-block {
+    height: 57px;
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 60px;
+      box-shadow: inset 0px -57px 79px -28px white;
+      z-index: 10;
+    }
+  }
+
   .card-block {
     padding: 10px 15px;
   }
