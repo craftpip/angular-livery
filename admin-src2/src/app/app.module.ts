@@ -34,7 +34,6 @@ import {CardCollapseDirective} from "./shared/directives/card-collapse.directive
         LoginComponent,
         TableCellDeleteButtonComponent,
         TableCellEditButtonComponent,
-        CardCollapseDirective,
     ],
     imports: [
         BrowserAnimationsModule,

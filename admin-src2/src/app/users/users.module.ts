@@ -9,6 +9,7 @@ import {UsersAddComponent} from './users-add/users-add.component';
 import {AgGridModule} from "ag-grid-angular";
 import {TagInputModule} from "ngx-chips";
 import {FlatpickrModule} from "angularx-flatpickr";
+import {CardCollapseDirective} from "../shared/directives/card-collapse.directive";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {FlatpickrModule} from "angularx-flatpickr";
     declarations: [
         UsersComponent,
         UsersAddComponent,
+        CardCollapseDirective,
     ],
     providers: [],
 })
