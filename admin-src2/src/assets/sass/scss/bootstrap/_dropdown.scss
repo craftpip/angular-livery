@@ -1,0 +1,17 @@
+.dropdown-divider {
+  margin: 0.15rem 0;
+}
+
+.dropdown-item {
+  padding: 0.15rem 1.5rem;
+}
+
+.dropdown-menu {
+
+  &.show {
+  }
+}
+
+[ngbDropdown] {
+  position: relative;
+}

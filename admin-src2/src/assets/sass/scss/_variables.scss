@@ -1,0 +1,47 @@
+// Theme Colors
+
+$color-primary: #009da0;
+$color-primary2: #bc3a44;
+$color-success: #0CC27E;
+$color-info: #1CBCD8;
+$color-warning: #FF8D60;
+$color-danger: #FF586B;
+$color-secondary: #868e96;
+$color-light: #f8f9fa;
+$color-dark: #343a40;
+
+$theme-colors: (
+        primary: $color-primary,
+        success: $color-success,
+        info: $color-info,
+        warning: $color-warning,
+        danger: $color-danger,
+        secondary: $color-secondary,
+        light: $color-light,
+        dark: $color-dark,
+);
+
+// Spacing
+
+$spacer: 1.5rem;
+
+$spacers: (
+        0: 0,
+        1: ($spacer * .25),
+        2: ($spacer * .75),
+        3: $spacer,
+        4: ($spacer * 1.5),
+        5: ($spacer * 3)
+) !default;
+
+// Body
+$body-bg: #fff;
+//$body-bg: #f5f7fa;
+
+// Fonts
+$font-family-sans-serif: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+//$font-family-content: "Rubik", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+//$font-family-content: Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-content: 'Roboto', sans-serif;
+
+$font-size-root: 16px;

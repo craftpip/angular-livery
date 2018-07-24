@@ -1,0 +1,96 @@
+.navbar-mock {
+  height: 60px;
+  display: block;
+}
+
+.navbar {
+  //background: teal;
+  background-image: url('assets/img/header_bg.jpg');
+  background-position: center;
+  height: 60px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  border: 0;
+  border-radius: 0;
+  background-size: cover;
+  box-shadow: $shadow-3dp;
+
+  .navbar-page-title {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 350px;
+    margin-left: -175px;
+    text-align: center;
+    background: rgba(0, 0, 0, .15);
+    color: white;
+    font-weight: 500;
+    padding: 3px 0;
+    border-radius: 0 0 10px 10px;
+    border: solid 2px rgba(255, 255, 255, .2);
+    border-top: none;
+  }
+
+  .navbar-brand {
+    position: relative;
+    transform: translate(0px, -5px);
+    margin-right: 0px;
+
+    .logo-container {
+      background-image: url('assets/img/fame_logo.png');
+      background-color: white;
+      height: 56px;
+      width: 139px;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+
+  .navbar-nav {
+    display: block;
+    margin-right: -18px;
+    a > * {
+      vertical-align: middle;
+    }
+    .dropdown-menu {
+      position: absolute;
+    }
+    .nav-link {
+      color: white;
+    }
+  }
+
+  .navbar-toggle {
+    //background-color: transparent;
+    border: none;
+    .icon-bar {
+      background-color: inherit;
+      border: 1px solid;
+
+      & + .icon-bar {
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .notification {
+    //position: absolute;
+    //top: -1px;
+    //right: 13px;
+  }
+
+  .navbar-master-selection {
+    i {
+      vertical-align: sub;
+    }
+    li > a {
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+}

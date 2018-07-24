@@ -1,0 +1,269 @@
+@import "scss/variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "scss/core/palette";
+@import "scss/app-variables";
+@import "scss/mixins";
+@import "scss/custom-bootstrap";
+@import "scss/core";
+@import "scss/fonts/weather-icons";
+@import "scss/plugins";
+@import "~ag-grid/dist/styles/ag-grid.css";
+@import "~ag-grid/dist/styles/ag-theme-balham.css";
+@import "~jquery-confirm/css/jquery-confirm.css";
+@import "~flatpickr/dist/flatpickr.css";
+// custom
+
+.title-right-buttons {
+  float: right;
+  margin-top: 33px;
+}
+
+.menu-collapsed {
+  .text.align-middle {
+    display: none !important;
+  }
+}
+
+.no-margin-b {
+  margin-bottom: 0 !important;
+}
+
+.quick-panel {
+  position: absolute;
+  right: 0px;
+  transform: translate(420px, 0);
+  background: white;
+  width: 400px;
+  transition: transform .4s, top .001s;
+  box-shadow: -3px 0px 30px rgba(0, 0, 0, .3);
+  overflow-y: auto;
+  z-index: 9;
+
+  &.open {
+    transform: translate(0px, 0);
+  }
+  .quick-panel-close {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .quick-panel-inner {
+    padding: 20px;
+  }
+}
+
+.validator-code {
+  font-family: consolas;
+  font-size: 12px;
+}
+
+.m-l {
+  margin-left: 7px;
+}
+
+.nav-master {
+  position: fixed;
+  background: white;
+  top: 52px;
+  padding: 0 10px 10px 0;
+  width: 401px;
+  box-shadow: $shadow-8dp;
+  border-radius: 4px;
+  transition: all .2s;
+  overflow: hidden;
+  opacity: 1;
+  transform-origin: top;
+
+  &.hide {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+
+  .nav-master-item {
+    background: #eee;
+    //color: white;
+    width: 47%;
+    padding: 7px 5px;
+    border-radius: 4px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: #ddd;
+    }
+
+    &.active {
+      background: darken(#ddd, 5%);
+
+      i {
+        color: inherit;
+      }
+    }
+
+    img {
+      height: 23px;
+    }
+    i, img {
+
+      margin: 0 8px 0 6px;
+    }
+    i, span {
+      vertical-align: middle;
+    }
+  }
+}
+
+.search-master {
+  position: absolute;
+  background: white;
+  border-radius: 4px;
+  width: 300px;
+  box-shadow: $shadow-8dp;
+  transition: all .2s;
+  overflow: hidden;
+  top: 52px;
+  opacity: 1;
+  transform-origin: top;
+
+  &.hide {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+
+  .search-input {
+    //padding: 10px;
+  }
+
+  .search-results {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 280px;
+
+    .search-result {
+      padding: 10px 10px;
+      display: block;
+      border-top: solid 1px #ddd;
+      cursor: pointer;
+      transition: all .1s;
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &:hover {
+        background: #eee;
+      }
+    }
+    .search-result-title {
+      font-size: 15px;
+      line-height: 15px;
+    }
+    .search-result-sub {
+      font-size: 13px;
+      line-height: 13px;
+      margin-top: 4px;
+    }
+  }
+}
+
+.nav-item {
+  .dropdown-menu {
+    top: 45px !important;
+  }
+}
+
+.notification-dropdown {
+  position: absolute;
+  background: white;
+  border-radius: 4px;
+  width: 300px;
+  box-shadow: $shadow-8dp;
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 320px;
+  padding: 0;
+
+  .noti-container {
+    padding: 10px 10px;
+    display: block;
+    border-top: solid 1px #ddd;
+    cursor: pointer;
+    transition: all .1s;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+
+    i {
+      margin-top: 0px;
+      font-size: 24px;
+      margin-left: 2px;
+      margin-right: 14px;
+    }
+    .noti-wrapper {
+      .noti-title {
+        font-size: 15px;
+        line-height: 15px;
+      }
+      .noti-text {
+        font-size: 13px;
+        line-height: 13px;
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+i {
+  vertical-align: middle;
+}
+
+.ag-root.ag-layout-normal {
+  border-radius: 5px;
+}
+
+.ng2-tag-input {
+  //background: red;
+  padding: 0px 7px !important;
+  min-height: 31px !important;
+  border: solid 1px #a6a9ae !important;
+  border-radius: 2px;
+
+  .ng2-tag-input__text-input {
+    height: 29px !important;
+    font-size: 14px !important;
+    padding: 0 !important;
+  }
+}
+
+tag {
+  opacity: 1 !important;
+  height: 25px !important;
+  padding: 0 10px !important;
+  line-height: 26px !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  background-color: $color-primary2 !important;
+  color: white !important;
+
+  delete-icon {
+    &:hover {
+      margin-top: 2px;
+    }
+    svg {
+      height: 26px !important;
+
+      path {
+        fill: white !important;
+      }
+    }
+  }
+}

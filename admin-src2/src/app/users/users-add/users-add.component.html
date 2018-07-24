@@ -1,0 +1,242 @@
+<div class="page-header-container">
+    <div class="row">
+        <div class="col-6">
+            <div class="content-header">ADD NEW USERS</div>
+        </div>
+        <div class="col-6">
+            <div class="header-breadcrumb">
+                <ul>
+                    <li>
+                        <i class="ft ft-home"></i>
+                    </li>
+                    <li>
+                        Back
+                    </li>
+                    <li>
+                        Masters
+                    </li>
+                    <li>
+                        Property masters
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="card">
+        <div class="card-header">
+            User edit form title
+        </div>
+        <div class="card-block">
+            <div class="alert alert-secondary"
+                 *ngIf="loading">
+                Loading...
+            </div>
+            <form (submit)="save($event)">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="user-group">Group</label>
+                            <select name="user-group"
+                                    id="user-group"
+                                    [(ngModel)]="user.group"
+                                    class="form-control form-control-sm">
+                                <option [value]="u.value"
+                                        *ngFor="let u of groups">
+                                    {{u.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="form-control form-control-sm"
+                                   id="name"
+                                   name="name"
+                                   [(ngModel)]="user.profile_fields.name"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   placeholder="e-mail"
+                                   name="email"
+                                   id="email"
+                                   [(ngModel)]="user.email"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="email">Email verified</label>
+                            <select
+                                    name="email-verification"
+                                    id="email-verification"
+                                    [(ngModel)]="user.email_verified"
+                                    class="form-control form-control-sm"
+                            >
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="account_active">Account active</label>
+                            <select name="account_active"
+                                    id="account_active"
+                                    [(ngModel)]="user.account_active"
+                                    required
+                                    class="form-control form-control-sm">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select name="country"
+                                    id="country"
+                                    [(ngModel)]="user.country"
+                                    required
+                                    class="form-control form-control-sm">
+                                <option value="973">Baharain</option>
+                                <option value="91">India</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="mobile">Mobile
+                                <span *ngIf="user.country">+{{user.country}}</span>
+                            </label>
+                            <input type="number"
+                                   placeholder="Mobile no."
+                                   name="mobile"
+                                   id="mobile"
+                                   [(ngModel)]="user.mobile"
+                                   required
+                                   maxlength="10"
+                                   class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="mobile-verified">Mobile verified</label>
+                            <select name="mobile-verified"
+                                    [(ngModel)]="user.mobile_verified"
+                                    class="form-control form-control-sm"
+                                    id="mobile-verified">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="currency">Currency
+                                <span *ngIf="loadingCurrency">(Loading)</span>
+                            </label>
+                            <select name="currency"
+                                    id="currency"
+                                    [(ngModel)]="user.currency"
+                                    required
+                                    class="form-control form-control-sm">
+                                <option [value]="i.code"
+                                        *ngFor="let i of currencyList">{{i.currency_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="password">Password (optional)</label>
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   [(ngModel)]="user.password"
+                                   required
+                                   class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="password">Tag input</label>
+                            <tag-input [(ngModel)]="tags"
+                                       name="enter-tag"
+                                       [editable]="true"
+                                       [allowDupes]="false"></tag-input>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="password">Date</label>
+                            <div class="input-group input-group-sm">
+                                <input class="form-control"
+                                       placeholder="yyyy-mm-dd"
+                                       placement="top-left"
+                                       name="dp"
+                                       [(ngModel)]="user.date"
+                                       ngbDatepicker
+                                       #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary"
+                                            (click)="d.toggle()"
+                                            type="button">
+                                        <i class="ft ft-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--<input type="text"-->
+                            <!--name="enter-date"-->
+                            <!--id="enter-date"-->
+                            <!--[(ngModel)]="user.date"-->
+                            <!--required-->
+                            <!--ngbDatepicker=""-->
+                            <!--class="form-control form-control-sm">-->
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="password">Date</label>
+                            <input class="form-control form-control-sm"
+                                   name="dp"
+                                   [(ngModel)]="user.date2"
+                                   [altInput]="true"
+                                   [altFormat]="'d-m-Y H:i'"
+                                   [convertModelValue]="false"
+                                   [enableTime]="true"
+                                   (timeupdate)="timeUpdated($event)"
+                                   [time24hr]="false"
+                                   [enableSeconds]="false"
+                                   dateFormat="Y-m-dTH:i"
+                                   [disableMobile]="true"
+                                   [noCalendar]="false"
+                                   mwlFlatpickr>
+                        </div>
+                    </div>
+                </div>
+                <!-- <hr> -->
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-dark btn-raised"
+                                type="submit">
+                            {{saving ? 'Saving' : 'Save'}}
+                        </button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</section>
