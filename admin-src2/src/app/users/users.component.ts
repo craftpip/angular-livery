@@ -19,8 +19,8 @@ import {TableCellButtonCallback} from "../shared/table/table-cell-button-callbac
 
 export class UsersComponent {
     @ViewChild('agTable') agGrid: AgGridNg2;
-    columnDefs: any[] = [];
     gridOptions: GridOptions;
+    // define table col here!
     definedCols: any = [
         {
             headerName: 'Id', field: 'id',
@@ -53,7 +53,7 @@ export class UsersComponent {
         });
 
         this.gridOptions = {
-            rowData: Users,
+            rowData: Users, // Load this data async later!
             context: {
                 componentParent: this,
             },
@@ -67,8 +67,8 @@ export class UsersComponent {
         let cols;
         if (cols = this.utils.storage.get('usersTableCol')) {
             // get the column def from storage. presist the state!
-            console.log(cols);
-
+            // have to sort the columns according to its history manually,
+            // after adding components in col options its not possible to load its json directly as it contains reference to component class.
             let sortedCols = [];
             for (let c of cols) {
                 for (let d of this.definedCols) {
@@ -77,7 +77,6 @@ export class UsersComponent {
                     }
                 }
             }
-            console.log(sortedCols);
             this.gridOptions.columnDefs = sortedCols;
         } else {
             // state does not exist, defaults please!s

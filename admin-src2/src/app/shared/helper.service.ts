@@ -5,6 +5,7 @@ import {HttpParamsOptions} from "@angular/common/http/src/params";
 import {AuthService} from "./auth/auth.service";
 
 declare const Tour: any;
+declare const Noty: any;
 
 export interface TourSteps {
     element?: string,
@@ -65,6 +66,16 @@ export interface Tour {
     start(),
 }
 
+export interface NotificationOptions {
+    text?: string,
+    theme?: string,
+    layout?: string,
+    timeout?: boolean | number,
+    progressBar?: boolean,
+    type?: string,
+}
+
+
 @Injectable()
 export class TourService {
     constructor() {
@@ -121,6 +132,45 @@ export class Utils {
             }));
         }
     };
+
+
+    notificationLayouts = {
+        top: 'top',
+        topLeft: 'topLeft',
+        topCenter: 'topCenter',
+        topRight: 'topRight',
+        center: 'center',
+        centerLeft: 'centerLeft',
+        centerRight: 'centerRight',
+        bottom: 'bottom',
+        bottomLeft: 'bottomLeft',
+        bottomCenter: 'bottomCenter',
+        bottomRight: 'bottomRight',
+    };
+
+    notificationType = {
+        alert: 'alert',
+        success: 'success',
+        error: 'error',
+        warning: 'warning',
+        info: 'info',
+    };
+
+    /**
+     * show notifications
+     * @param {NotificationOptions} options
+     * @returns {any}
+     */
+    notification(options: NotificationOptions) {
+        if (!options.theme)
+            options.theme = 'light';
+        if (!options.timeout)
+            options.timeout = 3000;
+
+        let noty = new Noty(options);
+        noty.show();
+        return noty;
+    }
 }
 
 

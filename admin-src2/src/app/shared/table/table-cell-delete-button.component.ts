@@ -5,8 +5,10 @@ import {TableCellButtonCallback} from "./table-cell-button-callback";
 @Component({
     selector: 'cell-delete',
     template: `
-        <i (click)="delete()"
-           class="ft ft-delete"></i>
+        <span class="cursor-pointer">
+            <i (click)="delete()"
+               class="ft ft-delete"></i>
+        </span>
     `,
 })
 export class TableCellDeleteButtonComponent implements ICellEditorAngularComp {

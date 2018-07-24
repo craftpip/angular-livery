@@ -13,6 +13,9 @@
 @import "~flatpickr/dist/flatpickr.css";
 @import "~angular-calendar/css/angular-calendar.css";
 @import "~bootstrap-tour/build/css/bootstrap-tour-standalone.css";
+@import "~noty/lib/noty.css";
+@import "~noty/lib/themes/bootstrap-v4.css";
+@import "~noty/lib/themes/light.css";
 
 // custom
 
@@ -270,3 +273,14 @@ tag {
     }
   }
 }
+
+//
+//.noty_layout {
+//  box-shadow: $shadow-8dp;
+//  .noty_bar {
+//    background: white;
+//    padding: 2px 10px;
+//    border: solid 1px #aaa;
+//    border-radius: 4px;
+//  }
+//}

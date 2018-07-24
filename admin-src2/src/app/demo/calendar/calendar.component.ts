@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {HttpHelper, TourOptions, TourService, TourSteps} from "../../shared/helper.service";
+import {HttpHelper, TourOptions, TourService, TourSteps, Utils} from "../../shared/helper.service";
 import * as moment from "moment";
 import {AgGridNg2} from "ag-grid-angular";
 import {JConfirm} from "../../shared/jconfirm";
@@ -46,9 +46,19 @@ export class CalendarComponent implements OnInit {
     constructor(public httpHelper: HttpHelper,
                 public jconfirm: JConfirm,
                 public tourService: TourService,
+                public utils: Utils,
                 public route: ActivatedRoute) {
         this.route.params.subscribe((data: any) => {
 
+        });
+
+    }
+
+    notification() {
+        this.utils.notification({
+            text: 'em Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ind',
+            layout: this.utils.notificationLayouts.bottomRight,
+            type: this.utils.notificationType.info,
         });
     }
 

@@ -43,6 +43,7 @@
     "ngx-chips": "^1.9.2",
     "ngx-moment": "^3.1.0",
     "node-sass": "^4.7.2",
+    "noty": "^3.2.0-beta",
     "resize-observer-polyfill": "^1.4.2",
     "rxjs": "^6.2.1",
     "screenfull": "^3.3.1",
