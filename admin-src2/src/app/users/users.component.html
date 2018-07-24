@@ -1,4 +1,3 @@
-
 <div class="page-header-container">
     <div class="row">
         <div class="col-6">
@@ -72,17 +71,11 @@
             <div class="">
                 <div class="">
                     <div class="">
-                        {{columnDefs | json}}
                         <ag-grid-angular
                                 #agTable
                                 style="width: 100%; height: 500px;"
                                 class="ag-theme-balham"
-                                [rowData]="rowData"
-                                [enableSorting]="true"
-                                [enableFilter]="true"
-                                [columnDefs]="columnDefs"
-                                [rowSelection]="'single'"
-                                [pagination]="true"
+                                [gridOptions]="gridOptions"
                                 (selectionChanged)="tableSelection()"
                                 (columnMoved)="colMoved($event)"
                         >

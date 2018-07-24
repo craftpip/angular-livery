@@ -18,7 +18,10 @@ export const ROUTES: RouteInfo[] = [
         path: '/home', title: 'Dashboard', icon: 'ft-layout', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     {
-        path: '/users', title: 'Users', icon: 'ft-layout', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+        path: '/users', title: 'Users', icon: 'ft-users', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+    },
+    {
+        path: '/demo/calendar', title: 'Calendar', icon: 'ft-calendar', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     // {
     //     path: '/subscriptions/packs', title: 'Subscription packs', icon: 'ft-layout', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []

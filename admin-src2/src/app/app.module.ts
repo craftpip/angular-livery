@@ -14,12 +14,15 @@ import {AuthGuard} from './shared/auth/auth-guard.service';
 import * as $ from 'jquery';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpHelper} from "./shared/helper.service";
+import {HttpHelper, TourService, Utils} from "./shared/helper.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {AgGridModule} from "ag-grid-angular";
 import {JConfirm} from "./shared/jconfirm";
 import {TagInputModule} from "ngx-chips";
 import {FlatpickrModule} from "angularx-flatpickr";
+import {CalendarModule} from "angular-calendar";
+import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-button.component";
+import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
 
 
 @NgModule({
@@ -27,7 +30,9 @@ import {FlatpickrModule} from "angularx-flatpickr";
         AppComponent,
         FullLayoutComponent,
         ContentLayoutComponent,
-        LoginComponent
+        LoginComponent,
+        TableCellDeleteButtonComponent,
+        TableCellEditButtonComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -37,15 +42,21 @@ import {FlatpickrModule} from "angularx-flatpickr";
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        AgGridModule.withComponents([]),
+        AgGridModule.withComponents([
+            TableCellDeleteButtonComponent,
+            TableCellEditButtonComponent,
+        ]),
         TagInputModule,
-        FlatpickrModule.forRoot()
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot(),
     ],
     providers: [
         AuthService,
         HttpHelper,
         AuthGuard,
         JConfirm,
+        Utils,
+        TourService,
     ],
     bootstrap: [AppComponent]
 })

@@ -29,7 +29,8 @@
               "node_modules/jquery/dist/jquery.min.js",
               "src/assets/vendor/pace/pace.min.js",
               "src/assets/js/perfect-scrollbar.jquery.min.js",
-              "node_modules/jquery-confirm/js/jquery-confirm.js"
+              "node_modules/jquery-confirm/js/jquery-confirm.js",
+              "node_modules/bootstrap-tour/build/js/bootstrap-tour-standalone.js"
             ]
           },
           "configurations": {

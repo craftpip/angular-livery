@@ -1,10 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {HttpHelper} from "../shared/helper.service";
+import {HttpHelper, Utils} from "../shared/helper.service";
 import * as moment from "moment";
-import {AgGridNg2} from "ag-grid-angular";
+import {AgGridNg2, ICellEditorAngularComp} from "ag-grid-angular";
 import {JConfirm} from "../shared/jconfirm";
 import {Users} from "./users.mock";
+import {GridOptions} from "ag-grid";
+import {TableCellDeleteButtonComponent} from "../shared/table/table-cell-delete-button.component";
+import {TableCellEditButtonComponent} from "../shared/table/table-cell-edit-button.component";
+import {TableCellButtonCallback} from "../shared/table/table-cell-button-callback";
 
 
 @Component({
@@ -14,52 +18,23 @@ import {Users} from "./users.mock";
 })
 
 export class UsersComponent {
-
-    page = 1;
-    total = 10;
-    pageSize = 30;
-    usersList: any[] = [];
-
-    constructor(public httpHelper: HttpHelper,
-                public jconfirm: JConfirm,
-                public route: ActivatedRoute) {
-
-        // this.getList();
-
-        this.route.params.subscribe((data: any) => {
-            // if (data.parent_id) {
-            // this.filters.parent_id = data.parent_id;
-            // }
-        });
-    }
-
-    loading: boolean = false;
-
-    filters: any = {};
-
-    // deleteUser(user_id) {
-    //     let c = confirm('Are you sure to delete the user?, this action cannot be undone.');
-    //
-    //     if (!c)
-    //         return false;
-    //
-    //     this.httpHelper.post('sec/users/remove', {
-    //         user_id: user_id
-    //     }).subscribe((data: any) => {
-    //         if (data.status) {
-    //             this.getList();
-    //         } else {
-    //             alert(data.reason);
-    //         }
-    //     }, err => {
-    //         this.loading = false;
-    //         console.log(err);
-    //     });
-    // }
-
     @ViewChild('agTable') agGrid: AgGridNg2;
-    columnDefs = [
-        {headerName: 'Id', field: 'id'},
+    columnDefs: any[] = [];
+    gridOptions: GridOptions;
+    definedCols: any = [
+        {
+            headerName: 'Id', field: 'id',
+        },
+        {
+            headerName: 'Delete', field: 'action_delete',
+            cellRendererFramework: TableCellDeleteButtonComponent,
+            width: 31,
+        },
+        {
+            headerName: 'Edit', field: 'action_edit',
+            cellRendererFramework: TableCellEditButtonComponent,
+            width: 31,
+        },
         {headerName: 'First name', field: 'first_name'},
         {headerName: 'Last name', field: 'last_name'},
         {headerName: 'Email', field: 'email'},
@@ -67,11 +42,98 @@ export class UsersComponent {
         {headerName: 'City', field: 'city'},
         {headerName: 'Mobile', field: 'mobile'},
     ];
-    icons = {
-        groupLoading:
-            '<img src="https://raw.githubusercontent.com/ag-grid/ag-grid-docs/master/src/javascript-grid-server-side-model/spinner.gif" style="width:22px;height:22px;">'
-    };
-    rowData = Users;
+
+    constructor(public httpHelper: HttpHelper,
+                public jconfirm: JConfirm,
+                public utils: Utils,
+                public route: ActivatedRoute) {
+
+        this.route.params.subscribe((data: any) => {
+            // parameters come here
+        });
+
+        this.gridOptions = {
+            rowData: Users,
+            context: {
+                componentParent: this,
+            },
+            enableColResize: true,
+            enableSorting: true,
+            enableFilter: true,
+            rowSelection: 'single',
+            pagination: true,
+        };
+
+        let cols;
+        if (cols = this.utils.storage.get('usersTableCol')) {
+            // get the column def from storage. presist the state!
+            console.log(cols);
+
+            let sortedCols = [];
+            for (let c of cols) {
+                for (let d of this.definedCols) {
+                    if (c == d.field) {
+                        sortedCols.push(d);
+                    }
+                }
+            }
+            console.log(sortedCols);
+            this.gridOptions.columnDefs = sortedCols;
+        } else {
+            // state does not exist, defaults please!s
+            this.gridOptions.columnDefs = this.definedCols;
+        }
+    }
+
+    /**
+     * This function will be called from @TableCellEditButtonComponent
+     * name should be editCell()
+     *
+     * @param {TableCellButtonCallback} s
+     */
+    editCell(s: TableCellButtonCallback) {
+        alert(JSON.stringify(s.data));
+    }
+
+    /**
+     * Similarly
+     * This function will be called from @TableCellDeleteButtonComponent
+     *
+     * @param {TableCellButtonCallback} s
+     */
+    deleteCell(s: TableCellButtonCallback) {
+        alert(s);
+    }
+
+    /**
+     * Store the state of the table columns
+     * @param $event
+     */
+    colMoved($event) {
+        // event fired when a col is moved in ag grid
+        let newIndex = $event.toIndex;
+        let columnMoved = $event.column.colId;
+        let cols = <any>this.gridOptions.columnDefs.slice();
+        let oldIndex;
+        for (let i in cols) {
+            if (cols[i].field == columnMoved) {
+                oldIndex = i;
+            }
+        }
+
+        let temp = cols[newIndex];
+        cols[newIndex] = cols[oldIndex];
+        cols[oldIndex] = temp;
+
+        let map = cols.map((e) => {
+            return e.field;
+        });
+
+        this.utils.storage.set('usersTableCol', map);
+    }
+
+    loading: boolean = false;
+
 
     editSelected() {
         let nodes = this.agGrid.api.getSelectedRows();
@@ -110,7 +172,4 @@ export class UsersComponent {
         this.isRowSelected = !!(nodes.length);
     }
 
-    colMoved($event) {
-        console.log($event);
-    }
 }
