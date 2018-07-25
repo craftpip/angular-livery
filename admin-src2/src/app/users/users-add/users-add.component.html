@@ -25,16 +25,50 @@
 </div>
 
 <section>
-    <div class="card">
-        <div class="card-header"
-             cardCollapse="">
-            User edit form title
-        </div>
-        <div class="card-block">
-            <div class="alert alert-secondary"
-                 *ngIf="loading">
-                Loading...
+    <div class="card"
+         cardCollapse=""
+         [isOpen]="isOpen"
+         [ngClass]="{'card-loading': loading}">
+        <div class="card-header">
+            <div class="pull-right">
+                <span class="has-field mr-1">
+                    <button type="button"
+                            (click)="isOpen = !isOpen"
+                            class="btn btn-fame btn-sm">
+                        Toggle using angular variables
+                    </button>
+                </span>
+                <span class="has-field mr-1">
+                    <select class="form-control form-control-sm">
+                        <option value="test1">test1</option>
+                        <option value="test2">test2</option>
+                    </select>
+                </span>
+                <span class="has-field mr-1">
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           placeholder="example">
+                </span>
+                <span class="mr-1 pr-1 pl-1">
+                    <i class="ft ft-refresh-ccw"
+                       (click)="showLoading()"></i>
+                </span>
+                <span class="card-collapse-toggle">
+                    <i class="ft ft-arrow-up"></i>
+                </span>
             </div>
+
+            <!-- Card collapse directive requires card-title -->
+            <span class="card-title">
+                User edit form title
+            </span>
+        </div>
+        <div class="card-block"
+             id="test">
+            <!--<div class="alert alert-secondary"-->
+            <!--*ngIf="loading">-->
+            <!--Loading...-->
+            <!--</div>-->
             <form (submit)="save($event)">
                 <div class="row">
                     <div class="col-sm-3">
@@ -228,10 +262,12 @@
                 <!-- <hr> -->
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn btn-dark btn-raised"
-                                type="submit">
-                            {{saving ? 'Saving' : 'Save'}}
-                        </button>
+                        <div class="mb-1 mt-1">
+                            <button class="btn btn-dark btn-raised btn-sm"
+                                    type="submit">
+                                {{saving ? 'Saving' : 'Save'}}
+                            </button>
+                        </div>
                     </div>
                 </div>
 

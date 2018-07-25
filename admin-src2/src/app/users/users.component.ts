@@ -9,6 +9,10 @@ import {GridOptions} from "ag-grid";
 import {TableCellDeleteButtonComponent} from "../shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "../shared/table/table-cell-edit-button.component";
 import {TableCellButtonCallback} from "../shared/table/table-cell-button-callback";
+import {HomeComponent} from "../home/home.component";
+import {LoginComponent} from "../login/login.component";
+import {CalendarModule} from "angular-calendar";
+import {CalendarComponent} from "../demo/calendar/calendar.component";
 
 
 @Component({
@@ -101,7 +105,38 @@ export class UsersComponent {
      * @param {TableCellButtonCallback} s
      */
     deleteCell(s: TableCellButtonCallback) {
-        alert(s);
+        // alert(s);
+
+        this.jconfirm.confirm({
+            content: 'Are you sure to delete the row?',
+            title: "Confirm?",
+            buttons: {
+                'delete': {
+                    btnClass: 'btn-sm btn-outline-danger',
+                    action: () => {
+                        // this.jconfirm.confirm({
+                        //     content: 'The row has been deleted!',
+                        //     title: 'Alert',
+                        // })
+                        this.utils.notification({
+                            text: 'The row has been deleted',
+                            type: this.utils.notificationType.success,
+                            layout: this.utils.notificationLayouts.topRight,
+                        });
+                    }
+                },
+                cancel: {
+                    action: () => {
+                        this.jconfirm.confirm({
+                            content: 'That action has been cancelled!'
+                        });
+                        // return false;
+                    }
+                }
+            },
+            animateFromElement: false, // because it wont be able to find the button clicked
+            autoClose: 'cancel|4000',
+        });
     }
 
     /**

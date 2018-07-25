@@ -90,14 +90,21 @@
                             </div>
                             <div class=""
                                  *ngIf="!searchLoading">
-                                <div *ngFor="let s of searchResults"
-                                     class="search-result">
-                                    <div class="search-result-title">
-                                        {{s.text}}
+
+                                <div *ngFor="let g of searchResults">
+                                    <div class="search-group">
+                                        {{g.group}}
                                     </div>
-                                    <div *ngIf="s.subText"
-                                         class="search-result-sub">
-                                        {{s.subText}}
+
+                                    <div *ngFor="let s of g.options"
+                                         class="search-result">
+                                        <div class="search-result-title">
+                                            {{s.text}}
+                                        </div>
+                                        <div *ngIf="s.subText"
+                                             class="search-result-sub">
+                                            {{s.subText}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

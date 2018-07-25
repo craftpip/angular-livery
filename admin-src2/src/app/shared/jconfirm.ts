@@ -106,7 +106,7 @@ export interface JConfirmOptions {
     containerFluid?: boolean,
     backgroundDismiss?: boolean,
     backgroundDismissAnimation?: string,
-    autoClose?: boolean,
+    autoClose?: boolean | string,
     closeIcon?: any,
     closeIconClass?: string,
     watchInterval?: number,

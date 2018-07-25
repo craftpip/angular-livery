@@ -42,6 +42,18 @@ export class UsersAddComponent {
         });
 
         this.loadCurrency();
+
+        // loading demo.
+        this.loading = true;
+        setTimeout(() => {
+            this.loading = false;
+        }, 5000);
+    }
+
+    isOpen: boolean = false;
+
+    showLoading() {
+        this.loading = !this.loading;
     }
 
     loading: boolean = false;

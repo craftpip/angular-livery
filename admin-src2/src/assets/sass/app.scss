@@ -144,7 +144,14 @@
     //padding: 10px;
   }
 
+  .search-group {
+    padding: 0px 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   .search-results {
+    margin-top: 4px;
     overflow: hidden;
     overflow-y: auto;
     max-height: 280px;
@@ -274,13 +281,23 @@ tag {
   }
 }
 
-//
-//.noty_layout {
-//  box-shadow: $shadow-8dp;
-//  .noty_bar {
-//    background: white;
-//    padding: 2px 10px;
-//    border: solid 1px #aaa;
-//    border-radius: 4px;
-//  }
-//}
+#noty_layout__topRight {
+  top: 70px;
+  right: 15px;
+}
+
+#noty_layout__bottomRight {
+  bottom: 5px;
+  right: 15px;
+}
+
+.noty_theme__light.noty_bar {
+  .noty_body {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+}
+
+.cal-month-view .cal-open-day-events {
+  box-shadow: none;
+}

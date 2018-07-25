@@ -166,6 +166,8 @@ export class Utils {
             options.theme = 'light';
         if (!options.timeout)
             options.timeout = 3000;
+        if (!options.layout)
+            options.layout = this.notificationLayouts.bottomRight;
 
         let noty = new Noty(options);
         noty.show();
