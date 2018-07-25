@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink, Routes } from "@angular/router";
-import { HttpHelper } from "../shared/helper.service";
-import { Form, FormControl, FormGroup, Validator, Validators } from "@angular/forms";
-import { AuthService } from "../shared/auth/auth.service";
+import {Component} from '@angular/core';
+import {Router, RouterLink, Routes} from "@angular/router";
+import {HttpHelper} from "../shared/helper.service";
+import {Form, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import {AuthService} from "../shared/auth/auth.service";
 
 
 @Component({
@@ -20,10 +20,10 @@ export class LoginComponent {
             password: new FormControl('', [Validators.required])
         });
 
-        this.checkLogin();
+        // this.checkLogin();
     }
 
-    checkingLogin: boolean = true;
+    checkingLogin: boolean = false;
 
     checkLogin() {
         this.checkingLogin = true;
@@ -47,6 +47,7 @@ export class LoginComponent {
     }
 
     loading: boolean = false;
+
     login($event) {
         $event.preventDefault();
         if (!this.loginForm.valid) {

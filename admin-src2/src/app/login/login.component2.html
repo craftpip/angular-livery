@@ -1,0 +1,56 @@
+<section id="login">
+    <div class="container-fluid">
+        <div class="row full-height-vh">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="card gradient-indigo-purple width-400">
+                    <form [formGroup]="loginForm"
+                          (submit)="login($event)">
+                        <div class="card-body">
+                            <div class="card-block">
+                                <!--<form>-->
+                                <h2 class="white"
+                                    style="margin: 20px 0 30px;">Login</h2>
+
+
+                                <div *ngIf="!checkingLogin">
+                                    <div class="form-group">
+                                        <input type="email"
+                                               class="form-control"
+                                               name="inputEmail"
+                                               id="inputEmail"
+                                               placeholder="Email or Username"
+                                               formControlName="username"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password"
+                                               class="form-control"
+                                               name="inputPass"
+                                               id="inputPass"
+                                               formControlName="password"
+                                               placeholder="Password"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                [disabled]="!loginForm.valid"
+                                                class="btn btn-default btn-block btn-raised">
+                                            {{loading ? 'Please wait..': 'Submit'}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="checkingLogin">
+                                    <h4 style="color: white; margin: 20px 0 15px">
+                                        Authenticating...
+                                    </h4>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

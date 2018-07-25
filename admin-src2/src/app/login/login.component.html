@@ -1,55 +1,150 @@
-<section id="login">
-    <div class="container-fluid">
-        <div class="row full-height-vh">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="card gradient-indigo-purple width-400">
-                    <form [formGroup]="loginForm" (submit)="login($event)">
-                        <div class="card-body">
-                            <div class="card-block">
-                                <!--<form>-->
-                                <h2 class="white"
-                                    style="margin: 20px 0 30px;">Login</h2>
+<div class="login-bg">
 
+</div>
+<div class="bottom-left-mock">
+    <div class="make-relative">
 
-                                <div *ngIf="!checkingLogin">
-                                    <div class="form-group">
-                                        <input type="email"
-                                               class="form-control"
-                                               name="inputEmail"
-                                               id="inputEmail"
-                                               placeholder="Email or Username"
-                                               formControlName="username"
-                                               required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password"
-                                               class="form-control"
-                                               name="inputPass"
-                                               id="inputPass"
-                                               formControlName="password"
-                                               placeholder="Password"
-                                               required>
-                                    </div>
+        <div class="tag-line">
+            Creating Impact Through Innovation.
+        </div>
 
-                                    <div class="form-group">
-                                        <button type="submit"
-                                                [disabled]="!loginForm.valid"
-                                                class="btn btn-default btn-block btn-raised">
-                                                {{loading ? 'Please wait..': 'Submit'}}
-                                        </button>
-                                    </div>
-                                </div>
-                                <div *ngIf="checkingLogin">
-                                    <h4 style="color: white; margin: 20px 0 15px">
-                                        Authenticating...
-                                    </h4>
-                                </div>
+        <div class="login-footer">
+            Phone: (+973) 17 217 991
+            |
+            Email: <a href="mailto:support@fameerp.com">support@fameerp.com</a>
+            |
 
+            <a href="#"
+               class="social-icon">
+                <img src="assets/img/social/facebook.png"
+                     alt="">
+            </a>
+            <a href="#"
+               class="social-icon">
+                <img src="assets/img/social/twitter.png"
+                     alt="">
+            </a>
+            <a href="#"
+               class="social-icon">
+                <img src="assets/img/social/linkedin.png"
+                     alt="">
+            </a>
+
+        </div>
+    </div>
+</div>
+<div class="right-mock">
+    <div class="right-relative">
+
+        <div class="panel-right">
+            <div class="">
+                <div class="">
+                    <form [formGroup]="loginForm"
+                          (submit)="login($event)">
+                        <!--<form>-->
+                        <h2 class="panel-title">
+                            Secure user login
+                        </h2>
+                        <p class="panel-subtext">
+                            Please login with your existing Username &amp; Password
+                        </p>
+
+                        <div *ngIf="!checkingLogin">
+                            <div class="form-group">
+                                <label for="">
+                                    E-mail
+                                </label>
+                                <input type="email"
+                                       class="form-control"
+                                       name="inputEmail"
+                                       id="inputEmail"
+                                       placeholder="Email or Username"
+                                       formControlName="username"
+                                       required>
                             </div>
+                            <div class="form-group">
+                                <label for="">
+                                    Password
+                                </label>
+                                <input type="password"
+                                       class="form-control"
+                                       name="inputPass"
+                                       id="inputPass"
+                                       formControlName="password"
+                                       placeholder="Password"
+                                       required>
+                            </div>
+
+                            <p class="text-right fp">
+                                <a href="#"
+                                   (click)="forgotPassword()">
+                                    Forgot password
+                                </a>
+                            </p>
+
+                            <button type="submit"
+                                    [disabled]="!loginForm.valid"
+                                    style="width: 50%"
+                                    class="btn btn-outline-warning btn-block btn-lg">
+                                {{loading ? 'Please wait..': 'Login'}}
+                            </button>
+
+                            <div class="inline-select mt-2">
+                                <div>
+                                    Company
+                                </div>
+                                <div>
+                                    <select name=""
+                                            id="">
+                                        <option value="test">Eskan property</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="inline-select mt-1">
+                                <div>
+                                    Site
+                                </div>
+                                <div>
+                                    <select name=""
+                                            id="">
+                                        <option value="test">Site 1</option>
+                                        <option value="test">Site 2</option>
+                                        <option value="test">Site 3</option>
+                                        <option value="test">Site 4</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="inline-select mt-1">
+                                <div>
+                                    Language
+                                </div>
+                                <div>
+                                    <select name=""
+                                            id="">
+                                        <option value="test">English - (US)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div *ngIf="checkingLogin">
+                            <h4 style="color: white; margin: 20px 0 15px">
+                                Authenticating...
+                            </h4>
                         </div>
                     </form>
                 </div>
             </div>
+
+            <div class="cr">
+                © Copyright 2018 Fame Technology Solutions WLL. All Rights Reserved.
+            </div>
+
         </div>
     </div>
-</section>
+</div>
+<div class="fame-logo">
+
+</div>
