@@ -95,7 +95,9 @@ export class UsersComponent {
      * @param {TableCellButtonCallback} s
      */
     editCell(s: TableCellButtonCallback) {
-        alert(JSON.stringify(s.data));
+        this.jconfirm.confirm({
+            content: 'edit node: ' + s.data.first_name
+        });
     }
 
     /**
@@ -175,7 +177,7 @@ export class UsersComponent {
         if (nodes.length) {
             let node = nodes[0];
             this.jconfirm.confirm({
-                content: 'edit node: ' + JSON.stringify(node),
+                content: 'edit node: ' + node.first_name,
             });
         } else {
             this.jconfirm.confirm({
@@ -190,7 +192,7 @@ export class UsersComponent {
         if (nodes.length) {
             let node = nodes[0];
             this.jconfirm.confirm({
-                content: 'delete node: ' + JSON.stringify(node)
+                content: 'delete node: ' + node.first_name
             });
         } else {
             this.jconfirm.confirm({
