@@ -11,7 +11,7 @@ declare const $: any;
 export class CardCollapseDirective implements OnInit {
     nativeElement: HTMLElement;
 
-    _isOpen: boolean = false;
+    _isOpen: boolean = true;
     _isStarted: boolean = false;
 
     @Input('isOpen')
@@ -48,10 +48,10 @@ export class CardCollapseDirective implements OnInit {
         this.$header = $el.find('.card-header');
         this.$icon = $el.find('.card-collapse-toggle');
 
-        if (this._isOpen) {
-            this.toggleOpen();
-        } else {
+        if (!this._isOpen) {
             this.toggleClose();
+        } else {
+            this.toggleOpen();
         }
         // this.$block.css({
         //     'height': this.$block[0].scrollHeight + 'px'

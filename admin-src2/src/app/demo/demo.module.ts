@@ -9,6 +9,8 @@ import {TagInputModule} from "ngx-chips";
 import {DemoRoutingModule} from "./demo-routing.module";
 import {CalendarComponent} from "./calendar/calendar.component";
 import {CalendarModule} from "angular-calendar";
+import {List1Component} from "./list1/list1.component";
+import {FlatpickrModule} from "angularx-flatpickr";
 
 @NgModule({
     imports: [
@@ -19,11 +21,13 @@ import {CalendarModule} from "angular-calendar";
         FormsModule,
         AgGridModule.withComponents([]),
         TagInputModule,
-        CalendarModule.forRoot()
+        CalendarModule.forRoot(),
+        FlatpickrModule.forRoot()
     ],
     exports: [],
     declarations: [
-        CalendarComponent
+        CalendarComponent,
+        List1Component,
     ],
     providers: [],
 })

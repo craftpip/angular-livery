@@ -23,6 +23,9 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '/demo/calendar', title: 'Calendar', icon: 'ft-calendar', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
+    {
+        path: '/demo/list1', title: 'List1', icon: 'ft-users', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+    },
     // {
     //     path: '/subscriptions/packs', title: 'Subscription packs', icon: 'ft-layout', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     // },
