@@ -11,6 +11,7 @@ import {CalendarComponent} from "./calendar/calendar.component";
 import {CalendarModule} from "angular-calendar";
 import {List1Component} from "./list1/list1.component";
 import {FlatpickrModule} from "angularx-flatpickr";
+import {TabsComponent} from "./tabs/tabs.component";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {FlatpickrModule} from "angularx-flatpickr";
     declarations: [
         CalendarComponent,
         List1Component,
+        TabsComponent,
     ],
     providers: [],
 })

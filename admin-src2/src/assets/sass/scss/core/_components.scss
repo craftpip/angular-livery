@@ -121,9 +121,11 @@
 
 .nav-tabs {
   .nav-link {
+    border-top-width: 4px;
     height: 100%;
     &.active {
       background-color: transparent;
+      border-top-color: $color-primary2;
       border-bottom-color: white;
     }
   }

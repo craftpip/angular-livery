@@ -1,0 +1,369 @@
+<div class="page-header-container">
+    <div class="row">
+        <div class="col-6">
+            <div class="content-header">USERS MASTER WITH TABS</div>
+        </div>
+        <div class="col-6">
+            <div class="header-breadcrumb">
+                <ul>
+                    <li>
+                        <i class="ft ft-home"></i>
+                    </li>
+                    <li>
+                        Back
+                    </li>
+                    <li>
+                        Masters
+                    </li>
+                    <li>
+                        Property masters
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="">
+    <form>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-block">
+
+                        <div class="float-right">
+                            <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
+                                    routerLink="add"
+                                    type="button">
+                                <i class="ft ft-plus mr-1"></i>
+                                Add new entry
+                            </button>
+                            <button class="btn btn-danger btn-raised btn-sm m-0 d-inline-block ml-1"
+                                    type="button"
+                                    *ngIf="isRowSelected"
+                                    (click)="deleteSelected()">
+                                <i class="ft ft-delete mr-1"></i>
+                                Delete
+                            </button>
+                            <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
+                                    type="button"
+                                    *ngIf="isRowSelected"
+                                    (click)="editSelected()">
+                                <i class="ft ft-edit mr-1"></i>
+                                Edit
+                            </button>
+
+                        </div>
+
+                        <input type="text"
+                               placeholder="Search"
+                               name="email"
+                               class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1">
+                        from
+                        <input type="text"
+                               placeholder="From"
+                               name="from-date"
+                               class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1"
+                               [(ngModel)]="fromDate"
+                               [altInput]="true"
+                               [altFormat]="'d-m-Y'"
+                               [convertModelValue]="false"
+                               [enableTime]="false"
+                               [time24hr]="false"
+                               [enableSeconds]="false"
+                               dateFormat="Y-m-dTH:i"
+                               [disableMobile]="true"
+                               [noCalendar]="false"
+                               mwlFlatpickr
+                        >
+                        to
+                        <input type="text"
+                               placeholder="To"
+                               name="to-date"
+                               class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1"
+                               [(ngModel)]="toDate"
+                               [altInput]="true"
+                               [altFormat]="'d-m-Y'"
+                               [convertModelValue]="false"
+                               [enableTime]="false"
+                               [time24hr]="false"
+                               [enableSeconds]="false"
+                               dateFormat="Y-m-dTH:i"
+                               [disableMobile]="true"
+                               [noCalendar]="false"
+                               mwlFlatpickr
+                        >
+                        <button type="button"
+                                class="btn btn-fame btn-sm">
+                            <i class="ft ft-refresh-cw"></i>
+
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<section id="extended">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ngb-tabset>
+                <ngb-tab title="Tab information">
+                    <ng-template ngbTabContent>
+                        <ag-grid-angular
+                                #agTable
+                                style="width: 100%; height: 500px;"
+                                class="ag-theme-balham"
+                                [gridOptions]="gridOptions"
+                                (selectionChanged)="tableSelection()"
+                                (columnMoved)="colMoved($event)"
+                        >
+                        </ag-grid-angular>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Add new entry">
+                    <ng-template ngbTabContent>
+
+
+                        <div class="form-legend">
+                            Additional information
+                        </div>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="user-group">Group</label>
+                                        <select name="user-group"
+                                                id="user-group"
+                                                class="form-control form-control-sm">
+                                            <option value="test">
+                                                test
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input class="form-control form-control-sm"
+                                               id="name"
+                                               name="name"
+                                               type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text"
+                                               class="form-control form-control-sm"
+                                               placeholder="e-mail"
+                                               name="email"
+                                               id="email"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="email">Email verified</label>
+                                        <select
+                                                name="email-verification"
+                                                id="email-verification"
+                                                class="form-control form-control-sm"
+                                        >
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="account_active">Account active</label>
+                                        <select name="account_active"
+                                                id="account_active"
+                                                required
+                                                class="form-control form-control-sm">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="country">Country</label>
+                                        <select name="country"
+                                                id="country"
+                                                required
+                                                class="form-control form-control-sm">
+                                            <option value="973">Baharain</option>
+                                            <option value="91">India</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="mobile">Mobile
+                                        </label>
+                                        <input type="number"
+                                               placeholder="Mobile no."
+                                               name="mobile"
+                                               id="mobile"
+                                               required
+                                               maxlength="10"
+                                               class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="mobile-verified">Mobile verified</label>
+                                        <select name="mobile-verified"
+                                                class="form-control form-control-sm"
+                                                id="mobile-verified">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="currency">Currency
+                                        </label>
+                                        <select name="currency"
+                                                id="currency"
+                                                required
+                                                class="form-control form-control-sm">
+                                            <option value="test">
+                                                test
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="password">Password (optional)</label>
+                                        <input type="password"
+                                               name="password"
+                                               id="password"
+                                               required
+                                               class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="password">Tag input</label>
+                                        <tag-input
+                                                name="enter-tag"
+                                                [editable]="true"
+                                                [allowDupes]="false"></tag-input>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="password">Date</label>
+                                        <div class="input-group input-group-sm">
+                                            <input class="form-control"
+                                                   placeholder="yyyy-mm-dd"
+                                                   placement="top-left"
+                                                   name="dp"
+                                                   ngbDatepicker
+                                                   #d="ngbDatepicker">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary"
+                                                        (click)="d.toggle()"
+                                                        type="button">
+                                                    <i class="ft ft-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--<input type="text"-->
+                                        <!--name="enter-date"-->
+                                        <!--id="enter-date"-->
+                                        <!--[(ngModel)]="user.date"-->
+                                        <!--required-->
+                                        <!--ngbDatepicker=""-->
+                                        <!--class="form-control form-control-sm">-->
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="password">Date</label>
+                                        <input class="form-control form-control-sm"
+                                               name="dp"
+                                               [altInput]="true"
+                                               [altFormat]="'d-m-Y H:i'"
+                                               [convertModelValue]="false"
+                                               [enableTime]="true"
+                                               [time24hr]="false"
+                                               [enableSeconds]="false"
+                                               dateFormat="Y-m-dTH:i"
+                                               [disableMobile]="true"
+                                               [noCalendar]="false"
+                                               mwlFlatpickr>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>
+                                            Check box?
+                                        </label>
+
+                                        <div class="input-checkbox mb-1">
+                                            <div>
+                                                <input
+                                                        id="myCheckbox"
+                                                        type="checkbox"
+                                                        style="display: none;"/>
+
+                                                <label for="myCheckbox">
+                                                <span>
+                                                    <svg width="12px"
+                                                         height="10px"
+                                                         viewbox="0 0 12 10">
+                                                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                                    </svg>
+                                                </span>
+                                                    <span>CodePenChallenge</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Textarea</label>
+                                        <textarea name="textarea"
+                                                  placeholder="Textarea here"
+                                                  class="form-control-sm form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <hr> -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-1 mt-1">
+                                        <button class="btn btn-dark btn-raised btn-sm"
+                                                type="submit">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+
+        </div>
+    </div>
+</section>
