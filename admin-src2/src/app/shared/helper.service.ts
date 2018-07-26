@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {HttpParamsOptions} from "@angular/common/http/src/params";
 import {AuthService} from "./auth/auth.service";
+import {Subject} from "rxjs/internal/Subject";
 
 declare const Tour: any;
 declare const Noty: any;
@@ -88,6 +89,83 @@ export class TourService {
     create(options: TourOptions) {
         let tour = <Tour>new Tour(options);
         return tour;
+    }
+}
+
+export interface AppEvent {
+    key?: any,
+    data?: any,
+}
+
+@Injectable()
+export class AppEvents {
+    subject: Subject<AppEvent> = new Subject<AppEvent>();
+
+    /**
+     * List of subscriptions
+     * @type {{}}
+     */
+    subscriptions: any = {};
+
+    constructor() {
+        this.subject.subscribe((data: AppEvent) => {
+            this.globalListener(data);
+        });
+    }
+
+    /**
+     * Lets get all the events, and distribute them to the listeners
+     *
+     * @param data
+     */
+    private globalListener(data: AppEvent) {
+        for (let id of Object.keys(this.subscriptions)) {
+            if (this.subscriptions[id].key == data.key) {
+                this.subscriptions[id].callback({...data.data});
+            }
+        }
+    }
+
+    /**
+     * Remove listener using the ID that was returned when @this.on was fired.
+     *
+     * @param {string} id
+     * @returns {boolean}
+     */
+    off(id: string) {
+        if (typeof this.subscriptions[id] === 'undefined') {
+            return false;
+        } else {
+            delete this.subscriptions[id];
+            return true;
+        }
+    }
+
+    /**
+     * Adds the key and callback to subscriptions and sends back its id.
+     *
+     * @param key
+     * @param callback
+     * @returns {string}
+     */
+    on(key, callback) {
+        let subscribeId = Math.floor(Math.random() * 99999).toString();
+        this.subscriptions[subscribeId] = {
+            'key': key,
+            'callback': callback,
+        };
+        return subscribeId;
+    }
+
+    /**
+     * @param key
+     * @param data
+     */
+    broadcast(key, data?) {
+        this.subject.next(<AppEvent>{
+            key: key,
+            data: data,
+        });
     }
 }
 

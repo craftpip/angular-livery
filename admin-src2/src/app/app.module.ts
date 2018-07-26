@@ -25,7 +25,6 @@ import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-b
 import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
 import {CardCollapseDirective} from "./shared/directives/card-collapse.directive";
 import {QuickPanelModule} from "./shared/directives/quick-panel.directive";
-import {EventsServiceModule} from "angular-event-service/dist";
 
 
 @NgModule({
@@ -52,7 +51,6 @@ import {EventsServiceModule} from "angular-event-service/dist";
         TagInputModule,
         FlatpickrModule.forRoot(),
         CalendarModule.forRoot(),
-        EventsServiceModule.forRoot(),
     ],
     providers: [
         AuthService,

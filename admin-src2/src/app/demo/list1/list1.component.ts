@@ -5,7 +5,7 @@ import {AgGridNg2, ICellEditorAngularComp} from "ag-grid-angular";
 import {GridOptions} from "ag-grid";
 import {TableCellDeleteButtonComponent} from "../../shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "../../shared/table/table-cell-edit-button.component";
-import {HttpHelper, Utils} from "../../shared/helper.service";
+import {AppEvents, HttpHelper, Utils} from "../../shared/helper.service";
 import {JConfirm} from "../../shared/jconfirm";
 import {Users} from "../../users/users.mock";
 import {TableCellButtonCallback} from "../../shared/table/table-cell-button-callback";
@@ -46,9 +46,18 @@ export class List1Component {
     fromDate;
     toDate;
 
+
+    testEvent() {
+        this.events.broadcast('hey', {
+            'hellooooo': 'there'
+        });
+    }
+
+
     constructor(public httpHelper: HttpHelper,
                 public jconfirm: JConfirm,
                 public utils: Utils,
+                private events: AppEvents,
                 public route: ActivatedRoute) {
 
         this.route.params.subscribe((data: any) => {
