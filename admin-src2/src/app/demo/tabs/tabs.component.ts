@@ -106,7 +106,6 @@ export class TabsComponent {
      */
     deleteCell(s: TableCellButtonCallback) {
         // alert(s);
-
         this.jconfirm.confirm({
             content: 'Are you sure to delete the row?',
             title: "Confirm?",
