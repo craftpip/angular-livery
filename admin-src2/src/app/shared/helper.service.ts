@@ -127,6 +127,29 @@ export class AppEvents {
     }
 
     /**
+     * Unsubscribe all events from a group.
+     *
+     * @param {string} groupName
+     */
+    offGroup(groupName: string) {
+        for (let id of Object.keys(this.subscriptions)) {
+            if (this.subscriptions[id].group == groupName)
+                this.off(id);
+        }
+    }
+
+    /**
+     * Give an array of ids to remove listeners.
+     *
+     * @param {string[]} ids
+     */
+    offIds(ids: string[]) {
+        for (let id of ids) {
+            this.off(id);
+        }
+    }
+
+    /**
      * Remove listener using the ID that was returned when @this.on was fired.
      *
      * @param {string} id
@@ -146,13 +169,15 @@ export class AppEvents {
      *
      * @param key
      * @param callback
+     * @param group
      * @returns {string}
      */
-    on(key, callback) {
+    on(key, callback, group?) {
         let subscribeId = Math.floor(Math.random() * 99999).toString();
         this.subscriptions[subscribeId] = {
             'key': key,
             'callback': callback,
+            'group': group || 'default'
         };
         return subscribeId;
     }
