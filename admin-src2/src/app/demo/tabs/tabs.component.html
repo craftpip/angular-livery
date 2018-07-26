@@ -105,6 +105,38 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="progression mb-2 mt-2">
+            <div class="progression-step green">
+                <div class="progression-cont">
+                    <div class="progression-circle">
+                        <i class="ft ft-rotate-ccw"></i>
+                    </div>
+                    <div class="progression-text">Submitted for approval</div>
+                </div>
+            </div>
+            <div class="progression-step blue">
+                <div class="progression-cont">
+                    <div class="progression-circle">
+                        <i class="ft ft-rotate-ccw"></i>
+                    </div>
+                    <div class="progression-text">Submitted for approval</div>
+                </div>
+            </div>
+            <div class="progression-step">
+                <div class="progression-cont">
+                    <div class="progression-circle">
+                        <i class="ft ft-rotate-ccw"></i>
+                    </div>
+                    <div class="progression-text">Submitted for approval</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <section id="extended">
     <div class="row">
         <div class="col-sm-12">
@@ -132,12 +164,10 @@
                                                 (filesUploaded)="files = $event"
                                         ></file-uploader>
 
-
                                         <div>
                                             Debug msg received by parent component:
-                                            {{files.length}}
+                                            {{files | json}}
                                         </div>
-
                                     </div>
                                 </div>
 
