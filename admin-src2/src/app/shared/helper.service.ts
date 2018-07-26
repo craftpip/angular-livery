@@ -75,7 +75,6 @@ export interface NotificationOptions {
     type?: string,
 }
 
-
 @Injectable()
 export class TourService {
     constructor() {
@@ -91,6 +90,7 @@ export class TourService {
         return tour;
     }
 }
+
 
 @Injectable()
 export class Utils {

@@ -11,7 +11,7 @@ export class QuickPanelDirective implements AfterViewChecked {
     public _open: boolean = false;
     public nativeElement: HTMLElement;
 
-    @Input()
+    @Input('open')
     set quickPanel(param) {
         this._open = !!param;
 
@@ -22,7 +22,9 @@ export class QuickPanelDirective implements AfterViewChecked {
         }
     }
 
-    constructor(private el: ElementRef, public renderer: Renderer2) {
+    constructor(private el: ElementRef,
+                public renderer: Renderer2) {
+
         this.nativeElement = <HTMLElement>el.nativeElement;
         // renderer.addClass(ne, 'hello');
         // console.log(ne);

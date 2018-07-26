@@ -22,6 +22,7 @@ import {CalendarComponent} from "../demo/calendar/calendar.component";
 })
 
 export class UsersComponent {
+    isOpen: boolean = true;
     @ViewChild('agTable') agGrid: AgGridNg2;
     gridOptions: GridOptions;
     // define table col here!

@@ -28,6 +28,7 @@
     "ag-grid": "^18.1.1",
     "ag-grid-angular": "^18.1.0",
     "angular-calendar": "^0.25.2",
+    "angular-event-service": "^1.2.0",
     "angularx-flatpickr": "^6.0.0",
     "bootstrap": "4.1.1",
     "bootstrap-tour": "^0.12.0",
