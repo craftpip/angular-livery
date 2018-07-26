@@ -36,18 +36,22 @@
 }
 
 .quick-panel {
-  position: absolute;
+  position: fixed;
   right: 0px;
   transform: translate(420px, 0);
   background: white;
   width: 400px;
-  transition: transform .4s, top .001s;
+  transition: all .2s;
   box-shadow: -3px 0px 30px rgba(0, 0, 0, .3);
   overflow-y: auto;
   z-index: 9;
+  bottom: 0px;
+  top: 60px;
+  opacity: 0;
 
   &.open {
     transform: translate(0px, 0);
+    opacity: 1;
   }
   .quick-panel-close {
     position: fixed;
@@ -513,5 +517,43 @@ tag {
 @keyframes wave {
   50% {
     transform: scale(0.9);
+  }
+}
+
+.form-control.form-control-sm[type='file'] {
+  height: 31px;
+  padding: 1px 10px;
+}
+
+.drop-zone {
+  border: dashed 1px #aaa;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  height: 80px;
+  line-height: 80px;
+  position: relative;
+  overflow: hidden;
+
+  &.has-file-over {
+    border-color: $color-primary2;
+  }
+
+  .file-progress {
+    position: absolute;
+    background: lighten($color-primary2, 40%);
+    transition: width .5s;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+  }
+}
+
+.uploader-queue {
+  .uploader-item {
+    padding: 4px 0;
+    border-bottom: solid 1px #ddd;
+    font-size: 14px;
   }
 }

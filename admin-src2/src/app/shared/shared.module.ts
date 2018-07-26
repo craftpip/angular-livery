@@ -9,6 +9,8 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {ToggleFullscreenDirective} from "./directives/toggle-fullscreen.directive";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FileUploaderComponent} from "./uploader/file-uploader.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         SidebarComponent,
         ToggleFullscreenDirective,
         NgbModule,
+        FileUploaderComponent
     ],
     imports: [
         RouterModule,
@@ -26,12 +29,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         FormsModule,
         ReactiveFormsModule,
         NgbModule,
+        FileUploadModule,
     ],
     declarations: [
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
-        ToggleFullscreenDirective
+        ToggleFullscreenDirective,
+        FileUploaderComponent
     ]
 })
 export class SharedModule {

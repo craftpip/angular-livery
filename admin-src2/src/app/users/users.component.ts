@@ -22,7 +22,6 @@ import {CalendarComponent} from "../demo/calendar/calendar.component";
 })
 
 export class UsersComponent {
-    isOpen: boolean = true;
     @ViewChild('agTable') agGrid: AgGridNg2;
     gridOptions: GridOptions;
     // define table col here!
@@ -96,9 +95,10 @@ export class UsersComponent {
      * @param {TableCellButtonCallback} s
      */
     editCell(s: TableCellButtonCallback) {
-        this.jconfirm.confirm({
-            content: 'edit node: ' + s.data.first_name
-        });
+        this.editInPanel(s.data);
+        // this.jconfirm.confirm({
+        //     content: 'edit node: ' + s.data.first_name
+        // });
     }
 
     /**
@@ -108,38 +108,7 @@ export class UsersComponent {
      * @param {TableCellButtonCallback} s
      */
     deleteCell(s: TableCellButtonCallback) {
-        // alert(s);
-
-        this.jconfirm.confirm({
-            content: 'Are you sure to delete the row?',
-            title: "Confirm?",
-            buttons: {
-                'delete': {
-                    btnClass: 'btn-sm btn-outline-danger',
-                    action: () => {
-                        // this.jconfirm.confirm({
-                        //     content: 'The row has been deleted!',
-                        //     title: 'Alert',
-                        // })
-                        this.utils.notification({
-                            text: 'The row has been deleted',
-                            type: this.utils.notificationType.success,
-                            layout: this.utils.notificationLayouts.topRight,
-                        });
-                    }
-                },
-                cancel: {
-                    action: () => {
-                        this.jconfirm.confirm({
-                            content: 'That action has been cancelled!'
-                        });
-                        // return false;
-                    }
-                }
-            },
-            animateFromElement: false, // because it wont be able to find the button clicked
-            autoClose: 'cancel|4000',
-        });
+        this.deleteUser(s.data);
     }
 
     /**
@@ -177,9 +146,11 @@ export class UsersComponent {
         console.log(nodes);
         if (nodes.length) {
             let node = nodes[0];
-            this.jconfirm.confirm({
-                content: 'edit node: ' + node.first_name,
-            });
+            this.editInPanel(node);
+
+            // this.jconfirm.confirm({
+            //     content: 'edit node: ' + node.first_name,
+            // });
         } else {
             this.jconfirm.confirm({
                 content: 'Please select a node',
@@ -187,14 +158,45 @@ export class UsersComponent {
         }
     }
 
+    deleteUser(user) {
+        this.jconfirm.confirm({
+            content: 'Are you sure to delete the row?',
+            title: "Confirm?",
+            buttons: {
+                'delete': {
+                    btnClass: 'btn-sm btn-outline-danger',
+                    action: () => {
+                        // this.jconfirm.confirm({
+                        //     content: 'The row has been deleted!',
+                        //     title: 'Alert',
+                        // })
+                        this.utils.notification({
+                            text: 'The row has been deleted',
+                            type: this.utils.notificationType.success,
+                            layout: this.utils.notificationLayouts.topRight,
+                        });
+                    }
+                },
+                cancel: {
+                    action: () => {
+                        this.jconfirm.confirm({
+                            content: 'That action has been cancelled!'
+                        });
+                        // return false;
+                    }
+                }
+            },
+            animateFromElement: false, // because it wont be able to find the button clicked
+            autoClose: 'cancel|4000',
+        });
+    }
+
     deleteSelected() {
         let nodes = this.agGrid.api.getSelectedRows();
         console.log(nodes);
         if (nodes.length) {
             let node = nodes[0];
-            this.jconfirm.confirm({
-                content: 'delete node: ' + node.first_name
-            });
+            this.deleteUser(node);
         } else {
             this.jconfirm.confirm({
                 content: 'Please select a node'
@@ -209,4 +211,13 @@ export class UsersComponent {
         this.isRowSelected = !!(nodes.length);
     }
 
+//    quick panel
+
+    editInPanel(user: any) {
+        this.editUser = {...user}; // make a copy.
+        this.isOpen = true;
+    }
+
+    isOpen: boolean = false; // close the panel initially
+    editUser: any = {}; // object used in quick panel
 }

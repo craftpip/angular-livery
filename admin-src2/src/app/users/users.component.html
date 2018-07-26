@@ -57,7 +57,11 @@
                         <i class="ft ft-edit mr-1"></i>
                         Edit
                     </button>
-
+                    <button type="button"
+                            (click)="isOpen = !isOpen"
+                            class="btn btn-fame btn-sm ml-1">
+                        Toggle
+                    </button>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -90,10 +94,71 @@
 <div class="quick-panel"
      quickPanel=""
      [open]="isOpen">
-    <div class="quick-panel-close">
+    <div class="quick-panel-close"
+         (click)="isOpen = false">
         &times;
     </div>
     <div class="quick-panel-inner">
+        <!--content goes here-->
+        <h3>
+            Edit user
+        </h3>
+        <form action="">
+            <div class="form-group">
+                <label for="">First name</label>
+                <input type="text"
+                       name="edit-first-name"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.first_name">
+            </div>
 
+            <div class="form-group">
+                <label for="">Last name</label>
+                <input type="text"
+                       name="edit-last-name"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.last_name">
+            </div>
+
+            <div class="form-group">
+                <label for="">E-mail</label>
+                <input type="text"
+                       name="edit-email"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.email">
+            </div>
+
+            <div class="form-group">
+                <label for="">Gender</label>
+                <input type="text"
+                       name="edit-gender"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.gender">
+            </div>
+
+            <div class="form-group">
+                <label for="">City</label>
+                <input type="text"
+                       name="edit-city"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.city">
+            </div>
+
+            <div class="form-group">
+                <label for="">Mobile</label>
+                <input type="text"
+                       name="edit-mobile"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="editUser.mobile">
+            </div>
+        </form>
+
+
+        <button type="button"
+                class="btn btn-fame btn-sm">
+            SAVE
+        </button>
+
+        <!--content ends here -->
     </div>
 </div>

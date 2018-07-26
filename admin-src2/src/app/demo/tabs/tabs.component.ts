@@ -20,6 +20,7 @@ import {TableCellButtonCallback} from "../../shared/table/table-cell-button-call
 export class TabsComponent {
     @ViewChild('agTable') agGrid: AgGridNg2;
     gridOptions: GridOptions;
+
     // define table col here!
     definedCols: any = [
         {
@@ -205,4 +206,6 @@ export class TabsComponent {
         this.isRowSelected = !!(nodes.length);
     }
 
+
+    files: any[] = [];
 }

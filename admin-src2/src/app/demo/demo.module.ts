@@ -12,6 +12,9 @@ import {CalendarModule} from "angular-calendar";
 import {List1Component} from "./list1/list1.component";
 import {FlatpickrModule} from "angularx-flatpickr";
 import {TabsComponent} from "./tabs/tabs.component";
+import {FileUploader} from "ng2-file-upload";
+import {FileUploaderComponent} from "../shared/uploader/file-uploader.component";
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -23,7 +26,8 @@ import {TabsComponent} from "./tabs/tabs.component";
         AgGridModule.withComponents([]),
         TagInputModule,
         CalendarModule.forRoot(),
-        FlatpickrModule.forRoot()
+        FlatpickrModule.forRoot(),
+        SharedModule,
     ],
     exports: [],
     declarations: [

@@ -110,22 +110,8 @@
         <div class="col-sm-12">
 
             <ngb-tabset>
-                <ngb-tab title="Tab information">
-                    <ng-template ngbTabContent>
-                        <ag-grid-angular
-                                #agTable
-                                style="width: 100%; height: 500px;"
-                                class="ag-theme-balham"
-                                [gridOptions]="gridOptions"
-                                (selectionChanged)="tableSelection()"
-                                (columnMoved)="colMoved($event)"
-                        >
-                        </ag-grid-angular>
-                    </ng-template>
-                </ngb-tab>
                 <ngb-tab title="Add new entry">
                     <ng-template ngbTabContent>
-
 
                         <div class="form-legend">
                             Additional information
@@ -133,6 +119,28 @@
 
                         <form>
                             <div class="row">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">
+                                            Upload files
+                                        </label>
+                                        <file-uploader
+                                                [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
+                                                [postData]="{'someId': 1}"
+                                                [files]="files"
+                                                (filesUploaded)="files = $event"
+                                        ></file-uploader>
+
+
+                                        <div>
+                                            Debug msg received by parent component:
+                                            {{files.length}}
+                                        </div>
+
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="user-group">Group</label>
@@ -450,6 +458,20 @@
                         </form>
 
 
+                    </ng-template>
+                </ngb-tab>
+
+                <ngb-tab title="Tab information">
+                    <ng-template ngbTabContent>
+                        <ag-grid-angular
+                                #agTable
+                                style="width: 100%; height: 500px;"
+                                class="ag-theme-balham"
+                                [gridOptions]="gridOptions"
+                                (selectionChanged)="tableSelection()"
+                                (columnMoved)="colMoved($event)"
+                        >
+                        </ag-grid-angular>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

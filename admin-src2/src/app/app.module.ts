@@ -25,6 +25,8 @@ import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-b
 import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
 import {CardCollapseDirective} from "./shared/directives/card-collapse.directive";
 import {QuickPanelModule} from "./shared/directives/quick-panel.directive";
+import {FileUploaderComponent} from "./shared/uploader/file-uploader.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 
 @NgModule({
