@@ -312,18 +312,12 @@ export class TabsComponent {
         }
     }
 
-    test() {
-        alert('hey');
-    }
-
-    calendarSettings: any = {
-        bigBanner: true,
-        timePicker: false,
-        format: 'dd-MM-yyyy',
-        defaultOpen: false,
-    };
-    date: Date = new Date();
-
+    /**
+     * testing
+     * @param formErrors
+     * @param property
+     * @returns {boolean}
+     */
     e(formErrors, property) {
         if (formErrors == null) {
             return true;
