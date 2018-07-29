@@ -439,65 +439,6 @@
                                 </div>
 
                                 <div class="col-sm-3">
-                                    <div class="form-group"
-                                         [ngClass]="{'ng-touched': testForm.get('date').touched}">
-                                        <label for="password">Date</label>
-                                        <div class="input-group input-group-sm">
-                                            <input class="form-control"
-                                                   placeholder="yyyy-mm-dd"
-                                                   placement="top-left"
-                                                   name="dp"
-                                                   formControlName="date"
-                                                   ngbDatepicker
-                                                   #d="ngbDatepicker">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary"
-                                                        (click)="d.toggle()"
-                                                        type="button">
-                                                    <i class="ft ft-calendar"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="error error-danger"
-                                             *ngIf="formTest.form.hasError('required', 'date')"
-                                        >
-                                            Please enter a valid date
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group"
-                                         [ngClass]="{'ng-touched': testForm.get('date2').touched}">
-                                        <label for="password">Date 2</label>
-
-                                        <input class="form-control form-control-sm"
-                                               name="dp"
-                                               #date2
-                                               type="date"
-                                               formControlName="date2"
-                                               [altInput]="false"
-                                               [altFormat]="'h:i:K'"
-                                               [convertModelValue]="false"
-                                               [enableTime]="true"
-                                               [time24hr]="false"
-                                               [enableSeconds]="false"
-                                               dateFormat="Y-m-d H:i"
-                                               [disableMobile]="true"
-                                               [noCalendar]="false"
-                                               [disabled]="false"
-                                               [readonly]="false"
-                                               mwlFlatpickr>
-
-                                        <div class="error error-danger"
-                                             *ngIf="formTest.form.hasError('required', 'date2')"
-                                        >
-                                            Please enter a valid date
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="password">Date 3</label>
                                         <p-calendar

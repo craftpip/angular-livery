@@ -268,12 +268,12 @@ export class TabsComponent {
                 Validators.required,
                 Validators.minLength(2)
             ]),
-            date2: this.fb.control('', [
-                Validators.required,
-            ]),
-            date: this.fb.control('', [
-                Validators.required,
-            ]),
+            // date2: this.fb.control('', [
+            //     Validators.required,
+            // ]),
+            // date: this.fb.control('', [
+            //     Validators.required,
+            // ]),
             date3: this.fb.control('', [
                 Validators.required,
             ]),
