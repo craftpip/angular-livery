@@ -8,6 +8,8 @@ body {
   line-height: 1.5em;
   color: rgba(0, 0, 0, 0.87);
   min-height: 100vh;
+  font-size: 14px;
+
   &.inverse {
     background: #333333;
     &, .form-control {
@@ -74,6 +76,10 @@ a {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 14px;
   letter-spacing: 0.3px;
+}
+
+strong{
+  font-weight: 600;
 }

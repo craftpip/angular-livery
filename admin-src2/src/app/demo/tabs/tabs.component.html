@@ -149,9 +149,14 @@
                             Additional information
                         </div>
 
-                        <form>
-                            <div class="row">
+                        <form [formGroup]="testForm"
+                              #formTest="ngForm"
+                              (submit)="submitForm()">
+                            isForm valid: {{testForm.valid}}
+                            <br>
+                            Status: {{testForm.status}}
 
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">
@@ -160,26 +165,54 @@
                                         <file-uploader
                                                 [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
                                                 [postData]="{'someId': 1}"
-                                                [files]="files"
-                                                (filesUploaded)="files = $event"
+                                                [files]="testForm.get('files').value"
+                                                (filesUploaded)="testForm.get('files').setValue($event)"
                                         ></file-uploader>
 
-                                        <div>
-                                            Debug msg received by parent component: {{files.length}}
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'files')"
+                                        >
+                                            Please upload the documents
                                         </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('minlength', 'files')">
+                                            At least 2 files are required
+                                        </div>
+
+                                        <div *ngIf="testForm.get('files').value.length">
+                                            <div class="mt-1"><strong>Uploaded files</strong></div>
+                                            <div *ngFor="let r of testForm.get('files').value; let indx = index"
+                                                 class="border-bottom py-sm-1">
+                                                {{r.file.file.name}}
+
+                                                <div class="pull-right"
+                                                     (click)="removeFromFiles(indx)">
+                                                    <i class="ft ft-delete"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="user-group">Group</label>
+                                        {{testForm.get('group').value}}
                                         <select name="user-group"
+                                                formControlName="group"
                                                 id="user-group"
                                                 class="form-control form-control-sm">
                                             <option value="test">
                                                 test
                                             </option>
                                         </select>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'group')">
+                                            This field is required
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -188,7 +221,18 @@
                                         <input class="form-control form-control-sm"
                                                id="name"
                                                name="name"
+                                               formControlName="name"
                                                type="text">
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'name')">
+                                            this is required
+                                        </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('minlength', 'name')">
+                                            please enter at least 6 chars
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -198,8 +242,19 @@
                                                class="form-control form-control-sm"
                                                placeholder="e-mail"
                                                name="email"
+                                               formControlName="email"
                                                id="email"
                                                required>
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'email')"
+                                        >
+                                            This is required.
+                                        </div>
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('email', 'email')"
+                                        >
+                                            Please enter a valid e-mail
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -208,11 +263,18 @@
                                         <select
                                                 name="email-verification"
                                                 id="email-verification"
+                                                formControlName="email_verified"
                                                 class="form-control form-control-sm"
                                         >
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'email_verified')"
+                                        >
+                                            This is required.
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -220,11 +282,18 @@
                                         <label for="account_active">Account active</label>
                                         <select name="account_active"
                                                 id="account_active"
+                                                formControlName="account_active"
                                                 required
                                                 class="form-control form-control-sm">
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
                                         </select>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'account_active')"
+                                        >
+                                            This is required.
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -232,35 +301,64 @@
                                         <label for="country">Country</label>
                                         <select name="country"
                                                 id="country"
+                                                formControlName="country"
                                                 required
                                                 class="form-control form-control-sm">
                                             <option value="973">Baharain</option>
                                             <option value="91">India</option>
                                         </select>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'country')"
+                                        >
+                                            This is required.
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="mobile">Mobile
                                         </label>
-                                        <input type="number"
+                                        <input type="text"
                                                placeholder="Mobile no."
                                                name="mobile"
                                                id="mobile"
+                                               formControlName="mobile"
                                                required
-                                               maxlength="10"
                                                class="form-control form-control-sm">
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'mobile')"
+                                        >
+                                            This is required
+                                        </div>
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('minlength', 'mobile')"
+                                        >
+                                            The mobile number must be at least 10 digits long
+                                        </div>
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('maxlength', 'mobile')"
+                                        >
+                                            The mobile number must be less than 15 digits long
+                                        </div>
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('pattern', 'mobile')"
+                                        >
+                                            Please enter a valid mobile number
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="mobile-verified">Mobile verified</label>
                                         <select name="mobile-verified"
+                                                formControlName="mobile_verified"
                                                 class="form-control form-control-sm"
                                                 id="mobile-verified">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -270,11 +368,21 @@
                                         <select name="currency"
                                                 id="currency"
                                                 required
+                                                formControlName="currency"
                                                 class="form-control form-control-sm">
-                                            <option value="test">
-                                                test
+                                            <option value="inr">
+                                                INR
+                                            </option>
+                                            <option value="dollar">
+                                                DOLLAR
                                             </option>
                                         </select>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'currency')"
+                                        >
+                                            This field is required
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -284,16 +392,42 @@
                                                name="password"
                                                id="password"
                                                required
+                                               formControlName="password"
                                                class="form-control form-control-sm">
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'password')"
+                                        >
+                                            Password is required
+                                        </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('minlength', 'password')"
+                                        >
+                                            Password must be atleast 6 chars long
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="password">Tag input</label>
                                         <tag-input
+                                                formControlName="tag_input"
                                                 name="enter-tag"
                                                 [editable]="true"
                                                 [allowDupes]="false"></tag-input>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'tag_input')"
+                                        >
+                                            This field is required.
+                                        </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('minlength', 'tag_input')"
+                                        >
+                                            Minimum two items are required.
+                                        </div>
                                     </div>
                                 </div>
 
@@ -305,6 +439,7 @@
                                                    placeholder="yyyy-mm-dd"
                                                    placement="top-left"
                                                    name="dp"
+                                                   formControlName="date"
                                                    ngbDatepicker
                                                    #d="ngbDatepicker">
                                             <div class="input-group-append">
@@ -315,30 +450,66 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <!--<input type="text"-->
-                                        <!--name="enter-date"-->
-                                        <!--id="enter-date"-->
-                                        <!--[(ngModel)]="user.date"-->
-                                        <!--required-->
-                                        <!--ngbDatepicker=""-->
-                                        <!--class="form-control form-control-sm">-->
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'date')"
+                                        >
+                                            Please enter a valid date
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label for="password">Date</label>
+                                        <label for="password">Date 2</label>
+
                                         <input class="form-control form-control-sm"
                                                name="dp"
-                                               [altInput]="true"
-                                               [altFormat]="'d-m-Y H:i'"
+                                               #date2
+                                               type="date"
+                                               formControlName="date2"
+                                               [altInput]="false"
+                                               [altFormat]="'h:i:K'"
                                                [convertModelValue]="false"
                                                [enableTime]="true"
                                                [time24hr]="false"
                                                [enableSeconds]="false"
-                                               dateFormat="Y-m-dTH:i"
+                                               dateFormat="Y-m-d H:i"
                                                [disableMobile]="true"
                                                [noCalendar]="false"
+                                               [disabled]="false"
+                                               [readonly]="false"
                                                mwlFlatpickr>
+
+                                        {{testForm.get('date2').value}}
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'date2')"
+                                        >
+                                            Please enter a valid date
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="password">Date 3</label>
+                                        <div>
+                                            <p-calendar
+                                                    [showButtonBar]="true"
+                                                    [showTime]="true"
+                                                    formControlName="date3"
+                                                    [hourFormat]="'12'"
+                                            >
+
+                                            </p-calendar>
+                                        </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'date3')"
+                                        >
+                                            Please enter a valid date
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -350,6 +521,7 @@
                                         <div class="input-checkbox mb-1">
                                             <div>
                                                 <input
+                                                        formControlName="checkbox_1"
                                                         id="myCheckbox"
                                                         type="checkbox"/>
 
@@ -363,6 +535,14 @@
                                                 </span>
                                                     <span>CodePenChallenge</span>
                                                 </label>
+
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formTest.form.hasError('required', 'checkbox_1')"
+                                                >
+                                                    This field is required.
+                                                </div>
+
                                             </div>
                                         </div>
 
@@ -372,7 +552,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>
-                                            Check box?
+                                            Radio buttons
                                         </label>
 
                                         <div class="form-check">
@@ -380,9 +560,10 @@
                                                 <input class="form-check-input"
                                                        type="radio"
                                                        name="exampleRadios"
+                                                       formControlName="radio1"
                                                        id="exampleRadios1"
                                                        value="option1"
-                                                       checked>
+                                                >
                                                 <label class="form-check-label"
                                                        for="exampleRadios1">
                                                     Default radio
@@ -396,9 +577,10 @@
                                                 <input class="form-check-input"
                                                        type="radio"
                                                        name="exampleRadios"
+                                                       formControlName="radio1"
                                                        id="exampleRadios2"
-                                                       value="option1"
-                                                       checked>
+                                                       value="option2"
+                                                >
                                                 <label class="form-check-label"
                                                        for="exampleRadios2">
                                                     Default radio
@@ -412,14 +594,23 @@
                                                 <input class="form-check-input"
                                                        type="radio"
                                                        name="exampleRadios"
+                                                       formControlName="radio1"
                                                        id="exampleRadios3"
-                                                       value="option1"
-                                                       checked>
+                                                       value="option3"
+                                                >
                                                 <label class="form-check-label"
                                                        for="exampleRadios3">
                                                     Default radio
                                                 </label>
                                             </div>
+                                        </div>
+
+                                        {{testForm.get('radio1').value}}
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'radio1')"
+                                        >
+                                            Please select a valid option
                                         </div>
                                     </div>
                                 </div>
@@ -428,7 +619,14 @@
                                         <label>Textarea</label>
                                         <textarea name="textarea"
                                                   placeholder="Textarea here"
+                                                  formControlName="textarea1"
                                                   class="form-control-sm form-control"></textarea>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'textarea1')"
+                                        >
+                                            This field is required
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -442,9 +640,10 @@
                                                     <input class="form-check-input"
                                                            type="radio"
                                                            name="exampleRadios"
+                                                           formControlName="radio2"
                                                            id="exampleRadios4"
                                                            value="option1"
-                                                           checked>
+                                                    >
                                                     <label class="form-check-label"
                                                            for="exampleRadios4">
                                                         Default radio
@@ -457,16 +656,25 @@
 
                                                     <input class="form-check-input"
                                                            type="radio"
+                                                           formControlName="radio2"
                                                            name="exampleRadios"
                                                            id="exampleRadios5"
-                                                           value="option1"
-                                                           checked>
+                                                           value="option2"
+                                                    >
                                                     <label class="form-check-label"
                                                            for="exampleRadios5">
                                                         Default radio
                                                     </label>
                                                 </div>
                                             </div>
+
+
+                                        </div>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'radio2')"
+                                        >
+                                            Please select a valid option
                                         </div>
                                     </div>
                                 </div>
@@ -475,7 +683,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-1 mt-1">
-                                        <button class="btn btn-dark btn-raised btn-sm"
+                                        <button class="btn btn-dark btn-sm"
+                                                [ngClass]="{'btn-fame': formTest.valid}"
                                                 type="submit">
                                             Save
                                         </button>
@@ -483,10 +692,7 @@
                                 </div>
                             </div>
 
-
                         </form>
-
-
                     </ng-template>
                 </ngb-tab>
 

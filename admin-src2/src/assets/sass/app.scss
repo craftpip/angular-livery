@@ -525,18 +525,50 @@ tag {
   padding: 1px 10px;
 }
 
+.error {
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.error-danger {
+    color: $color-danger;
+  }
+  &.error-warning {
+    color: $color-warning;
+  }
+  &.error-info {
+    color: $color-info;
+  }
+}
+
+.form-control ~ .error {
+  display: none;
+}
+
+.form-control.ng-touched ~ .error {
+  display: block;
+}
+
 .drop-zone {
   border: dashed 1px #aaa;
   border-radius: 4px;
   text-align: center;
   font-size: 14px;
-  height: 80px;
-  line-height: 80px;
+  height: inherit;
+  min-height: 31px;
+  line-height: 100%;
   position: relative;
   overflow: hidden;
+  display: grid;
+  transition: all .1s;
+
+  .drop-text {
+    margin: auto;
+  }
 
   &.has-file-over {
     border-color: $color-primary2;
+    min-height: 100px;
   }
 
   .file-progress {
@@ -592,7 +624,7 @@ tag {
         height: 11px;
         left: 0;
         right: 0;
-        background: #ddd;
+        background: #eee;
         top: 50%;
         margin-top: -6px;
         z-index: -1;

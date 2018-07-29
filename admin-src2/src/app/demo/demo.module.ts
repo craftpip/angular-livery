@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 
 import {MatchHeightModule} from "../shared/directives/match-height.directive";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AgGridModule} from "ag-grid-angular";
 import {TagInputModule} from "ngx-chips";
 import {DemoRoutingModule} from "./demo-routing.module";
@@ -15,6 +15,7 @@ import {TabsComponent} from "./tabs/tabs.component";
 import {FileUploader} from "ng2-file-upload";
 import {FileUploaderComponent} from "../shared/uploader/file-uploader.component";
 import {SharedModule} from "../shared/shared.module";
+import {CalendarModule as CM} from "primeng/primeng";
 
 @NgModule({
     imports: [
@@ -25,9 +26,11 @@ import {SharedModule} from "../shared/shared.module";
         FormsModule,
         AgGridModule.withComponents([]),
         TagInputModule,
+        ReactiveFormsModule,
         CalendarModule.forRoot(),
         FlatpickrModule.forRoot(),
         SharedModule,
+        CM,
     ],
     exports: [],
     declarations: [

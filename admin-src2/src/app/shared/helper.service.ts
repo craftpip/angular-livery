@@ -92,6 +92,39 @@ export class TourService {
     }
 }
 
+
+@Injectable()
+export class FormHelper {
+    /**
+     * To be used with
+     *
+     * formName.get('firstname').errors
+     *F
+     * isError(formName.get('firstname'), 'required')
+     *
+     * @param control
+     * @param errorType
+     */
+    isError(control: any, errorType: string) {
+        let errors = control.errors;
+        console.log(errors);
+        if (errors === null)
+            return false;
+
+        if (typeof errors[errorType] === 'undefined') {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    hasErrors(control) {
+        let errors = control.errors;
+        return errors !== null;
+    }
+}
+
+
 export interface AppEvent {
     key?: any,
     data?: any,

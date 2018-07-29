@@ -14,9 +14,11 @@ import {FileItem, FileUploader} from "ng2-file-upload";
             <div class="file-progress"
                  *ngIf="uploader.isUploading"
                  [style.width]="getUploadedPercent()+'%' ">
-
+ 
             </div>
-            Drop files here or click to choose file
+            <div class="drop-text">
+                Drop files here or click to choose file
+            </div>
         </div>
         <input type="file"
                #fileUploader

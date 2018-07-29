@@ -21,7 +21,7 @@ import {FileUploadModule} from "ng2-file-upload";
         SidebarComponent,
         ToggleFullscreenDirective,
         NgbModule,
-        FileUploaderComponent
+        FileUploaderComponent,
     ],
     imports: [
         RouterModule,

@@ -22,6 +22,18 @@
               "src/.htaccess"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/omega/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/ag-grid/dist/styles/ag-grid.css",
+              "node_modules/ag-grid/dist/styles/ag-theme-balham.css",
+              "node_modules/jquery-confirm/css/jquery-confirm.css",
+              "node_modules/flatpickr/dist/flatpickr.css",
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "node_modules/bootstrap-tour/build/css/bootstrap-tour-standalone.css",
+              "node_modules/noty/lib/noty.css",
+              "node_modules/noty/lib/themes/bootstrap-v4.css",
+              "node_modules/noty/lib/themes/light.css",
               "src/assets/sass/app.scss",
               "src/styles.css"
             ],

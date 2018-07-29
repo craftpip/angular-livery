@@ -14,7 +14,7 @@ import {AuthGuard} from './shared/auth/auth-guard.service';
 import * as $ from 'jquery';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AppEvents, HttpHelper, TourService, Utils} from "./shared/helper.service";
+import {AppEvents, FormHelper, HttpHelper, TourService, Utils} from "./shared/helper.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {AgGridModule} from "ag-grid-angular";
 import {JConfirm} from "./shared/jconfirm";
@@ -37,6 +37,7 @@ import {FileUploadModule} from "ng2-file-upload";
         LoginComponent,
         TableCellDeleteButtonComponent,
         TableCellEditButtonComponent,
+
     ],
     imports: [
         BrowserAnimationsModule,
@@ -62,6 +63,7 @@ import {FileUploadModule} from "ng2-file-upload";
         Utils,
         TourService,
         AppEvents,
+        FormHelper,
     ],
     bootstrap: [AppComponent]
 })
