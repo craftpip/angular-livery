@@ -168,9 +168,11 @@
                                                     'ng-invalid': testForm.get('files').invalid,
                                                     'ng-valid': testForm.get('files').valid
                                                 }"
+                                                [allowedFormats]="['jpg','jpeg','png']"
                                                 [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
                                                 [postData]="{'someId': 1}"
                                                 [files]="testForm.get('files').value"
+
                                                 (filesUploaded)="testForm.get('files').setValue($event)"
                                         ></file-uploader>
 
@@ -187,6 +189,7 @@
 
                                         <div *ngIf="testForm.get('files').value.length">
                                             <div class="mt-1"><strong>Uploaded files</strong></div>
+
                                             <div *ngFor="let r of testForm.get('files').value; let indx = index"
                                                  class="border-bottom py-sm-1">
                                                 {{r.file.file.name}}
@@ -531,7 +534,7 @@
                                             Check box?
                                         </label>
 
-                                        <div class="form-check mb-1">
+                                        <div class="form-check">
                                             <div>
                                                 <input class="form-check-input"
                                                        type="checkbox"
@@ -546,32 +549,11 @@
                                             </div>
                                         </div>
 
-                                        <!--<div class="input-checkbox mb-1">-->
-                                        <!--<div>-->
-                                        <!--<input-->
-                                        <!--formControlName="checkbox_1"-->
-                                        <!--id="myCheckbox"-->
-                                        <!--type="checkbox"/>-->
-
-                                        <!--<label for="myCheckbox">-->
-                                        <!--<span>-->
-                                        <!--<svg width="12px"-->
-                                        <!--height="10px"-->
-                                        <!--viewbox="0 0 12 10">-->
-                                        <!--<polyline points="1.5 6 4.5 9 10.5 1"></polyline>-->
-                                        <!--</svg>-->
-                                        <!--</span>-->
-                                        <!--<span>CodePenChallenge</span>-->
-                                        <!--</label>-->
-
-                                        <!--<div class="error error-danger"-->
-                                        <!--*ngIf="formTest.form.hasError('required', 'checkbox_1')"-->
-                                        <!--&gt;-->
-                                        <!--This field is required.-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'checkbox_1')"
+                                        >
+                                            Please select a valid option
+                                        </div>
                                     </div>
                                 </div>
 

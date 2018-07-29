@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, NgModule, OnInit, Output} from '@angular/core';
 import {FileItem, FileUploader} from "ng2-file-upload";
+import {Utils} from "../helper.service";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {FileItem, FileUploader} from "ng2-file-upload";
             <div class="file-progress"
                  *ngIf="uploader.isUploading"
                  [style.width]="getUploadedPercent()+'%' ">
- 
+
             </div>
             <div class="drop-text">
                 Drop files here or click to choose file
@@ -53,7 +54,11 @@ export class FileUploaderComponent implements OnInit {
     public uploader: FileUploader;
     public _url: string;
 
+
     public hasFileOver: boolean = false;
+
+    @Input('allowedFormats')
+    allowedFormats: string;
 
     /**
      * Url to upload the file.
@@ -93,7 +98,9 @@ export class FileUploaderComponent implements OnInit {
     @Output()
     isUploading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor() {
+    constructor(
+        public utils: Utils,
+    ) {
 
     }
 
@@ -161,6 +168,19 @@ export class FileUploaderComponent implements OnInit {
             this.filesUploaded.emit(this.responses);
         };
         this.uploader.onAfterAddingFile = (file: FileItem) => {
+            let fileName = file.file.name;
+            console.log(fileName);
+
+            let extension = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
+
+            if (this.allowedFormats.indexOf(extension) == -1) {
+                this.utils.notification({
+                    text: 'The file type ' + extension + ' is not allowed',
+                    type: this.utils.notificationType.error
+                });
+                this.uploader.removeFromQueue(file);
+                return false;
+            }
             this.uploader.uploadAll();
         };
     }
