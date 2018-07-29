@@ -326,6 +326,8 @@ export class TabsComponent {
         } else {
             return true;
         }
+
+
     }
 
     st(a) {

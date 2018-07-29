@@ -163,6 +163,11 @@
                                             Upload files
                                         </label>
                                         <file-uploader
+                                                [ngClass]="{
+                                                    'ng-touched': testForm.get('files').touched,
+                                                    'ng-invalid': testForm.get('files').invalid,
+                                                    'ng-valid': testForm.get('files').valid
+                                                }"
                                                 [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
                                                 [postData]="{'someId': 1}"
                                                 [files]="testForm.get('files').value"
@@ -408,13 +413,15 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="password">Tag input</label>
                                         <tag-input
                                                 formControlName="tag_input"
                                                 name="enter-tag"
-                                                [editable]="true"
+                                                [editable]="false"
                                                 [allowDupes]="false"></tag-input>
 
                                         <div class="error error-danger"
@@ -432,7 +439,8 @@
                                 </div>
 
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         [ngClass]="{'ng-touched': testForm.get('date').touched}">
                                         <label for="password">Date</label>
                                         <div class="input-group input-group-sm">
                                             <input class="form-control"
@@ -459,7 +467,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         [ngClass]="{'ng-touched': testForm.get('date2').touched}">
                                         <label for="password">Date 2</label>
 
                                         <input class="form-control form-control-sm"
@@ -480,8 +489,6 @@
                                                [readonly]="false"
                                                mwlFlatpickr>
 
-                                        {{testForm.get('date2').value}}
-
                                         <div class="error error-danger"
                                              *ngIf="formTest.form.hasError('required', 'date2')"
                                         >
@@ -493,27 +500,28 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="password">Date 3</label>
-                                        <div>
-                                            <p-calendar
-                                                    [showButtonBar]="true"
-                                                    [showTime]="true"
-                                                    formControlName="date3"
-                                                    [hourFormat]="'12'"
-                                            >
+                                        <p-calendar
+                                                [showButtonBar]="true"
+                                                [showTime]="true"
+                                                formControlName="date3"
+                                                [hourFormat]="'12'"
+                                        >
 
-                                            </p-calendar>
-                                        </div>
+                                        </p-calendar>
 
                                         <div class="error error-danger"
                                              *ngIf="formTest.form.hasError('required', 'date3')"
                                         >
                                             Please enter a valid date
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         [ngClass]="{
+                                             'ng-touched': testForm.get('radio2').touched,
+                                             'ng-invalid': testForm.get('radio2').invalid
+                                         }">
                                         <label>
                                             Check box?
                                         </label>
@@ -550,7 +558,11 @@
                                 </div>
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         [ngClass]="{
+                                             'ng-touched': testForm.get('radio1').touched,
+                                             'ng-invalid': testForm.get('radio1').invalid
+                                         }">
                                         <label>
                                             Radio buttons
                                         </label>
@@ -630,7 +642,12 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         [ngClass]="{
+                                             'ng-touched': testForm.get('radio2').touched,
+                                             'ng-invalid': testForm.get('radio2').invalid
+                                         }"
+                                    >
                                         <label for="">Radios</label>
 
                                         <div>
@@ -639,7 +656,7 @@
 
                                                     <input class="form-check-input"
                                                            type="radio"
-                                                           name="exampleRadios"
+                                                           name="exampleRadios2"
                                                            formControlName="radio2"
                                                            id="exampleRadios4"
                                                            value="option1"
@@ -657,7 +674,7 @@
                                                     <input class="form-check-input"
                                                            type="radio"
                                                            formControlName="radio2"
-                                                           name="exampleRadios"
+                                                           name="exampleRadios2"
                                                            id="exampleRadios5"
                                                            value="option2"
                                                     >
@@ -667,8 +684,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-
-
                                         </div>
 
                                         <div class="error error-danger"
