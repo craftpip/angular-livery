@@ -287,7 +287,7 @@ tag {
   line-height: 26px !important;
   font-size: 14px !important;
   text-align: center !important;
-  background-color: $color-primary2 !important;
+  background-color: #656565 !important;
   color: white !important;
 
   delete-icon {
@@ -408,6 +408,17 @@ tag {
       }
     }
 
+    input[type="checkbox"] {
+      + label {
+        &:before {
+          border-radius: 4px;
+        }
+        &:after {
+          border-radius: 3px;
+        }
+      }
+    }
+
     input {
       display: none;
 
@@ -426,6 +437,9 @@ tag {
   }
 }
 
+/**
+@deprecated
+ */
 .input-checkbox {
   height: 31px;
   > div {
@@ -604,6 +618,27 @@ p-calendar {
   }
 }
 
+.ng-valid.ng-touched {
+  > .drop-zone {
+    border-color: $color-success;
+  }
+}
+
+.ng-invalid.ng-touched {
+  > .drop-zone {
+    border-color: $color-danger;
+  }
+}
+
+.flatpickr-input {
+  &.ng-touched.ng-valid + input {
+    border-color: $color-success;
+  }
+  &.ng-touched.ng-invalid + input {
+    border-color: $color-danger;
+  }
+}
+
 // validation end
 
 .drop-zone {
@@ -618,6 +653,7 @@ p-calendar {
   overflow: hidden;
   display: grid;
   transition: all .1s;
+  transition-delay: .1s;
 
   .drop-text {
     margin: auto;

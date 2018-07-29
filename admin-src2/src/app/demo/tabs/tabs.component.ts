@@ -268,12 +268,12 @@ export class TabsComponent {
                 Validators.required,
                 Validators.minLength(2)
             ]),
-            // date2: this.fb.control('', [
-            //     Validators.required,
-            // ]),
-            // date: this.fb.control('', [
-            //     Validators.required,
-            // ]),
+            date2: this.fb.control('', [
+                Validators.required,
+            ]),
+            date: this.fb.control('', [
+                Validators.required,
+            ]),
             date3: this.fb.control('', [
                 Validators.required,
             ]),
@@ -296,17 +296,24 @@ export class TabsComponent {
     submitForm() {
         if (this.testForm.valid) {
             this.jconfirm.confirm({
-                content: 'form is valid'
+                title: 'Success!',
+                content: 'the form is valid'
             });
         } else {
             this.jconfirm.confirm({
-                content: 'form is invalid'
+                title: 'Validation error',
+                content: 'form is invalid, please try again'
             });
             for (let key of Object.keys(this.testForm.controls)) {
-                console.log(key);
                 this.testForm.get(key).markAsTouched();
+                this.testForm.get(key).markAsDirty();
+                // mark all as touched so that their errors are shown
             }
         }
+    }
+
+    test() {
+        alert('hey');
     }
 
     calendarSettings: any = {
