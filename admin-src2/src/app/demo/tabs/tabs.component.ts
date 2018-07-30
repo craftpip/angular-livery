@@ -403,4 +403,6 @@ export class TabsComponent {
             return a.first_name + ' ' + a.last_name;
         });
     }
+
+    advancedOptions: boolean = false;
 }

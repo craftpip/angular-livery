@@ -29,15 +29,13 @@
         <div class="col-12">
             <div class="card shadow-z-1">
                 <div class="card-block">
-                    <div class="float-right">
-                        <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
+                    <div class="pull-right">
+                        <button class="btn btn-fame btn-sm btn-block"
                                 type="button">
                             <i class="ft ft-plus mr-1"></i>
                             Add new entry
                         </button>
                     </div>
-
-
                     <form>
                         <div class="row gutter-5">
                             <div class="col-md-2">
@@ -49,15 +47,16 @@
                                            class="form-control form-control-sm">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">From</label>
+                                    <label for="">From - To</label>
                                     <input type="text"
                                            placeholder="From"
                                            name="from-date"
                                            class="form-control form-control-sm"
                                            [(ngModel)]="fromDate"
                                            [altInput]="true"
+                                           [mode]="'range'"
                                            [altFormat]="'d-m-Y'"
                                            [convertModelValue]="true"
                                            [enableTime]="false"
@@ -68,32 +67,63 @@
                                            mwlFlatpickr>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">&nbsp;</label>
+                                    <button type="button"
+                                            class="btn btn-fame btn-sm btn-block">
+                                        <i class="ft ft-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">&nbsp;</label>
+
+                                    <button type="button"
+                                            (click)="advancedOptions = !advancedOptions"
+                                            class="btn btn-outline-primary btn-sm btn-block">
+                                        <i class="ft ft-arrow-down"></i>
+                                        Advance search
+                                    </button>
+                                    <!--<input type="text">-->
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="row gutter-5"
+                             *ngIf="advancedOptions">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Username</label>
+                                    <input type="text"
+                                           name="username"
+                                           class="form-control form-control-sm"
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">E-mail</label>
+                                    <input type="text"
+                                           name="email"
+                                           class="form-control form-control-sm"
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Mobile</label>
+                                    <input type="text"
+                                           name="mobile"
+                                           class="form-control form-control-sm"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
-
-
-                    <input type="text"
-                           placeholder="To"
-                           name="to-date"
-                           class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1"
-                           [(ngModel)]="toDate"
-                           [altInput]="true"
-                           [altFormat]="'d-m-Y'"
-                           [convertModelValue]="false"
-                           [enableTime]="false"
-                           [time24hr]="false"
-                           [enableSeconds]="false"
-                           dateFormat="Y-m-dTH:i"
-                           [disableMobile]="true"
-                           [noCalendar]="false"
-                           mwlFlatpickr
-                    >
-                    <button type="button"
-                            class="btn btn-fame btn-sm">
-                        <i class="ft ft-refresh-cw"></i>
-
-                        Refresh
-                    </button>
                 </div>
             </div>
 
@@ -160,7 +190,7 @@
 
 
                             <div class="row gutter-5">
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="">
                                             Upload files
