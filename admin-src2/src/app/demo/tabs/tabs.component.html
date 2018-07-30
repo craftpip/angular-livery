@@ -29,52 +29,49 @@
         <div class="col-12">
             <div class="card shadow-z-1">
                 <div class="card-block">
-
                     <div class="float-right">
                         <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
                                 type="button">
                             <i class="ft ft-plus mr-1"></i>
                             Add new entry
                         </button>
-                        <button class="btn btn-danger btn-raised btn-sm m-0 d-inline-block ml-1"
-                                type="button"
-                                *ngIf="isRowSelected"
-                                (click)="deleteSelected()">
-                            <i class="ft ft-delete mr-1"></i>
-                            Delete
-                        </button>
-                        <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
-                                type="button"
-                                *ngIf="isRowSelected"
-                                (click)="editSelected()">
-                            <i class="ft ft-edit mr-1"></i>
-                            Edit
-                        </button>
-
                     </div>
 
-                    <input type="text"
-                           placeholder="Search"
-                           name="email"
-                           class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1">
-                    from
-                    <input type="text"
-                           placeholder="From"
-                           name="from-date"
-                           class="form-control form-control-sm m-0 w-p100 d-inline-block mr-1"
-                           [(ngModel)]="fromDate"
-                           [altInput]="true"
-                           [altFormat]="'d-m-Y'"
-                           [convertModelValue]="false"
-                           [enableTime]="false"
-                           [time24hr]="false"
-                           [enableSeconds]="false"
-                           dateFormat="Y-m-dTH:i"
-                           [disableMobile]="true"
-                           [noCalendar]="false"
-                           mwlFlatpickr
-                    >
-                    to
+
+                    <form>
+                        <div class="row gutter-5">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Search</label>
+                                    <input type="text"
+                                           placeholder="Search"
+                                           name="email"
+                                           class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">From</label>
+                                    <input type="text"
+                                           placeholder="From"
+                                           name="from-date"
+                                           class="form-control form-control-sm"
+                                           [(ngModel)]="fromDate"
+                                           [altInput]="true"
+                                           [altFormat]="'d-m-Y'"
+                                           [convertModelValue]="true"
+                                           [enableTime]="false"
+                                           [time24hr]="false"
+                                           [enableSeconds]="false"
+                                           [disableMobile]="true"
+                                           [noCalendar]="false"
+                                           mwlFlatpickr>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
                     <input type="text"
                            placeholder="To"
                            name="to-date"
@@ -140,7 +137,6 @@
 <section id="extended">
     <div class="row">
         <div class="col-sm-12">
-
             <ngb-tabset>
                 <ngb-tab title="Add new entry">
                     <ng-template ngbTabContent>
@@ -163,7 +159,7 @@
                             </button>
 
 
-                            <div class="row">
+                            <div class="row gutter-5">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">

@@ -886,3 +886,20 @@ p-autoComplete {
     }
   }
 }
+
+div.gutter-5 {
+  margin-left: -5px;
+  margin-right: -5px;
+
+  > div {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+div.gutter-10 {
+  > div {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
