@@ -12,7 +12,7 @@
 @import "~jquery-confirm/css/jquery-confirm.css";
 @import "~flatpickr/dist/flatpickr.css";
 @import "~angular-calendar/css/angular-calendar.css";
-@import "~bootstrap-tour/build/css/bootstrap-tour-standalone.css";
+//@import "~bootstrap-tour/build/css/bootstrap-tour-standalone.css";
 @import "~noty/lib/noty.css";
 @import "~noty/lib/themes/bootstrap-v4.css";
 @import "~noty/lib/themes/light.css";
@@ -774,3 +774,69 @@ p-calendar {
     }
   }
 }
+
+.tour-tour.fade {
+  opacity: 1;
+
+  .arrow {
+    display: none;
+  }
+}
+
+// tour
+div.hopscotch-bubble {
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  box-shadow: $shadow-8dp;
+
+  .hopscotch-title, .hopscotch-bubble-number {
+    font-family: $font-family-content;
+  }
+  .hopscotch-content {
+    font-family: $font-family-content;
+  }
+  .hopscotch-bubble-arrow-container {
+    &.right {
+      right: -34px;
+
+      .hopscotch-bubble-arrow-border {
+        border-left-color: #ddd;
+      }
+      .hopscotch-bubble-arrow {
+        left: -2px;
+      }
+    }
+    &.left {
+      left: -17px;
+
+      .hopscotch-bubble-arrow-border {
+        border-right-color: #ddd;
+      }
+      .hopscotch-bubble-arrow {
+        left: 2px;
+      }
+    }
+    &.down {
+      bottom: -33px;
+
+      .hopscotch-bubble-arrow-border {
+        border-top-color: #ddd;
+      }
+      .hopscotch-bubble-arrow {
+        top: -19px;
+      }
+    }
+    &.up {
+      top: -17px;
+
+      .hopscotch-bubble-arrow-border {
+        border-bottom-color: #ddd;
+      }
+      .hopscotch-bubble-arrow {
+        top: -15px;
+      }
+    }
+  }
+}
+
+// end tour

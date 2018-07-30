@@ -156,6 +156,13 @@
                             <br>
                             Status: {{testForm.status}}
 
+                            <button type="button"
+                                    class="btn btn-fame btn-sm"
+                                    (click)="startTour()">
+                                Start tour
+                            </button>
+
+
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -163,16 +170,17 @@
                                             Upload files
                                         </label>
                                         <file-uploader
+                                                id="tour1"
                                                 [ngClass]="{
                                                     'ng-touched': testForm.get('files').touched,
                                                     'ng-invalid': testForm.get('files').invalid,
                                                     'ng-valid': testForm.get('files').valid
                                                 }"
                                                 [allowedFormats]="['jpg','jpeg','png']"
+                                                (errorsUpdated)="errorsList = $event"
                                                 [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
                                                 [postData]="{'someId': 1}"
                                                 [files]="testForm.get('files').value"
-
                                                 (filesUploaded)="testForm.get('files').setValue($event)"
                                         ></file-uploader>
 
@@ -205,11 +213,11 @@
                                 </div>
 
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         >
                                         <label for="user-group">Group</label>
                                         {{testForm.get('group').value}}
-                                        <select name="user-group"
-                                                formControlName="group"
+                                        <select formControlName="group"
                                                 id="user-group"
                                                 class="form-control form-control-sm">
                                             <option value="test">
@@ -224,11 +232,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group" id="tour2">
                                         <label for="name">Name</label>
                                         <input class="form-control form-control-sm"
                                                id="name"
-                                               name="name"
                                                formControlName="name"
                                                type="text">
 
@@ -249,7 +256,6 @@
                                         <input type="text"
                                                class="form-control form-control-sm"
                                                placeholder="e-mail"
-                                               name="email"
                                                formControlName="email"
                                                id="email"
                                                required>
@@ -269,7 +275,6 @@
                                     <div class="form-group">
                                         <label for="email">Email verified</label>
                                         <select
-                                                name="email-verification"
                                                 id="email-verification"
                                                 formControlName="email_verified"
                                                 class="form-control form-control-sm"
@@ -288,7 +293,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="account_active">Account active</label>
-                                        <select name="account_active"
+                                        <select
                                                 id="account_active"
                                                 formControlName="account_active"
                                                 required
@@ -307,7 +312,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="country">Country</label>
-                                        <select name="country"
+                                        <select
                                                 id="country"
                                                 formControlName="country"
                                                 required
@@ -329,7 +334,6 @@
                                         </label>
                                         <input type="text"
                                                placeholder="Mobile no."
-                                               name="mobile"
                                                id="mobile"
                                                formControlName="mobile"
                                                required
@@ -359,7 +363,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="mobile-verified">Mobile verified</label>
-                                        <select name="mobile-verified"
+                                        <select
                                                 formControlName="mobile_verified"
                                                 class="form-control form-control-sm"
                                                 id="mobile-verified">
@@ -373,7 +377,7 @@
                                     <div class="form-group">
                                         <label for="currency">Currency
                                         </label>
-                                        <select name="currency"
+                                        <select
                                                 id="currency"
                                                 required
                                                 formControlName="currency"
@@ -397,7 +401,7 @@
                                     <div class="form-group">
                                         <label for="password">Password (optional)</label>
                                         <input type="password"
-                                               name="password"
+
                                                id="password"
                                                required
                                                formControlName="password"
@@ -423,7 +427,7 @@
                                         <label for="password">Tag input</label>
                                         <tag-input
                                                 formControlName="tag_input"
-                                                name="enter-tag"
+
                                                 [editable]="false"
                                                 [allowDupes]="false"></tag-input>
 
@@ -449,7 +453,7 @@
                                             <input class="form-control"
                                                    placeholder="yyyy-mm-dd"
                                                    placement="top-left"
-                                                   name="dp"
+
                                                    formControlName="date"
                                                    ngbDatepicker
                                                    #d="ngbDatepicker">
@@ -474,7 +478,7 @@
                                         <label for="password">Date 2</label>
 
                                         <input class="form-control form-control-sm"
-                                               name="dp"
+
                                                #date2
                                                type="date"
                                                formControlName="date2"
@@ -538,7 +542,7 @@
                                             <div>
                                                 <input class="form-check-input"
                                                        type="checkbox"
-                                                       name="checkbox_1"
+
                                                        id="formCheckbox_1"
                                                        formControlName="checkbox_1"
                                                 >
@@ -559,6 +563,7 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group"
+                                         id="tour3"
                                          [ngClass]="{
                                              'ng-touched': testForm.get('radio1').touched,
                                              'ng-invalid': testForm.get('radio1').invalid
@@ -571,7 +576,7 @@
                                             <div>
                                                 <input class="form-check-input"
                                                        type="radio"
-                                                       name="exampleRadios"
+
                                                        formControlName="radio1"
                                                        id="exampleRadios1"
                                                        value="option1"
@@ -588,7 +593,7 @@
 
                                                 <input class="form-check-input"
                                                        type="radio"
-                                                       name="exampleRadios"
+
                                                        formControlName="radio1"
                                                        id="exampleRadios2"
                                                        value="option2"
@@ -604,7 +609,7 @@
                                             <div>
                                                 <input class="form-check-input"
                                                        type="radio"
-                                                       name="exampleRadios"
+
                                                        formControlName="radio1"
                                                        id="exampleRadios3"
                                                        value="option3"
@@ -624,12 +629,12 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group" id="tour4">
                                         <label>Textarea</label>
-                                        <textarea name="textarea"
-                                                  placeholder="Textarea here"
-                                                  formControlName="textarea1"
-                                                  class="form-control-sm form-control"></textarea>
+                                        <textarea
+                                                placeholder="Textarea here"
+                                                formControlName="textarea1"
+                                                class="form-control-sm form-control"></textarea>
 
                                         <div class="error error-danger"
                                              *ngIf="formTest.form.hasError('required', 'textarea1')"
@@ -652,7 +657,7 @@
                                                 <div>
                                                     <input class="form-check-input"
                                                            type="radio"
-                                                           name="exampleRadios2"
+
                                                            formControlName="radio2"
                                                            id="exampleRadios4"
                                                            value="option1"
@@ -670,7 +675,6 @@
                                                     <input class="form-check-input"
                                                            type="radio"
                                                            formControlName="radio2"
-                                                           name="exampleRadios2"
                                                            id="exampleRadios5"
                                                            value="option2"
                                                     >

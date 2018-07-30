@@ -1,5 +1,5 @@
 import {Router} from '@angular/router';
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {HttpParamsOptions} from "@angular/common/http/src/params";
 import {AuthService} from "./auth/auth.service";
@@ -7,65 +7,7 @@ import {Subject} from "rxjs/internal/Subject";
 
 declare const Tour: any;
 declare const Noty: any;
-
-export interface TourSteps {
-    element?: string,
-    title?: string,
-    content?: string,
-}
-
-export interface TourOptions {
-    name?: string,
-    steps?: TourSteps[],
-    container?: string,
-    smartPlacement?: boolean,
-    keyboard?: boolean,
-    storage?: any,
-    debug?: boolean,
-    backdrop?: boolean,
-    backdropContainer?: string,
-    backdropPadding?: number,
-    redirect?: boolean,
-    orphan?: boolean,
-    duration?: boolean,
-    delay?: boolean,
-    basePath?: string,
-    template?: string,
-
-    afterGetState?(key: any, value: any),
-
-    afterSetState?(key: any, value: any),
-
-    afterRemoveState?(key: any, value: any),
-
-    onStart?(tour: any),
-
-    onEnd?(tour: any),
-
-    onShow?(tour: any),
-
-    onShown?(tour: any),
-
-    onHide?(tour: any),
-
-    onHidden?(tour: any),
-
-    onNext?(tour: any),
-
-    onPrev?(tour: any),
-
-    onPause?(tour: any, duration: any),
-
-    onResume?(tour: any, duration: any),
-
-    onRedirectError?(tour: any),
-}
-
-export interface Tour {
-    init(),
-
-    start(),
-}
+declare const hopscotch: any;
 
 export interface NotificationOptions {
     text?: string,
@@ -76,9 +18,37 @@ export interface NotificationOptions {
     type?: string,
 }
 
+
+export interface TourStep {
+    title?: string,
+    content?: string,
+    target: string,
+    placement: string,
+    zindex?: number,
+    showNextButton?: boolean,
+    showPrevButton?: boolean,
+    showSkip?: boolean,
+}
+
+export interface TourOptions {
+    id?: string,
+    steps?: TourStep[],
+    scrollDuration?: number,
+    smoothScroll?: boolean,
+    showCloseButton?: boolean,
+    showPrevButton?: boolean, // false
+    showNextButton?: boolean, // true
+}
+
+export interface Tour {
+
+}
+
 @Injectable()
 export class TourService {
-    constructor() {
+    constructor(
+        public ngZone: NgZone,
+    ) {
 
     }
 
@@ -87,8 +57,8 @@ export class TourService {
      * @returns {Tour}
      */
     create(options: TourOptions) {
-        let tour = <Tour>new Tour(options);
-        return tour;
+        // Start the tour!
+        return hopscotch.startTour(options);
     }
 }
 
@@ -315,8 +285,8 @@ export class Utils {
 @Injectable()
 export class HttpHelper {
     // baseUrl: string = 'http://192.168.2.150:81/assets-mg-portal/eapi/';
-    // baseUrl: string = 'http://assetalbum.com/eapi/';
-    baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
+    baseUrl: string = 'http://assetalbum.com/eapi/';
+    // baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
 
     defaultOptions = {
         headers: {

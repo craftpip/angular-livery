@@ -54,7 +54,6 @@ export class FileUploaderComponent implements OnInit {
     public uploader: FileUploader;
     public _url: string;
 
-
     public hasFileOver: boolean = false;
 
     @Input('allowedFormats')
@@ -97,6 +96,15 @@ export class FileUploaderComponent implements OnInit {
      */
     @Output()
     isUploading: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    /**
+     * List of failure uploads
+     *
+     * @type {EventEmitter<any[]>}
+     */
+    @Output()
+    errorsUpdated: EventEmitter<any[]> = new EventEmitter<any[]>();
+    errors: any[] = [];
 
     constructor(
         public utils: Utils,
@@ -159,13 +167,27 @@ export class FileUploaderComponent implements OnInit {
                 response = r;
             }
 
-            // store the file and its response in responses
-            this.responses.push({
-                file: file,
-                response: response,
-            });
 
-            this.filesUploaded.emit(this.responses);
+            // depending on the api, process the success and error responses
+
+            /**
+             * Validation if the response from the server gives a positive response.
+             * Files that are invalid for the server should be moved to the errors array.
+             */
+            if (response.status) {
+                // store the file and its response in responses
+                this.responses.push({
+                    file: file,
+                    response: response,
+                });
+                this.filesUploaded.emit(this.responses);
+            } else {
+                this.errors.push({
+                    file: file,
+                    response: response,
+                });
+                this.errorsUpdated.emit(this.errors);
+            }
         };
         this.uploader.onAfterAddingFile = (file: FileItem) => {
             let fileName = file.file.name;

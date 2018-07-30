@@ -63,27 +63,27 @@ export class CalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        let tourOptions: TourOptions = {
-            steps: [
-                {
-                    content: 'test',
-                    element: '#step1',
-                    title: 'hello',
-                },
-                {
-                    content: 'test2',
-                    element: '#step2',
-                    title: 'hello wow',
-                }
-            ]
-        };
-
-        console.log(tourOptions);
-        let tour = this.tourService.create(tourOptions);
-        console.log(tour);
-        tour.init();
-        tour.start();
-        console.log(tour);
+        // let tourOptions: TourOptions = {
+        //     steps: [
+        //         {
+        //             content: 'test',
+        //             element: '#step1',
+        //             title: 'hello',
+        //         },
+        //         {
+        //             content: 'test2',
+        //             element: '#step2',
+        //             title: 'hello wow',
+        //         }
+        //     ]
+        // };
+        //
+        // console.log(tourOptions);
+        // let tour = this.tourService.create(tourOptions);
+        // console.log(tour);
+        // tour.init();
+        // tour.start();
+        // console.log(tour);
     }
 
     handleEvent(action: string, event: CalendarEvent): void {
