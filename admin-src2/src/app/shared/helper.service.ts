@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { HttpParamsOptions } from "@angular/common/http/src/params";
-import { AuthService } from "./auth/auth.service";
+import {Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {HttpParamsOptions} from "@angular/common/http/src/params";
+import {AuthService} from "./auth/auth.service";
+import {Subject} from "rxjs/internal/Subject";
 
 declare const Tour: any;
 declare const Noty: any;
@@ -75,7 +76,6 @@ export interface NotificationOptions {
     type?: string,
 }
 
-
 @Injectable()
 export class TourService {
     constructor() {
@@ -91,6 +91,142 @@ export class TourService {
         return tour;
     }
 }
+
+
+@Injectable()
+export class FormHelper {
+    /**
+     * To be used with
+     *
+     * formName.get('firstname').errors
+     *F
+     * isError(formName.get('firstname'), 'required')
+     *
+     * @param control
+     * @param errorType
+     */
+    isError(control: any, errorType: string) {
+        let errors = control.errors;
+        console.log(errors);
+        if (errors === null)
+            return false;
+
+        if (typeof errors[errorType] === 'undefined') {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    hasErrors(control) {
+        let errors = control.errors;
+        return errors !== null;
+    }
+}
+
+
+export interface AppEvent {
+    key?: any,
+    data?: any,
+}
+
+@Injectable()
+export class AppEvents {
+    subject: Subject<AppEvent> = new Subject<AppEvent>();
+
+    /**
+     * List of subscriptions
+     * @type {{}}
+     */
+    subscriptions: any = {};
+
+    constructor() {
+        this.subject.subscribe((data: AppEvent) => {
+            this.globalListener(data);
+        });
+    }
+
+    /**
+     * Lets get all the events, and distribute them to the listeners
+     *
+     * @param data
+     */
+    private globalListener(data: AppEvent) {
+        for (let id of Object.keys(this.subscriptions)) {
+            if (this.subscriptions[id].key == data.key) {
+                this.subscriptions[id].callback({...data.data});
+            }
+        }
+    }
+
+    /**
+     * Unsubscribe all events from a group.
+     *
+     * @param {string} groupName
+     */
+    offGroup(groupName: string) {
+        for (let id of Object.keys(this.subscriptions)) {
+            if (this.subscriptions[id].group == groupName)
+                this.off(id);
+        }
+    }
+
+    /**
+     * Give an array of ids to remove listeners.
+     *
+     * @param {string[]} ids
+     */
+    offIds(ids: string[]) {
+        for (let id of ids) {
+            this.off(id);
+        }
+    }
+
+    /**
+     * Remove listener using the ID that was returned when @this.on was fired.
+     *
+     * @param {string} id
+     * @returns {boolean}
+     */
+    off(id: string) {
+        if (typeof this.subscriptions[id] === 'undefined') {
+            return false;
+        } else {
+            delete this.subscriptions[id];
+            return true;
+        }
+    }
+
+    /**
+     * Adds the key and callback to subscriptions and sends back its id.
+     *
+     * @param key
+     * @param callback
+     * @param group
+     * @returns {string}
+     */
+    on(key, callback, group?) {
+        let subscribeId = Math.floor(Math.random() * 99999).toString();
+        this.subscriptions[subscribeId] = {
+            'key': key,
+            'callback': callback,
+            'group': group || 'default'
+        };
+        return subscribeId;
+    }
+
+    /**
+     * @param key
+     * @param data
+     */
+    broadcast(key, data?) {
+        this.subject.next(<AppEvent>{
+            key: key,
+            data: data,
+        });
+    }
+}
+
 
 @Injectable()
 export class Utils {
@@ -179,8 +315,8 @@ export class Utils {
 @Injectable()
 export class HttpHelper {
     // baseUrl: string = 'http://192.168.2.150:81/assets-mg-portal/eapi/';
-    baseUrl: string = 'http://assetalbum.com/eapi/';
-    // baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
+    // baseUrl: string = 'http://assetalbum.com/eapi/';
+    baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
 
     defaultOptions = {
         headers: {
@@ -193,7 +329,7 @@ export class HttpHelper {
     }
 
     post(url: string, data?, options?) {
-        options = { ...this.defaultOptions, ...options };
+        options = {...this.defaultOptions, ...options};
         data = {
             ...data, ...{
                 'token': this.authService.getToken()

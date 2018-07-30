@@ -20,7 +20,7 @@ export class LoginComponent {
             password: new FormControl('', [Validators.required])
         });
 
-        // this.checkLogin();
+        this.checkLogin();
     }
 
     checkingLogin: boolean = false;

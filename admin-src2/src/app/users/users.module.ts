@@ -10,6 +10,7 @@ import {AgGridModule} from "ag-grid-angular";
 import {TagInputModule} from "ngx-chips";
 import {FlatpickrModule} from "angularx-flatpickr";
 import {CardCollapseDirective} from "../shared/directives/card-collapse.directive";
+import {QuickPanelModule} from "../shared/directives/quick-panel.directive";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {CardCollapseDirective} from "../shared/directives/card-collapse.directiv
         FormsModule,
         AgGridModule.withComponents([]),
         TagInputModule,
-        FlatpickrModule.forRoot()
+        FlatpickrModule.forRoot(),
+        QuickPanelModule,
     ],
     exports: [],
     declarations: [

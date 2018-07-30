@@ -14,7 +14,7 @@ import {AuthGuard} from './shared/auth/auth-guard.service';
 import * as $ from 'jquery';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpHelper, TourService, Utils} from "./shared/helper.service";
+import {AppEvents, FormHelper, HttpHelper, TourService, Utils} from "./shared/helper.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {AgGridModule} from "ag-grid-angular";
 import {JConfirm} from "./shared/jconfirm";
@@ -24,6 +24,9 @@ import {CalendarModule} from "angular-calendar";
 import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
 import {CardCollapseDirective} from "./shared/directives/card-collapse.directive";
+import {QuickPanelModule} from "./shared/directives/quick-panel.directive";
+import {FileUploaderComponent} from "./shared/uploader/file-uploader.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 
 @NgModule({
@@ -34,6 +37,7 @@ import {CardCollapseDirective} from "./shared/directives/card-collapse.directive
         LoginComponent,
         TableCellDeleteButtonComponent,
         TableCellEditButtonComponent,
+
     ],
     imports: [
         BrowserAnimationsModule,
@@ -58,6 +62,8 @@ import {CardCollapseDirective} from "./shared/directives/card-collapse.directive
         JConfirm,
         Utils,
         TourService,
+        AppEvents,
+        FormHelper,
     ],
     bootstrap: [AppComponent]
 })

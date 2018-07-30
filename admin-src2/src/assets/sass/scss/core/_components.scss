@@ -123,6 +123,8 @@
   .nav-link {
     border-top-width: 4px;
     height: 100%;
+    padding: 0.1rem 1rem;
+
     &.active {
       background-color: transparent;
       border-top-color: $color-primary2;

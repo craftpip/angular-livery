@@ -94,10 +94,19 @@
                                mwlFlatpickr
                         >
                         <button type="button"
-                                class="btn btn-fame btn-sm">
+                                class="btn btn-fame btn-sm mr-1">
                             <i class="ft ft-refresh-cw"></i>
 
                             Refresh
+                        </button>
+
+                        <button type="button"
+                                (click)="testEvent()"
+                                class="btn btn-fame btn-sm">
+
+                            <i class="ft ft-rotate-ccw"></i>
+
+                            Test events
                         </button>
                     </div>
                 </div>

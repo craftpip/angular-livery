@@ -273,3 +273,7 @@ select.form-control-xl:not([size]):not([multiple]) {
 .ng-touched.ng-invalid {
   border-color: theme-color("danger");
 }
+
+.ng-touched.ng-valid {
+  border-color: $color-success;
+}

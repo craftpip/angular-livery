@@ -87,7 +87,7 @@
   }
 
   &.card-loading {
-    .card-block {
+    .card-block, .card-body {
       &:after {
         content: '';
         position: absolute;
@@ -114,6 +114,18 @@
         border-radius: 100%;
         /* border: solid 1px; */
         box-shadow: $shadow-4dp;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  &.card-loading-simple {
+    .card-block, .card-body {
+      &:before {
+        background-image: url(assets/img/loading-simple.gif);
+        background-color: transparent;
+        box-shadow: none;
+        background-size: 50px;
       }
     }
   }
