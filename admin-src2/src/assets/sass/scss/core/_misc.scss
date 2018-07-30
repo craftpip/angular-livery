@@ -177,6 +177,7 @@ datetime .form-group{
 // Form Control
 .form-control{
   &:focus{
-    border-color: theme-color('primary') !important;
+    // border-color: theme-color('primary') !important;
+    border-color: #000 !important;
   }
 }
