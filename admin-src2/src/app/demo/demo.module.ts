@@ -15,7 +15,7 @@ import {TabsComponent} from "./tabs/tabs.component";
 import {FileUploader} from "ng2-file-upload";
 import {FileUploaderComponent} from "../shared/uploader/file-uploader.component";
 import {SharedModule} from "../shared/shared.module";
-import {CalendarModule as CM} from "primeng/primeng";
+import {AutoCompleteModule, CalendarModule as CM} from "primeng/primeng";
 
 @NgModule({
     imports: [
@@ -31,6 +31,7 @@ import {CalendarModule as CM} from "primeng/primeng";
         FlatpickrModule.forRoot(),
         SharedModule,
         CM,
+        AutoCompleteModule,
     ],
     exports: [],
     declarations: [

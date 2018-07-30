@@ -840,3 +840,49 @@ div.hopscotch-bubble {
 }
 
 // end tour
+
+p-autoComplete {
+  width: 100%;
+  display: block;
+  > span.ui-autocomplete {
+    display: block;
+    width: inherit;
+    > input {
+      display: block;
+      width: inherit;
+      @extend .form-control;
+      @extend .form-control-sm;
+    }
+  }
+
+  .ui-autocomplete-panel {
+    box-shadow: $shadow-8dp;
+
+    .ui-autocomplete-list {
+      padding: 0px;
+
+      .ui-autocomplete-list-item {
+        padding: 0px 10px;
+        border-radius: 0;
+
+        &:hover {
+          background-color: #ddd;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+p-autoComplete {
+  &.ng-valid.ng-touched {
+    input {
+      border-color: $color-success !important;
+    }
+  }
+  &.ng-invalid.ng-touched {
+    input {
+      border-color: $color-danger !important;
+    }
+  }
+}

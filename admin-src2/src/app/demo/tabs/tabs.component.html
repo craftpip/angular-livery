@@ -214,9 +214,26 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group"
-                                         >
+                                    >
+                                        <label for="user-group">Username</label>
+
+                                        <p-autoComplete
+                                                formControlName="first_name"
+                                                [suggestions]="firstNameResults"
+                                                (completeMethod)="searchFirstName($event)"
+                                        ></p-autoComplete>
+
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'group')">
+                                            This field is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group"
+                                    >
                                         <label for="user-group">Group</label>
-                                        {{testForm.get('group').value}}
                                         <select formControlName="group"
                                                 id="user-group"
                                                 class="form-control form-control-sm">
@@ -232,7 +249,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group" id="tour2">
+                                    <div class="form-group"
+                                         id="tour2">
                                         <label for="name">Name</label>
                                         <input class="form-control form-control-sm"
                                                id="name"
@@ -629,7 +647,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group" id="tour4">
+                                    <div class="form-group"
+                                         id="tour4">
                                         <label>Textarea</label>
                                         <textarea
                                                 placeholder="Textarea here"

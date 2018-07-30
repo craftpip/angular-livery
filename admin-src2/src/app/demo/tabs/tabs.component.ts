@@ -289,6 +289,9 @@ export class TabsComponent {
             ]),
             textarea1: this.fb.control('', [
                 Validators.required,
+            ]),
+            first_name: this.fb.control('', [
+                Validators.required,
             ])
         });
 
@@ -381,5 +384,23 @@ export class TabsComponent {
         };
 
         this.tour.create(tour);
+    }
+
+    // auto complete
+
+    firstNameResults: any[] = [];
+
+    searchFirstName($event) {
+        let query = $event.query;
+        let users = Users;
+        let results = users.filter((a) => {
+            return (
+                a.first_name.toLowerCase().indexOf(query) != -1
+                || a.last_name.toLowerCase().indexOf(query) != -1
+            );
+        });
+        this.firstNameResults = results.map(a => {
+            return a.first_name + ' ' + a.last_name;
+        });
     }
 }
