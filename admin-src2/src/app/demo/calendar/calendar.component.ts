@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {HttpHelper, TourOptions, TourService, TourSteps, Utils} from "../../shared/helper.service";
+import {HttpHelper, TourOptions, TourService, Utils} from "../../shared/helper.service";
 import * as moment from "moment";
 import {AgGridNg2} from "ag-grid-angular";
 import {JConfirm} from "../../shared/jconfirm";
