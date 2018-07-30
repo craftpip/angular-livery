@@ -314,9 +314,9 @@ export class Utils {
 
 @Injectable()
 export class HttpHelper {
-    // baseUrl: string = 'http://192.168.2.150:81/assets-mg-portal/eapi/';
+    baseUrl: string = 'http://192.168.2.150:81/assets-mg-portal/eapi/';
     // baseUrl: string = 'http://assetalbum.com/eapi/';
-    baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
+    // baseUrl: string = 'http://localhost/assets-mg-portal/eapi/';
 
     defaultOptions = {
         headers: {

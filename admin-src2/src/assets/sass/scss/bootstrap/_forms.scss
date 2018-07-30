@@ -3,11 +3,17 @@ label{
 }
 form {
   label {
-    color: #75787d;
+    // color: #75787d;
+    // font-size: 0.75rem;
+    // text-transform: uppercase;
+    // letter-spacing: 2px;
+    // font-weight: 500;
+
+    /** updated by gaurish */
+    color: #000;
     font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 500;
+    text-transform: capitalize;
+    font-weight: 300;
   }
   .labelfocus {
     color: #000;
