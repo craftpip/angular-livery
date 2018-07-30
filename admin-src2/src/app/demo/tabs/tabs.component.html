@@ -220,6 +220,8 @@
                                         <p-autoComplete
                                                 formControlName="first_name"
                                                 [suggestions]="firstNameResults"
+                                                [emptyMessage]="'No results found'"
+                                                [autoHighlight]="true"
                                                 (completeMethod)="searchFirstName($event)"
                                         ></p-autoComplete>
 

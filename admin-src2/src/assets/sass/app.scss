@@ -595,7 +595,7 @@ tag {
 tag-input {
   &.ng-touched.ng-valid {
     > div {
-      border-color: $color-success !important;
+      //border-color: $color-success !important;
     }
   }
   &.ng-touched.ng-invalid {
@@ -608,7 +608,7 @@ tag-input {
 p-calendar {
   &.ng-touched.ng-valid {
     input {
-      border-color: $color-success !important;
+      //border-color: $color-success !important;
     }
   }
   &.ng-touched.ng-invalid {
@@ -620,7 +620,7 @@ p-calendar {
 
 .ng-valid.ng-touched {
   > .drop-zone {
-    border-color: $color-success;
+    //border-color: $color-success;
   }
 }
 
@@ -632,7 +632,7 @@ p-calendar {
 
 .flatpickr-input {
   &.ng-touched.ng-valid + input {
-    border-color: $color-success;
+    //border-color: $color-success;
   }
   &.ng-touched.ng-invalid + input {
     border-color: $color-danger;
@@ -877,7 +877,7 @@ p-autoComplete {
 p-autoComplete {
   &.ng-valid.ng-touched {
     input {
-      border-color: $color-success !important;
+      ////border-color: $color-success !important;
     }
   }
   &.ng-invalid.ng-touched {
