@@ -5,7 +5,7 @@ import {AgGridNg2, ICellEditorAngularComp} from "ag-grid-angular";
 import {GridOptions} from "ag-grid";
 import {TableCellDeleteButtonComponent} from "../../shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "../../shared/table/table-cell-edit-button.component";
-import {FormHelper, HttpHelper, Tour, TourOptions, TourService, Utils} from "../../shared/helper.service";
+import {FormHelper, HttpHelper, Utils} from "../../shared/helper.service";
 import {JConfirm} from "../../shared/jconfirm";
 import {Users} from "../../users/users.mock";
 import {TableCellButtonCallback} from "../../shared/table/table-cell-button-callback";
@@ -53,7 +53,6 @@ export class TabsComponent {
                 public utils: Utils,
                 public fb: FormBuilder,
                 public formHelper: FormHelper,
-                public tour: TourService,
                 public route: ActivatedRoute) {
 
         this.route.params.subscribe((data: any) => {
@@ -345,43 +344,6 @@ export class TabsComponent {
 
     changed() {
         alert('hey');
-    }
-
-    startTour() {
-        let tour = <TourOptions>{
-            id: "hello-hopscotch",
-            steps: [
-                {
-                    title: "My Header",
-                    content: "This is the header of my page.",
-                    target: "tour1",
-                    placement: "right"
-                },
-                {
-                    title: "My content",
-                    content: "Here is where I put my content.",
-                    target: 'tour2',
-                    placement: "left",
-                },
-                {
-                    title: "Radio buttons",
-                    content: "Here is where I put my content.",
-                    target: 'tour3',
-                    placement: "top",
-                },
-                {
-                    title: "Radio buttons",
-                    content: "Here is where I put my content.",
-                    target: 'tour4',
-                    placement: "bottom",
-                }
-            ],
-            showCloseButton: true,
-            showNextButton: true,
-            showPrevButton: true,
-        };
-
-        this.tour.create(tour);
     }
 
     // auto complete

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {forEach} from "@angular/router/src/utils/collection";
+import {TourOptions, TourService} from "../tours/tours.service";
 
 declare var $: any;
 
@@ -15,11 +16,28 @@ declare var $: any;
 
 export class NavbarComponent implements OnInit {
     public user = {};
+    public currentTourPath: string;
+    public isTourAvailable: boolean = false;
 
     constructor(public authService: AuthService,
+                public tourService: TourService,
                 public router: Router) {
         this.user = authService.getUser();
 
+        this.router.events.subscribe((e: any) => {
+            if (e instanceof NavigationEnd) {
+                let url = e.urlAfterRedirects;
+                console.log(url);
+                this.isTourAvailable = !!this.tourService.isAvailableForPath(url);
+                this.currentTourPath = url;
+            }
+        })
+    }
+
+    startTour() {
+        if (this.isTourAvailable) {
+            this.tourService.createForPath(this.currentTourPath);
+        }
     }
 
     ngOnInit() {
@@ -68,12 +86,12 @@ export class NavbarComponent implements OnInit {
         {
             text: 'Lorem ipsum dolor sit amet',
             subText: 'Lorem ipsum dolor ',
-            group: 'Yo Yo'
+            group: 'Tools'
         },
         {
             text: 'enim. Donec pede justo',
             subText: 'enim. Donec ',
-            group: 'Yo Yo'
+            group: 'Tools'
         },
         {
             text: 'venenatis vitae, justo. Nullam',
@@ -98,32 +116,32 @@ export class NavbarComponent implements OnInit {
         {
             text: 'faucibus. Nullam quis',
             subText: 'faucibus. ',
-            group: 'Others'
+            group: 'Help Group'
         },
         {
             text: 'Curabitur ullamcorper ultricies',
             subText: 'Curabitur ',
-            group: 'Others'
+            group: 'Help Group'
         },
         {
             text: 'dapibus. Vivamus elementum',
             subText: 'dapibus. ',
-            group: 'Others'
+            group: 'Help Group'
         },
         {
             text: 'metus varius laoreet. Quisque',
             subText: 'metus varius laoreet',
-            group: 'Others'
+            group: 'Help Group'
         },
         {
             text: 'sodales, augue velit cursus nunc',
             subText: 'sodales, augue velit ',
-            group: 'Others'
+            group: 'Help Group'
         },
         {
             text: 'Sed consequat, leo eget',
             subText: 'Sed consequat, ',
-            group: 'Others'
+            group: 'Help Group'
         },
     ];
 
@@ -185,43 +203,43 @@ export class NavbarComponent implements OnInit {
 
     notifications: any[] = [
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
         {
-            'text': 'New notification bar!',
+            'text': 'New notification!',
             'subText': 'Lorem ipsum dolor sit ametitaque in, et!'
         },
     ];

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {HttpHelper, TourOptions, TourService, Utils} from "../../shared/helper.service";
+import {HttpHelper, Utils} from "../../shared/helper.service";
 import * as moment from "moment";
 import {AgGridNg2} from "ag-grid-angular";
 import {JConfirm} from "../../shared/jconfirm";
@@ -20,6 +20,7 @@ import {
     CalendarEventTimesChangedEvent
 } from 'angular-calendar';
 import {Subject} from "rxjs/internal/Subject";
+import {TourService} from "../../shared/tours/tours.service";
 
 @Component({
     selector: 'app-demo-calendar',

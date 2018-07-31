@@ -5,9 +5,7 @@ import {HttpParamsOptions} from "@angular/common/http/src/params";
 import {AuthService} from "./auth/auth.service";
 import {Subject} from "rxjs/internal/Subject";
 
-declare const Tour: any;
 declare const Noty: any;
-declare const hopscotch: any;
 
 export interface NotificationOptions {
     text?: string,
@@ -18,51 +16,10 @@ export interface NotificationOptions {
     type?: string,
 }
 
-
-export interface TourStep {
-    title?: string,
-    content?: string,
-    target: string,
-    placement: string,
-    zindex?: number,
-    showNextButton?: boolean,
-    showPrevButton?: boolean,
-    showSkip?: boolean,
-}
-
-export interface TourOptions {
-    id?: string,
-    steps?: TourStep[],
-    scrollDuration?: number,
-    smoothScroll?: boolean,
-    showCloseButton?: boolean,
-    showPrevButton?: boolean, // false
-    showNextButton?: boolean, // true
-}
-
-export interface Tour {
-
-}
-
-@Injectable()
-export class TourService {
-    constructor(
-        public ngZone: NgZone,
-    ) {
-
-    }
-
-    /**
-     * @param {TourOptions} options
-     * @returns {Tour}
-     */
-    create(options: TourOptions) {
-        // Start the tour!
-        return hopscotch.startTour(options);
-    }
-}
-
-
+/**
+ * @deprecated
+ * Not usable i guess, remove when comfortable!
+ */
 @Injectable()
 export class FormHelper {
     /**

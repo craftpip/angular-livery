@@ -908,3 +908,9 @@ div.gutter-10 {
     padding-right: 10px;
   }
 }
+
+.flatpickr-calendar{
+  box-shadow: $shadow-8dp;
+  &.open{
+  }
+}

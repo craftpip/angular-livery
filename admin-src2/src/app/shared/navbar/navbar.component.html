@@ -110,12 +110,12 @@
                  id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <!--<li class="nav-item mr-1">-->
-                        <!--<a href="javascript:;"-->
-                           <!--class="nav-link"-->
-                           <!--appToggleFullscreen>-->
-                            <!--<i class="ft-maximize font-medium-3"></i>-->
-                            <!--<p class="d-none">fullscreen</p>-->
-                        <!--</a>-->
+                    <!--<a href="javascript:;"-->
+                    <!--class="nav-link"-->
+                    <!--appToggleFullscreen>-->
+                    <!--<i class="ft-maximize font-medium-3"></i>-->
+                    <!--<p class="d-none">fullscreen</p>-->
+                    <!--</a>-->
                     <!--</li>-->
                     <li class="nav-item"
                         ngbDropdown
@@ -130,6 +130,8 @@
                              aria-labelledby="dropdownBasic4"
                              class="">
                             <a class="dropdown-item"
+                               *ngIf="isTourAvailable"
+                               (click)="startTour()"
                                href="javascript:;">
                                 <i class="ft-play mr-1"></i>
                                 <span>

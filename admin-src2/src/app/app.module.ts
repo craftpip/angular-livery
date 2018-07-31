@@ -14,7 +14,7 @@ import {AuthGuard} from './shared/auth/auth-guard.service';
 import * as $ from 'jquery';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AppEvents, FormHelper, HttpHelper, TourService, Utils} from "./shared/helper.service";
+import {AppEvents, FormHelper, HttpHelper, Utils} from "./shared/helper.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {AgGridModule} from "ag-grid-angular";
 import {JConfirm} from "./shared/jconfirm";
@@ -27,6 +27,7 @@ import {CardCollapseDirective} from "./shared/directives/card-collapse.directive
 import {QuickPanelModule} from "./shared/directives/quick-panel.directive";
 import {FileUploaderComponent} from "./shared/uploader/file-uploader.component";
 import {FileUploadModule} from "ng2-file-upload";
+import {TourService} from "./shared/tours/tours.service";
 
 
 @NgModule({
