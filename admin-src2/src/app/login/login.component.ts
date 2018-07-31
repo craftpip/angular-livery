@@ -20,13 +20,16 @@ export class LoginComponent {
             password: new FormControl('', [Validators.required])
         });
 
-        this.checkLogin();
+        // this.checkLogin();
+        this.checkingLogin = true;
     }
+
 
     checkingLogin: boolean = false;
 
     checkLogin() {
         this.checkingLogin = true;
+
         this.http.get('auth/valid').subscribe((data: any) => {
             this.checkingLogin = false;
 
