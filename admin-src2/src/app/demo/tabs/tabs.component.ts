@@ -152,6 +152,9 @@ export class TabsComponent {
             userDropdown: this.fb.control('', [
                 Validators.required,
             ]),
+            maskedInput: this.fb.control('', [
+                Validators.required,
+            ])
         });
 
     }
@@ -223,4 +226,10 @@ export class TabsComponent {
     }
 
     editorContent: any;
+
+    test: any;
+
+    complete(a) {
+        console.log(this.test);
+    }
 }

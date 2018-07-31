@@ -693,7 +693,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
                                     <div class="form-group"
                                          [ngClass]="{
                                              'ng-touched': testForm.get('radio2').touched,
@@ -755,7 +755,24 @@
                                                     formControlName="userDropdown"></p-dropdown>
 
                                         <div class="error error-danger"
-                                             *ngIf="formTest.form.hasError('required', 'textarea1')"
+                                             *ngIf="formTest.form.hasError('required', 'userDropdown')"
+                                        >
+                                            This field is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Masked input</label>
+
+                                        <p-inputMask
+                                                formControlName="maskedInput"
+                                                [unmask]="true"
+                                                (onComplete)="complete($event)"
+                                                mask="(999) 999-9999"></p-inputMask>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'maskedInput')"
                                         >
                                             This field is required
                                         </div>
