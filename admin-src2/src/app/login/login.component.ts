@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink, Routes} from "@angular/router";
 import {HttpHelper} from "../shared/helper.service";
-import {Form, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import {Form, FormBuilder, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {AuthService} from "../shared/auth/auth.service";
 
 
@@ -14,16 +14,16 @@ import {AuthService} from "../shared/auth/auth.service";
 export class LoginComponent {
     loginForm: FormGroup;
 
-    constructor(public router: Router, public http: HttpHelper, public authService: AuthService) {
+    constructor(public router: Router,
+                public http: HttpHelper,
+                public authService: AuthService) {
         this.loginForm = new FormGroup({
             username: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required])
         });
 
-        // this.checkLogin();
-        this.checkingLogin = true;
+        this.checkLogin();
     }
-
 
     checkingLogin: boolean = false;
 

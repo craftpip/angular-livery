@@ -3,10 +3,14 @@
 }
 
 .dropdown-item {
-  padding: 0.15rem 1.5rem;
+  padding: 0.15rem 0.9rem;
 }
 
 .dropdown-menu {
+  padding: 0px;
+  font-size: inherit;
+  border: none;
+  overflow: hidden;
 
   &.show {
   }

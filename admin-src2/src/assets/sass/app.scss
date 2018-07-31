@@ -120,13 +120,14 @@ p-calendar {
     margin-top: 10px;
     margin-left: 10px;
     cursor: pointer;
+    position: relative;
 
     &:hover {
-      background: #ddd;
+      background-color: #ddd;
     }
 
     &.active {
-      background: darken(#ddd, 5%);
+      background-color: rgba(2, 157, 159, 0.38);
 
       i {
         color: inherit;
@@ -137,11 +138,15 @@ p-calendar {
       height: 23px;
     }
     i, img {
-
-      margin: 0 8px 0 6px;
+      position: absolute;
+      top: 7px;
+      left: 9px;
     }
-    i, span {
+    i, span, img {
       vertical-align: middle;
+    }
+    span {
+      padding-left: 40px;
     }
   }
 }

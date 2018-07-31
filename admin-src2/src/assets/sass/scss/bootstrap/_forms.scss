@@ -1,6 +1,7 @@
-label{
+label {
   margin-bottom: 0px;
 }
+
 form {
   label {
     // color: #75787d;
@@ -277,9 +278,9 @@ select.form-control-xl:not([size]):not([multiple]) {
 }
 
 .ng-touched.ng-invalid {
-  border-color: theme-color("danger");
+  border-color: $color-danger;
 }
 
 .ng-touched.ng-valid {
-  border-color: $color-success;
+  //border-color: $color-success;
 }

@@ -8,7 +8,7 @@ import * as screenfull from 'screenfull';
 export class ToggleFullscreenDirective {
 
     constructor() {
-        alert('loaded?');
+
     }
 
     @HostListener('click') onClick() {
