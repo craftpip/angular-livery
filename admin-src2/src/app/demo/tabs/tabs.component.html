@@ -794,6 +794,15 @@
                         </ag-grid-angular>
                     </ng-template>
                 </ngb-tab>
+
+                <ngb-tab title="HTML Editor">
+                    <ng-template ngbTabContent>
+                        <p-editor [(ngModel)]="editorContent"
+                                  [style]="{'height':'320px'}">
+
+                        </p-editor>
+                    </ng-template>
+                </ngb-tab>
             </ngb-tabset>
 
         </div>

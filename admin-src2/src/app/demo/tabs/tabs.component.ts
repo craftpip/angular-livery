@@ -221,4 +221,6 @@ export class TabsComponent {
         });
         console.log(this.dropdownOptions)
     }
+
+    editorContent: any;
 }
