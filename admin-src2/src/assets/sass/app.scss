@@ -870,7 +870,7 @@ p-autoComplete {
         padding: 0px 10px;
         border-radius: 0;
 
-        &:hover {
+        &:hover, &.ui-state-highlight {
           background-color: #ddd;
           color: black;
         }
@@ -909,8 +909,8 @@ div.gutter-10 {
   }
 }
 
-.flatpickr-calendar{
+.flatpickr-calendar {
   box-shadow: $shadow-8dp;
-  &.open{
+  &.open {
   }
 }

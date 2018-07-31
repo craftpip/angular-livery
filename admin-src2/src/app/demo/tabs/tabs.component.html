@@ -39,16 +39,25 @@
                     <form>
                         <div class="row gutter-5">
                             <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="">Search</label>
-                                    <input type="text"
-                                           placeholder="Search"
-                                           name="email"
-                                           class="form-control form-control-sm">
+                                <div class="form-group"
+                                     id="tour-duration">
+                                    <label for="">Duration</label>
+                                    <select name=""
+                                            dateRangeSelect
+                                            (dateRangeChanged)="fromDate = $event"
+                                            class="form-control form-control-sm"
+                                            id="">
+                                        <option value="day">this day</option>
+                                        <option value="week">this week</option>
+                                        <option value="month">this month</option>
+                                        <option value="30days">last 30 days</option>
+                                        <option value="7days">last 7 days</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group"
+                                     id="tour-range-selector">
                                     <label for="">From - To</label>
                                     <input type="text"
                                            placeholder="From"
@@ -78,7 +87,8 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="form-group">
+                                <div class="form-group"
+                                     id="tour-advanced-search">
                                     <label for="">&nbsp;</label>
 
                                     <button type="button"
@@ -135,7 +145,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="progression mb-2 mt-2">
-            <div class="progression-step green">
+            <div class="progression-step green"
+                 id="tour-progress-bar">
                 <div class="progression-cont">
                     <div class="progression-circle">
                         <i class="ft ft-rotate-ccw"></i>
@@ -168,7 +179,8 @@
     <div class="row">
         <div class="col-sm-12">
             <ngb-tabset>
-                <ngb-tab title="Add new entry">
+                <ngb-tab title="Add new entry"
+                         id="tour-tabs">
                     <ng-template ngbTabContent>
 
                         <div class="form-legend">
@@ -182,12 +194,12 @@
 
                             <div class="row gutter-5">
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         id="tour1">
                                         <label for="">
                                             Upload files
                                         </label>
                                         <file-uploader
-                                                id="tour1"
                                                 [ngClass]="{
                                                     'ng-touched': testForm.get('files').touched,
                                                     'ng-invalid': testForm.get('files').invalid,
@@ -230,6 +242,7 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group"
+                                         id="tour-username"
                                     >
                                         <label for="user-group">Username</label>
 
@@ -250,6 +263,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group"
+                                         id="tour-native-elements"
                                     >
                                         <label for="user-group">Group</label>
                                         <select formControlName="group"
@@ -459,12 +473,13 @@
 
 
                                 <div class="col-sm-6">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         id="tour-tag-input">
                                         <label for="password">Tag input</label>
                                         <tag-input
                                                 formControlName="tag_input"
 
-                                                [editable]="false"
+                                                [editable]="true"
                                                 [allowDupes]="false"></tag-input>
 
                                         <div class="error error-danger"
@@ -510,7 +525,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group">
+                                    <div class="form-group"
+                                         id="tour-date1">
                                         <label for="password">Date 2</label>
 
                                         <input class="form-control form-control-sm"
@@ -531,8 +547,6 @@
                                                [disabled]="false"
                                                [readonly]="false"
                                                mwlFlatpickr>
-
-                                        {{ testForm.get('date2').value }}
 
                                         <div class="error error-danger"
                                              *ngIf="formTest.form.hasError('required', 'date2')"
@@ -566,12 +580,13 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group"
+                                         id="tour-checkbox"
                                          [ngClass]="{
                                              'ng-touched': testForm.get('radio2').touched,
                                              'ng-invalid': testForm.get('radio2').invalid
                                          }">
                                         <label>
-                                            Check box?
+                                            Check box
                                         </label>
 
                                         <div class="form-check">
@@ -584,7 +599,7 @@
                                                 >
                                                 <label class="form-check-label"
                                                        for="formCheckbox_1">
-                                                    Checkbox here!
+                                                    Checkbox here
                                                 </label>
                                             </div>
                                         </div>
@@ -599,7 +614,6 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group"
-                                         id="tour3"
                                          [ngClass]="{
                                              'ng-touched': testForm.get('radio1').touched,
                                              'ng-invalid': testForm.get('radio1').invalid
@@ -665,8 +679,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="form-group"
-                                         id="tour4">
+                                    <div class="form-group">
                                         <label>Textarea</label>
                                         <textarea
                                                 placeholder="Textarea here"
@@ -736,6 +749,7 @@
                                 <div class="col-12">
                                     <div class="mb-1 mt-1">
                                         <button class="btn btn-dark btn-sm"
+                                                id="tour-save-button"
                                                 [ngClass]="{'btn-fame': formTest.valid}"
                                                 type="submit">
                                             Save
@@ -750,13 +764,14 @@
 
                 <ngb-tab title="Tab information">
                     <ng-template ngbTabContent>
+                        <p>
+                            Display table inside tab, for full table demo, please click <a routerLink="/users">here</a>
+                        </p>
                         <ag-grid-angular
                                 #agTable
                                 style="width: 100%; height: 500px;"
                                 class="ag-theme-balham"
                                 [gridOptions]="gridOptions"
-                                (selectionChanged)="tableSelection()"
-                                (columnMoved)="colMoved($event)"
                         >
                         </ag-grid-angular>
                     </ng-template>

@@ -11,6 +11,7 @@ import {ToggleFullscreenDirective} from "./directives/toggle-fullscreen.directiv
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderComponent} from "./uploader/file-uploader.component";
 import {FileUploadModule} from "ng2-file-upload";
+import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {FileUploadModule} from "ng2-file-upload";
         ToggleFullscreenDirective,
         NgbModule,
         FileUploaderComponent,
+        DateRangeSelectorDirective,
     ],
     imports: [
         RouterModule,
@@ -36,7 +38,8 @@ import {FileUploadModule} from "ng2-file-upload";
         NavbarComponent,
         SidebarComponent,
         ToggleFullscreenDirective,
-        FileUploaderComponent
+        FileUploaderComponent,
+        DateRangeSelectorDirective,
     ]
 })
 export class SharedModule {

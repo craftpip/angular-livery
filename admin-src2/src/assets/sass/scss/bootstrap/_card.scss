@@ -5,6 +5,7 @@
   //@include card-shadow();
   box-shadow: $shadow-2dp;
   border-radius: $border-radius-base;
+  font-size: inherit;
 
   @extend %std-font;
 

@@ -10,6 +10,7 @@ import {JConfirm} from "../../shared/jconfirm";
 import {Users} from "../../users/users.mock";
 import {TableCellButtonCallback} from "../../shared/table/table-cell-button-callback";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {endOfMonth, endOfToday, endOfWeek, startOfMonth, startOfToday, startOfWeek} from "date-fns";
 
 
 @Component({
@@ -22,20 +23,12 @@ export class TabsComponent {
     @ViewChild('agTable') agGrid: AgGridNg2;
     gridOptions: GridOptions;
 
-    // define table col here!
+    /*
+     * FOR TABLE EXAMPLE, PLEASE SEE USERS COMPONENT
+     */
     definedCols: any = [
         {
             headerName: 'Id', field: 'id',
-        },
-        {
-            headerName: 'Delete', field: 'action_delete',
-            cellRendererFramework: TableCellDeleteButtonComponent,
-            width: 31,
-        },
-        {
-            headerName: 'Edit', field: 'action_edit',
-            cellRendererFramework: TableCellEditButtonComponent,
-            width: 31,
         },
         {headerName: 'First name', field: 'first_name'},
         {headerName: 'Last name', field: 'last_name'},
@@ -52,7 +45,6 @@ export class TabsComponent {
                 public jconfirm: JConfirm,
                 public utils: Utils,
                 public fb: FormBuilder,
-                public formHelper: FormHelper,
                 public route: ActivatedRoute) {
 
         this.route.params.subscribe((data: any) => {
@@ -71,149 +63,13 @@ export class TabsComponent {
             pagination: true,
         };
 
-        let cols;
-        if (cols = this.utils.storage.get('usersTableCol')) {
-            // get the column def from storage. presist the state!
-            // have to sort the columns according to its history manually,
-            // after adding components in col options its not possible to load its json directly as it contains reference to component class.
-            let sortedCols = [];
-            for (let c of cols) {
-                for (let d of this.definedCols) {
-                    if (c == d.field) {
-                        sortedCols.push(d);
-                    }
-                }
-            }
-            this.gridOptions.columnDefs = sortedCols;
-        } else {
-            // state does not exist, defaults please!s
-            this.gridOptions.columnDefs = this.definedCols;
-        }
+        this.gridOptions.columnDefs = this.definedCols;
 
         this.formReady();
     }
 
-    /**
-     * This function will be called from @TableCellEditButtonComponent
-     * name should be editCell()
-     *
-     * @param {TableCellButtonCallback} s
-     */
-    editCell(s: TableCellButtonCallback) {
-        alert(JSON.stringify(s.data));
-    }
-
-    /**
-     * Similarly
-     * This function will be called from @TableCellDeleteButtonComponent
-     *
-     * @param {TableCellButtonCallback} s
-     */
-    deleteCell(s: TableCellButtonCallback) {
-        // alert(s);
-        this.jconfirm.confirm({
-            content: 'Are you sure to delete the row?',
-            title: "Confirm?",
-            buttons: {
-                'delete': {
-                    btnClass: 'btn-sm btn-outline-danger',
-                    action: () => {
-                        // this.jconfirm.confirm({
-                        //     content: 'The row has been deleted!',
-                        //     title: 'Alert',
-                        // })
-                        this.utils.notification({
-                            text: 'The row has been deleted',
-                            type: this.utils.notificationType.success,
-                            layout: this.utils.notificationLayouts.topRight,
-                        });
-                    }
-                },
-                cancel: {
-                    action: () => {
-                        this.jconfirm.confirm({
-                            content: 'That action has been cancelled!'
-                        });
-                        // return false;
-                    }
-                }
-            },
-            animateFromElement: false, // because it wont be able to find the button clicked
-            autoClose: 'cancel|4000',
-        });
-    }
-
-    /**
-     * Store the state of the table columns
-     * @param $event
-     */
-    colMoved($event) {
-        // event fired when a col is moved in ag grid
-        let newIndex = $event.toIndex;
-        let columnMoved = $event.column.colId;
-        let cols = <any>this.gridOptions.columnDefs.slice();
-        let oldIndex;
-        for (let i in cols) {
-            if (cols[i].field == columnMoved) {
-                oldIndex = i;
-            }
-        }
-
-        let temp = cols[newIndex];
-        cols[newIndex] = cols[oldIndex];
-        cols[oldIndex] = temp;
-
-        let map = cols.map((e) => {
-            return e.field;
-        });
-
-        this.utils.storage.set('usersTableCol', map);
-    }
-
     loading: boolean = false;
-
-
-    editSelected() {
-        let nodes = this.agGrid.api.getSelectedRows();
-        console.log(nodes);
-        if (nodes.length) {
-            let node = nodes[0];
-            this.jconfirm.confirm({
-                content: 'edit node: ' + JSON.stringify(node),
-            });
-        } else {
-            this.jconfirm.confirm({
-                content: 'Please select a node',
-            });
-        }
-    }
-
-    deleteSelected() {
-        let nodes = this.agGrid.api.getSelectedRows();
-        console.log(nodes);
-        if (nodes.length) {
-            let node = nodes[0];
-            this.jconfirm.confirm({
-                content: 'delete node: ' + JSON.stringify(node)
-            });
-        } else {
-            this.jconfirm.confirm({
-                content: 'Please select a node'
-            });
-        }
-    }
-
-    isRowSelected: boolean = false;
-
-    tableSelection() {
-        let nodes = this.agGrid.api.getSelectedRows();
-        this.isRowSelected = !!(nodes.length);
-    }
-
-    asd: string;
-
     files: any[] = [];
-
 
     // form validation
     testForm: FormGroup;
@@ -365,4 +221,18 @@ export class TabsComponent {
     }
 
     advancedOptions: boolean = false;
+
+
+    dateChange(a) {
+        console.log(a);
+        let today = new Date();
+
+        console.log('start', startOfToday());
+        console.log('end', endOfToday());
+        console.log('start month', startOfMonth(today));
+        console.log('end month', endOfMonth(today));
+        console.log('start week', startOfWeek(today));
+        console.log('end week', endOfWeek(today));
+    }
+
 }
