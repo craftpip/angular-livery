@@ -12,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderComponent} from "./uploader/file-uploader.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
+import {ColorPickerModule, Dropdown, DropdownModule} from "primeng/primeng";
 
 
 @NgModule({
@@ -24,6 +25,8 @@ import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
         NgbModule,
         FileUploaderComponent,
         DateRangeSelectorDirective,
+        ColorPickerModule,
+        DropdownModule,
     ],
     imports: [
         RouterModule,
@@ -32,6 +35,8 @@ import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
         ReactiveFormsModule,
         NgbModule,
         FileUploadModule,
+        ColorPickerModule,
+        DropdownModule,
     ],
     declarations: [
         FooterComponent,

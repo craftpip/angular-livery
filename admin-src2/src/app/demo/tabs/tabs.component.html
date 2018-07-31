@@ -743,6 +743,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Select dropdown</label>
+
+                                        <p-dropdown [options]="dropdownOptions"
+                                                    optionLabel="name"
+                                                    [autoDisplayFirst]="false"
+                                                    [filter]="true"
+                                                    [filterBy]="'name'"
+                                                    formControlName="userDropdown"></p-dropdown>
+
+                                        <div class="error error-danger"
+                                             *ngIf="formTest.form.hasError('required', 'textarea1')"
+                                        >
+                                            This field is required
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- <hr> -->
                             <div class="row">

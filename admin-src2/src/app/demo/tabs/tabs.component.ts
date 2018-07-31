@@ -65,7 +65,8 @@ export class TabsComponent {
 
         this.gridOptions.columnDefs = this.definedCols;
 
-        this.formReady();
+        this.initForm();
+        this.initDropdown();
     }
 
     loading: boolean = false;
@@ -74,7 +75,7 @@ export class TabsComponent {
     // form validation
     testForm: FormGroup;
 
-    formReady() {
+    initForm() {
         // this.testForm = new FormGroup({
         //     'group': new FormControl(null, )
         // })
@@ -147,7 +148,10 @@ export class TabsComponent {
             ]),
             first_name: this.fb.control('', [
                 Validators.required,
-            ])
+            ]),
+            userDropdown: this.fb.control('', [
+                Validators.required,
+            ]),
         });
 
     }
@@ -172,22 +176,11 @@ export class TabsComponent {
     }
 
     /**
-     * testing
-     * @param formErrors
-     * @param property
-     * @returns {boolean}
+     * For testing
+     *
+     * @param a
+     * @returns {string}
      */
-    e(formErrors, property) {
-        if (formErrors == null) {
-            return true;
-        }
-        if (typeof formErrors[property] === 'undefined') {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     st(a) {
         return JSON.stringify(a);
     }
@@ -198,12 +191,7 @@ export class TabsComponent {
         this.testForm.get('files').setValue(files);
     }
 
-    changed() {
-        alert('hey');
-    }
-
     // auto complete
-
     firstNameResults: any[] = [];
 
     searchFirstName($event) {
@@ -222,17 +210,15 @@ export class TabsComponent {
 
     advancedOptions: boolean = false;
 
+    dropdownOptions: any[] = [];
 
-    dateChange(a) {
-        console.log(a);
-        let today = new Date();
-
-        console.log('start', startOfToday());
-        console.log('end', endOfToday());
-        console.log('start month', startOfMonth(today));
-        console.log('end month', endOfMonth(today));
-        console.log('start week', startOfWeek(today));
-        console.log('end week', endOfWeek(today));
+    initDropdown() {
+        this.dropdownOptions = Users.map((user) => {
+            return {
+                'name': user.first_name,
+                'code': user.first_name,
+            };
+        });
+        console.log(this.dropdownOptions)
     }
-
 }
