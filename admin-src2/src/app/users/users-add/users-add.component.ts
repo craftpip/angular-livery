@@ -41,16 +41,14 @@ export class UsersAddComponent {
             }
         });
 
-        this.loadCurrency();
-
         // loading demo.
         this.loading = true;
         setTimeout(() => {
             this.loading = false;
-        }, 5000);
+        }, 3000);
     }
 
-    isOpen: boolean = false;
+    isOpen: boolean = true;
 
     showLoading() {
         this.loading = !this.loading;
@@ -118,9 +116,6 @@ export class UsersAddComponent {
 
     // demo
 
-    tags: any[] = ['test1', 'test3', 'test4'];
+    tags: any[] = ['test2', 'test3', 'test4'];
 
-    timeUpdated($event) {
-        console.log('time updated', $event);
-    }
 }

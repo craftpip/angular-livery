@@ -914,3 +914,36 @@ div.gutter-10 {
   &.open {
   }
 }
+
+.sidebar-toggle {
+  z-index: 4;
+  position: relative;
+  height: 27px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border-bottom: solid 1px #eee;
+
+  > a {
+    //background-color: #bdbdbd;
+    /* display: inline-block !important; */
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0px 5px 4px;
+    vertical-align: middle;
+    > * {
+      color: white;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: 61px;
+      width: 41px;
+      background-color: #bdbdbd;
+      transform: rotate(-45deg) translate(3px, -35px);
+      transform-origin: center;
+      z-index: -1;
+    }
+  }
+}

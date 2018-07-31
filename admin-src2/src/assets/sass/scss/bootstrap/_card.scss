@@ -35,8 +35,17 @@
 
     .card-header {
       span.has-field {
-        margin-top: -3px;
+        margin-top: -4px;
         margin-bottom: -4px;
+        > * {
+          vertical-align: middle;
+        }
+        > input, > button, > select {
+          height: 28px;
+          line-height: 28px !important;
+          padding-top: initial;
+          padding-bottom: initial;
+        }
       }
       .pull-right {
         > span {
@@ -46,6 +55,7 @@
 
       .card-title {
         cursor: pointer;
+        vertical-align: middle;
       }
 
       .card-collapse-toggle {

@@ -33,7 +33,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="mt-1 mb-1">
-                        <div class="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-sm"
+                             id="tour-date-navigation">
                             <div
                                     class="btn btn-fame"
                                     mwlCalendarPreviousView
@@ -61,28 +62,78 @@
                 </div>
                 <div class="col-md-4 text-center">
                     <div class="mt-1 mb-1">
-                        {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                        <strong>
+                            {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                        </strong>
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <div class="mt-1 mb-1">
-                        <button type="button"
-                                class="btn btn-fame btn-sm"
-                                (click)="notification()">Info Notification
-                        </button>
+                    <div class="btn-group btn-group-sm mt-1 mb-1"
+                         id="tour-date-type"
+                    >
+                        <div
+                                class="btn btn-fame"
+                                (click)="view = 'month'"
+                                [class.active]="view === 'month'">
+                            Month
+                        </div>
+                        <div
+                                class="btn btn-fame"
+                                (click)="view = 'week'"
+                                [class.active]="view === 'week'">
+                            Week
+                        </div>
+                        <div
+                                class="btn btn-fame"
+                                (click)="view = 'day'"
+                                [class.active]="view === 'day'">
+                            Day
+                        </div>
                     </div>
                 </div>
+                <!--<div class="col-md-4 text-right">-->
+                <!--<div class="mt-1 mb-1">-->
+                <!--<button type="button"-->
+                <!--class="btn btn-fame btn-sm"-->
+                <!--(click)="notification()">Info Notification-->
+                <!--</button>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"
+                     id="tour-calendar-events"></div>
+                <div class="col-md-2"
+                     id="tour-calendar-sink"></div>
             </div>
 
             <mwl-calendar-month-view
                     [viewDate]="viewDate"
                     [events]="events"
+                    *ngIf="view == 'month'"
                     [refresh]="refresh"
                     [activeDayIsOpen]="activeDayIsOpen"
                     (dayClicked)="dayClicked($event.day)"
                     (eventClicked)="handleEvent('Clicked', $event.event)"
                     (eventTimesChanged)="eventTimesChanged($event)">
             </mwl-calendar-month-view>
+            <mwl-calendar-week-view
+                    *ngIf="view == 'week'"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh"
+                    (eventClicked)="handleEvent('Clicked', $event.event)"
+                    (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view
+                    *ngIf="view == 'day'"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh"
+                    (eventClicked)="handleEvent('Clicked', $event.event)"
+                    (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-day-view>
         </div>
     </div>
 </section>

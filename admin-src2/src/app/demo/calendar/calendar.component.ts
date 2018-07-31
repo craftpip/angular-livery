@@ -55,13 +55,13 @@ export class CalendarComponent implements OnInit {
 
     }
 
-    notification() {
-        this.utils.notification({
-            text: 'em Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ind',
-            layout: this.utils.notificationLayouts.bottomRight,
-            type: this.utils.notificationType.info,
-        });
-    }
+    // notification() {
+    //     this.utils.notification({
+    //         text: 'em Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ind',
+    //         layout: this.utils.notificationLayouts.bottomRight,
+    //         type: this.utils.notificationType.info,
+    //     });
+    // }
 
     ngOnInit() {
         // let tourOptions: TourOptions = {

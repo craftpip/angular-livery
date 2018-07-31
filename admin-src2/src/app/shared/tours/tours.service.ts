@@ -62,6 +62,13 @@ export class TourService {
      */
     create(options: TourOptions) {
         // Start the tour!
+        if (typeof options['showCloseButton'] === 'undefined')
+            options['showCloseButton'] = true;
+        if (typeof options['showNextButton'] === 'undefined')
+            options['showNextButton'] = true;
+        if (typeof options['showPrevButton'] === 'undefined')
+            options['showPrevButton'] = true;
+
         return hopscotch.startTour(options);
     }
 }

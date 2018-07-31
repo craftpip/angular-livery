@@ -10,9 +10,9 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '/demo/calendar', title: 'Calendar', icon: 'ft-calendar', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
-    {
-        path: '/demo/list1', title: 'List1', icon: 'ft-users', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
-    },
+    // {
+    //     path: '/demo/list1', title: 'List1', icon: 'ft-users', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+    // }, // this page exists but is not useful for demo
     {
         path: '/demo/tabs', title: 'Tabs', icon: 'ft-tag', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },

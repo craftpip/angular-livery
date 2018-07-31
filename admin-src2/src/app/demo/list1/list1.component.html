@@ -1,3 +1,8 @@
+<!--
+This demo page was made to demo the filter in card,
+but this feature has already been shown in the demo/tabs page.
+-->
+
 <div class="page-header-container">
     <div class="row">
         <div class="col-6">
@@ -38,21 +43,6 @@
                                 <i class="ft ft-plus mr-1"></i>
                                 Add new entry
                             </button>
-                            <button class="btn btn-danger btn-raised btn-sm m-0 d-inline-block ml-1"
-                                    type="button"
-                                    *ngIf="isRowSelected"
-                                    (click)="deleteSelected()">
-                                <i class="ft ft-delete mr-1"></i>
-                                Delete
-                            </button>
-                            <button class="btn btn-fame btn-raised btn-sm m-0 d-inline-block ml-1"
-                                    type="button"
-                                    *ngIf="isRowSelected"
-                                    (click)="editSelected()">
-                                <i class="ft ft-edit mr-1"></i>
-                                Edit
-                            </button>
-
                         </div>
 
                         <input type="text"

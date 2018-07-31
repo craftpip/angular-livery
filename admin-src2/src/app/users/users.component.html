@@ -25,7 +25,7 @@
     <form>
         <div class="row">
             <div class="col-12">
-                <div class="float-right">
+                <div class="float-right" id="tour-table-toolbar">
                     <input type="text"
                            placeholder="Search something maybe"
                            name="email"
@@ -57,7 +57,7 @@
                     <button type="button"
                             (click)="isOpen = !isOpen"
                             class="btn btn-fame btn-sm ml-1">
-                        Toggle
+                        Toggle quick panel
                     </button>
                 </div>
                 <div class="clearfix"></div>
@@ -67,6 +67,18 @@
 </div>
 
 <section id="extended">
+    <div class="row">
+        <div class="col-md-1"
+             id="tour-table"></div>
+        <div class="col-md-1"
+             id="tour-table-sorting"></div>
+        <div class="col-md-1"
+             id="tour-table-filter"></div>
+        <div class="col-md-1"
+             id="tour-quick-edit"></div>
+        <div class="col-md-1"
+             id="tour-quick-delete"></div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="">

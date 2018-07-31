@@ -3,9 +3,92 @@ import {TourOptions} from "./tours.service";
 export var tours: {
     [key: string]: TourOptions,
 } = {
+    '/home': {
+        id: 'home-tour',
+        steps: [
+            {
+                title: 'Cards',
+                content: 'Standard cards to show important information',
+                target: 'tour-card',
+                placement: 'bottom',
+            },
+            {
+                title: 'Cards loading',
+                content: 'This can be used when cards call their different api, and data cant be shown until the api loading has finished',
+                target: 'tour-card-loading',
+                placement: 'bottom',
+            },
+        ],
+    },
     '/users': {
         id: 'users-tour',
-        steps: []
+        steps: [
+            {
+                title: 'Table toolbar',
+                content: 'Actions to be take on the table, select a row in the table and edit/delete buttons will appear. Showing actions only when its available.',
+                target: 'tour-table-toolbar',
+                placement: 'bottom',
+            },
+            {
+                title: 'AgTable',
+                content: 'The best table framework',
+                target: 'tour-table',
+                placement: 'top',
+            },
+            {
+                title: 'Sort & Save state',
+                content: 'Move the columns to the left and right, and we will save the state of the order of columns. Refresh and see the state be as you arranged it',
+                target: 'tour-table-sorting',
+                placement: 'right',
+            },
+            {
+                title: 'Order and filter',
+                content: 'Click on the column name to filter it, or click on the bars icon to show filter options',
+                target: 'tour-table-filter',
+                placement: 'bottom',
+            },
+            {
+                title: 'Quick edit panel',
+                content: 'Click on the edit button icon in any row, this will display a quick form to edit information without changing pages.',
+                target: 'tour-quick-edit',
+                placement: 'bottom',
+            },
+            {
+                title: 'Custom alert dialog',
+                content: 'Click on the delete button icon in any row, this will display a confirmation asking if to delete the row, BUT it has a countdown if the user doesnt take a action before 6 seconds the confirmation will be cancelled.',
+                target: 'tour-quick-delete',
+                placement: 'bottom',
+            },
+        ],
+    },
+    '/users/add': {
+        id: 'users-add-tour',
+        steps: [
+            {
+                title: 'Elegant card collapse',
+                content: 'Click to toggle collapse of card, on collapse the content does not hide completely but shows hint of input elements',
+                target: 'tour-card-header',
+                placement: 'bottom',
+            },
+            {
+                title: 'Card header fields',
+                content: 'Card headers support fields like button, input and select',
+                target: 'tour-card-collapse',
+                placement: 'bottom',
+            },
+            {
+                title: 'Loading indicator in card',
+                content: 'Click here to toggle the loading for card, loading is also supported for cards when the card is collapsed',
+                target: 'tour-toggle-loading',
+                placement: 'left',
+            },
+            {
+                title: 'Arrow animation',
+                content: 'This toggles the card collapse too',
+                target: 'tour-card-arrow',
+                placement: 'left',
+            },
+        ]
     },
     '/demo/tabs': {
         id: "demo-tabs",
@@ -85,8 +168,34 @@ export var tours: {
                 placement: "top"
             },
         ],
-        showCloseButton: true,
-        showNextButton: true,
-        showPrevButton: true,
+    },
+    '/demo/calendar': {
+        id: "demo-calendar",
+        steps: [
+            {
+                title: "Date navigation",
+                content: "Date through next and previous dates or months",
+                target: "tour-date-navigation",
+                placement: "bottom"
+            },
+            {
+                title: "Calendar types",
+                content: "The calendar supports view for month, week and days",
+                target: "tour-date-type",
+                placement: "left",
+            },
+            {
+                title: "Events",
+                content: "An event can span over multiple days by its start and end timestamps",
+                target: "tour-calendar-events",
+                placement: "bottom",
+            },
+            {
+                title: "Event details",
+                content: "When clicking on the calendar date that has events, it will open a kitchen sink that lists the events. Custom buttons can be added for actions to edit/remove/add events",
+                target: "tour-calendar-sink",
+                placement: "bottom",
+            },
+        ],
     }
 };

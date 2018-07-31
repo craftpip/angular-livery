@@ -33,33 +33,40 @@
             <div class="pull-right">
                 <span class="has-field mr-1">
                     <button type="button"
+                            id="tour-card-collapse"
                             (click)="isOpen = !isOpen"
-                            class="btn btn-fame btn-sm">
-                        Toggle using variables
+                            class="btn btn-outline-danger btn-sm">
+                        Toggle collapse
                     </button>
                 </span>
                 <span class="has-field mr-1">
-                    <select class="form-control form-control-sm">
-                        <option value="test1">test1</option>
-                        <option value="test2">test2</option>
+                    <select class="form-control form-control-sm"
+                    >
+                        <option value="option1">option 1</option>
+                        <option value="option2">option 2</option>
                     </select>
                 </span>
                 <span class="has-field mr-1">
                     <input type="text"
                            class="form-control form-control-sm"
-                           placeholder="example">
+                           placeholder="example input">
                 </span>
-                <span class="mr-1 pr-1 pl-1">
+                <span class="mr-1 pr-1 pl-1"
+                      ngbTooltip="Toggle loading"
+                      id="tour-toggle-loading"
+                      placement="left">
                     <i class="ft ft-refresh-ccw"
                        (click)="showLoading()"></i>
                 </span>
-                <span class="card-collapse-toggle">
+                <span class="card-collapse-toggle"
+                      id="tour-card-arrow">
                     <i class="ft ft-arrow-up"></i>
                 </span>
             </div>
 
             <!-- Card collapse directive requires card-title -->
-            <span class="card-title">
+            <span class="card-title"
+                  id="tour-card-header">
                 User edit form title
             </span>
         </div>
@@ -237,25 +244,6 @@
                             <!--required-->
                             <!--ngbDatepicker=""-->
                             <!--class="form-control form-control-sm">-->
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label for="password">Date</label>
-                            <input class="form-control form-control-sm"
-                                   name="dp"
-                                   [(ngModel)]="user.date2"
-                                   [altInput]="true"
-                                   [altFormat]="'d-m-Y H:i'"
-                                   [convertModelValue]="false"
-                                   [enableTime]="true"
-                                   (timeupdate)="timeUpdated($event)"
-                                   [time24hr]="false"
-                                   [enableSeconds]="false"
-                                   dateFormat="Y-m-dTH:i"
-                                   [disableMobile]="true"
-                                   [noCalendar]="false"
-                                   mwlFlatpickr>
                         </div>
                     </div>
                 </div>
