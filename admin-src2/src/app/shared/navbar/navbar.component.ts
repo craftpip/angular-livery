@@ -15,7 +15,7 @@ declare var $: any;
 })
 
 export class NavbarComponent implements OnInit {
-    public user = {};
+    public user: any = {};
     public currentTourPath: string;
     public isTourAvailable: boolean = false;
 
