@@ -1,0 +1,4 @@
+/node_modules
+/admin
+package.json
+package-lock.json
