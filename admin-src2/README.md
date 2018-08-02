@@ -1,19 +1,29 @@
 # iBase angular template
 
+Recreation of the iBase template in angular from scratch.   
+version: 1.0.0  
+See CHANGELOG.md for changes
+
 ## installation
 
-to install node modules
-`npm install`
+`cd admin-src2`  
+`npm install`  
+This will install all the required dependencies, 
+all commands are to be run in context of `admin-src2` directory.
 
 ## Demo code
 
-Demo code/html snippets lives in the demo module,
-
-DO NOT EDIT THE SCSS FILES
+All of the components are here for demo purpose.
 
 ## Development server
 
-Run `ng serve` or `ng serve -aot` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+There are 2 ways to run a dev server.
+
+1. `ng serve` - this will compile the code in RAM and served to port 4200
+    Navigate to `http://localhost:4200/`.
+2. `ng build --watch` - this will build to the output directory and look for changes, you must use Xampp/Apache to server it yourself.
+    Navigate to `http://localhost/path/to/output/`. 
+
 
 ## Code scaffolding
 
@@ -21,11 +31,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+`ng build --base-href=/admin/src/` - will build the code   
+`ng build --base-href=/admin/src/ --prod` - will build production code.  
+`--base-href=/path/to/build` is the relative path where the code lives.  
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 Author
 — Boniface Pereira
