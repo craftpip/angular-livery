@@ -1,11 +1,12 @@
 {
-  "name": "apex",
+  "name": "ibase-angular",
   "version": "4.1.0",
   "license": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --watch --base-href=/",
+    "build-prod": "ng build --prod --base-href=/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
