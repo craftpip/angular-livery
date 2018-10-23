@@ -1,0 +1,650 @@
+<div>
+    <button class="btn btn-outline-secondary btn-sm"
+            type="button"
+            (click)="openAddEditSidebar()">
+        <i class="ft ft-plus"></i>
+        Add new card
+    </button>
+</div>
+
+<div class="dcards-container"
+     dragula="DCARDS"
+     [(dragulaModel)]="cards">
+    <div class="dcard"
+         [ngClass]="{
+            'dcard2': c.size == '2',
+            'dcard3': c.size == '3'
+         }"
+         *ngFor="let c of cards; let indx = index;">
+        <div class="dcard-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="pull-right card-right-icons">
+                        <span class="cursor-pointer clickable mr-1"
+                              title="Duplicate"
+                              (click)="copyCard(c, indx)">
+                            <i class="ft ft-copy"></i>
+                        </span>
+                        <span class="cursor-pointer clickable mr-1"
+                              title="Customize"
+                              (click)="editCard(c, indx)">
+                            <i class="ft ft-edit-2"></i>
+                        </span>
+                        <span class="cursor-pointer clickable"
+                              title="Remove"
+                              (click)="removeCard(c, indx)">
+                            <i class="ft ft-trash"></i>
+                        </span>
+                    </div>
+                    <span class="card-title"
+                          id="tour-card-header">
+                        {{c.name}}
+                    </span>
+                </div>
+                <app-card
+                        class="position-relative card-h"
+                        [card]="c"
+                ></app-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="quick-panel quick-panel-2x"
+     quickPanel=""
+     [open]="sidebarIsOpen">
+    <div class="quick-panel-close"
+         (click)="sidebarIsOpen = false">
+        &times;
+    </div>
+    <div class="quick-panel-inner">
+        <!--content goes here-->
+        <h3 class="mb-2">
+            {{sidebarCard.id ? 'Edit ' : 'Add a '}} card
+        </h3>
+
+        <form (submit)="sidebarCreateOrSaveCard()">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            Name your card
+                        </label>
+                        <input type="text"
+                               name="cardName"
+                               [(ngModel)]="sidebarCard.name"
+                               class="form-control form-control-sm">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Data source
+                            <span *ngIf="sidebarLoadingTableList">(Loading..)</span>
+                        </label>
+                        <select name="dataSource"
+                                [disabled]="sidebarCard.id"
+                                [(ngModel)]="sidebarCard.tableCode"
+                                (change)="sidebarOnChangeTableName()"
+                                class="form-control form-control-sm">
+                            <option [value]="t.code"
+                                    *ngFor="let t of tableList">
+                                {{t.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Card size</label>
+
+                        <select class="form-control form-control-sm"
+                                name="cardSize"
+                                [(ngModel)]="sidebarCard.size"
+                                id="">
+                            <option value="1">Small</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div *ngIf="sidebarLoadingTableColumns"
+                         class="alert alert-secondary mt-1">
+                        Loading columns...
+                    </div>
+
+                    <div class=""
+                         [ngClass]="{ 'view-blocked':sidebarTableColumns.length == 0 || sidebarLoadingTableColumns}">
+
+                        <div class="form-group">
+                            <label>
+                                Select view
+                            </label>
+
+                            <div class="viewSelection">
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'table'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'table'}">
+                                    <img src="assets/img/icons/table-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Table
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'pie'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'pie'}">
+                                    <img src="assets/img/icons/pie-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Pie
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'donut'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'donut'}">
+                                    <img src="assets/img/icons/donut-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Donut
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'line'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'line'}">
+                                    <img src="assets/img/icons/line-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Line
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'bar'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'bar'}">
+                                    <img src="assets/img/icons/bar-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Bar
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'column'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'column'}">
+                                    <img src="assets/img/icons/column-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Column
+                                </span>
+                                </div>
+                                <div class="selectView clickable"
+                                     (click)="sidebarCard.options.view = 'count'"
+                                     [ngClass]="{'selected': sidebarCard.options.view == 'count'}">
+                                    <img src="assets/img/icons/count-chart.svg"
+                                         alt="">
+                                    <span>
+                                    Count
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+
+                                <div *ngIf="sidebarCard.options.view == 'table'">
+                                    <p>
+                                        <small>
+                                            This view does not have any options
+                                        </small>
+                                    </p>
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'pie'">
+                                    <div class="form-group">
+                                        <label>
+                                            Legend
+                                        </label>
+                                        <select name="pieLegendSelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.pie.legend"
+                                                class="form-control form-control-sm">
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="row gutter-5">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>
+                                                    Value
+                                                </label>
+                                                <select name="pieValueSelect"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.pie.value"
+                                                        class="form-control form-control-sm">
+
+                                                    <option [value]="c.value"
+                                                            *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">
+                                                    Value Aggregator
+                                                </label>
+                                                <select name="sidebarPieMethod"
+                                                        class="form-control form-control-sm"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.pie.valueAggregator">
+                                                    <option value="sum">
+                                                        Sum
+                                                    </option>
+                                                    <option value="avg">
+                                                        Average
+                                                    </option>
+                                                    <option value="count">
+                                                        Count
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'donut'">
+                                    <div class="form-group">
+                                        <label>
+                                            Legend
+                                        </label>
+                                        <select name="donutLegendSelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.donut.legend"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="row gutter-5">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>
+                                                    Value
+                                                </label>
+                                                <select name="donutValueSelect"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.donut.value"
+                                                        class="form-control form-control-sm">
+
+                                                    <option [value]="c.value"
+                                                            *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">
+                                                    Value Aggregator
+                                                </label>
+                                                <select name="sidebarDonutAggregator"
+                                                        class="form-control form-control-sm"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.donut.valueAggregator">
+                                                    <option value="sum">
+                                                        Sum
+                                                    </option>
+                                                    <option value="avg">
+                                                        Average
+                                                    </option>
+                                                    <option value="count">
+                                                        Count
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'line'">
+                                    <div class="form-group">
+                                        <label>
+                                            Legend
+                                        </label>
+                                        <select name="lineLegendSelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.line.legend"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Group by (optional)
+                                        </label>
+                                        <select name="lineGroupBySelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.line.groupBy"
+                                                class="form-control form-control-sm">
+                                            <option [value]="''"
+                                                    selected>• None
+                                            </option>
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <strong>Plotting lines:</strong>
+                                    <p *ngIf="sidebarCard.options.viewOptions.line.lines.length == 0">
+                                        Please add a line to begin
+                                    </p>
+                                    <div class="form-group"
+                                         *ngFor="let l of sidebarCard.options.viewOptions.line.lines; let indx = index">
+
+                                        <div class="row gutter-5">
+                                            <div class="col-md-7">
+                                                <label>
+                                                    Line {{(indx + 1)}}
+                                                </label>
+
+                                                <select name="lineLine{{indx}}"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.line.lines[indx].line"
+                                                        class="form-control form-control-sm">
+
+                                                    <option [value]="c.value"
+                                                            *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="">
+                                                    Line Aggregator
+                                                </label>
+                                                <select name="lineLineAggregator{{indx}}"
+                                                        class="form-control form-control-sm"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.line.lines[indx].aggregator">
+                                                    <option value="sum">
+                                                        Sum
+                                                    </option>
+                                                    <option value="avg">
+                                                        Average
+                                                    </option>
+                                                    <option value="count">
+                                                        Count
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="">&nbsp; </label>
+                                                <button (click)="sidebarCard.options.viewOptions.line.lines.splice(indx, 1)"
+                                                        [disabled]="sidebarCard.options.viewOptions.line.lines.length < 2"
+                                                        type="button"
+                                                        class="btn btn-fame btn-sm btn-block">
+                                                    <i class="ft ft-delete"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-fame btn-sm"
+                                            type="button"
+                                            (click)="sidebarCard.options.viewOptions.line.lines.push({})">Add line
+                                    </button>
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'bar'">
+                                    <div class="form-group">
+                                        <label>
+                                            Legend
+                                        </label>
+                                        <select name="lineLegendSelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.bar.legend"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Group by (optional)
+                                        </label>
+                                        <select name="lineGroupBySelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.bar.groupBy"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="''"
+                                                    selected>• None
+                                            </option>
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <strong>Plotting lines:</strong>
+                                    <p *ngIf="sidebarCard.options.viewOptions.bar.lines.length == 0">
+                                        Please add a line to begin
+                                    </p>
+                                    <div class="form-group"
+                                         *ngFor="let l of sidebarCard.options.viewOptions.bar.lines; let indx = index">
+
+                                        <div class="row gutter-5">
+                                            <div class="col-md-7">
+                                                <label>
+                                                    Line {{(indx + 1)}}
+                                                </label>
+                                                <select name="lineLine{{indx}}"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.bar.lines[indx].line"
+                                                        class="form-control form-control-sm">
+
+                                                    <option [value]="c.value"
+                                                            *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="">
+                                                    Line Aggregator
+                                                </label>
+                                                <select name="lineLineAggregator{{indx}}"
+                                                        class="form-control form-control-sm"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.bar.lines[indx].aggregator">
+                                                    <option value="sum">
+                                                        Sum
+                                                    </option>
+                                                    <option value="avg">
+                                                        Average
+                                                    </option>
+                                                    <option value="count">
+                                                        Count
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="">&nbsp;</label>
+                                                <button (click)="sidebarCard.options.viewOptions.bar.lines.splice(indx, 1)"
+                                                        [disabled]="sidebarCard.options.viewOptions.bar.lines.length < 2"
+                                                        type="button"
+                                                        class="btn btn-fame btn-sm btn-block">
+                                                    <i class="ft ft-delete"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-fame btn-sm"
+                                            type="button"
+                                            (click)="sidebarCard.options.viewOptions.bar.lines.push({})">Add line
+                                    </button>
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'column'">
+                                    <div class="form-group">
+                                        <label>
+                                            Legend
+                                        </label>
+                                        <select name="lineLegendSelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.column.legend"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Group by (optional)
+                                        </label>
+                                        <select name="lineGroupBySelect"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.column.groupBy"
+                                                class="form-control form-control-sm">
+
+                                            <option [value]="''"
+                                                    selected>• None
+                                            </option>
+                                            <option [value]="c.value"
+                                                    *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <strong>Plotting lines:</strong>
+                                    <p *ngIf="sidebarCard.options.viewOptions.column.lines.length == 0">
+                                        Please add a line to begin
+                                    </p>
+                                    <div class="form-group"
+                                         *ngFor="let l of sidebarCard.options.viewOptions.column.lines; let indx = index">
+
+                                        <div class="row gutter-5">
+                                            <div class="col-md-7">
+                                                <label>
+                                                    Line {{(indx + 1)}}
+                                                </label>
+                                                <select name="lineColumn{{indx}}"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.column.lines[indx].line"
+                                                        class="form-control form-control-sm">
+
+                                                    <option [value]="c.value"
+                                                            *ngFor="let c of sidebarTableColumns">{{c.key}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="">
+                                                    Line Aggregator
+                                                </label>
+                                                <select name="lineColumnAggregator{{indx}}"
+                                                        class="form-control form-control-sm"
+                                                        [(ngModel)]="sidebarCard.options.viewOptions.column.lines[indx].aggregator">
+                                                    <option value="sum">
+                                                        Sum
+                                                    </option>
+                                                    <option value="avg">
+                                                        Average
+                                                    </option>
+                                                    <option value="count">
+                                                        Count
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="">&nbsp;</label>
+                                                <button (click)="sidebarCard.options.viewOptions.column.lines.splice(indx, 1)"
+                                                        type="button"
+                                                        [disabled]="sidebarCard.options.viewOptions.column.lines.length < 2"
+                                                        class="btn btn-fame btn-sm btn-block">
+                                                    <i class="ft ft-delete"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-fame btn-sm"
+                                            type="button"
+                                            (click)="sidebarCard.options.viewOptions.column.lines.push({})">Add line
+                                    </button>
+                                </div>
+                                <div *ngIf="sidebarCard.options.view == 'count'">
+
+                                    <div class="form-group">
+                                        <label for="">
+                                            Column
+                                        </label>
+                                        <select name="countColumn"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.count.col">
+                                            <option *ngFor="let c of sidebarTableColumns"
+                                                    [value]="c.value">
+                                                {{c.key}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">
+                                            Method
+                                        </label>
+                                        <select name="sidebarCountMethod"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.count.method">
+                                            <option value="sum">
+                                                Sum
+                                            </option>
+                                            <option value="avg">
+                                                Average
+                                            </option>
+                                            <option value="count">
+                                                Count
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Decimals</label>
+                                        <input type="number"
+                                               name="sidebarCardCountDecimals"
+                                               class="form-control form-control-sm"
+                                               [(ngModel)]="sidebarCard.options.viewOptions.count.decimals">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Format</label>
+                                        <select name="sidebarCardFormatCount"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="sidebarCard.options.viewOptions.count.format">
+                                            <option value="normal">
+                                                123456789
+                                            </option>
+                                            <option value="us">
+                                                123,456,789
+                                            </option>
+                                            <option value="in">
+                                                12,34,56,789
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-1 mb-1">
+                <button type="submit"
+                        class="btn btn-outline-success btn-sm clickable">
+                    {{sidebarCard.id ? 'Save changes': 'Add'}}
+                </button>
+                <button type="button"
+                        class="btn btn-default btn-sm ml-1 clickable"
+                        (click)="sidebarIsOpen = false;">
+                    Close
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

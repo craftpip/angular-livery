@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {MatchHeightModule} from "../shared/directives/match-height.directive";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UsersRoutingModule} from './users-routing.module';
 import {UsersComponent} from './users.component';
 import {UsersAddComponent} from './users-add/users-add.component';
@@ -11,6 +11,7 @@ import {TagInputModule} from "ngx-chips";
 import {FlatpickrModule} from "angularx-flatpickr";
 import {CardCollapseDirective} from "../shared/directives/card-collapse.directive";
 import {QuickPanelModule} from "../shared/directives/quick-panel.directive";
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -18,17 +19,17 @@ import {QuickPanelModule} from "../shared/directives/quick-panel.directive";
         UsersRoutingModule,
         MatchHeightModule,
         NgbModule,
-        FormsModule,
+        FormsModule, ReactiveFormsModule,
         AgGridModule.withComponents([]),
         TagInputModule,
         FlatpickrModule.forRoot(),
         QuickPanelModule,
+        SharedModule
     ],
     exports: [],
     declarations: [
         UsersComponent,
         UsersAddComponent,
-        CardCollapseDirective,
     ],
     providers: [],
 })

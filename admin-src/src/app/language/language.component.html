@@ -1,0 +1,159 @@
+<div class="page-header-container">
+    <div class="row">
+        <div class="col-6">
+            <div class="content-header">Languages</div>
+        </div>
+        <div class="col-6">
+            <div class="header-breadcrumb">
+                <ul>
+                    <li>
+                        <i class="ft ft-home"></i>
+                    </li>
+                    <li>
+                        Languages
+                    </li>
+                    <li>
+                        List
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-2 ">
+
+    <button type="button"
+            class="btn btn-fame btn-sm clickable-btn d-inline mr-1"
+            (click)="create()">
+        Create
+    </button>
+
+    <input type="text"
+           placeholder="Search"
+           style="width: 200px;"
+           class="form-control form-control-sm d-inline"
+           [(ngModel)]="filterTerm"
+           (input)="filterLang()">
+
+</div>
+
+
+<section>
+    <table class="table table-bordered table-sm table-fame">
+        <tr>
+            <th style="width: 100px">
+                Language
+            </th>
+            <th style="width: 200px;">
+                Key
+            </th>
+            <th>
+                Value
+            </th>
+            <th class="text-right"
+                style="width: 100px;">
+
+            </th>
+        </tr>
+        <tr *ngFor="let l of filteredLanguages">
+            <td class="valign-middle">
+                {{l.lang}}
+            </td>
+            <td>
+                <input class="form-control form-control-sm"
+                       (blur)="saveChanges(l)"
+                       type="text"
+                       [(ngModel)]="l.key">
+            </td>
+            <td>
+                <input style="width: 100%"
+                       class="form-control form-control-sm"
+                       (blur)="saveChanges(l)"
+                       type="text"
+                       [(ngModel)]="l.value">
+            </td>
+            <td class="text-right">
+                <button type="button"
+                        class="btn btn-fame btn-sm clickable-btn"
+                        ngbTooltip="Delete"
+                        (click)="deleteLanguage(l)">
+                    <i class="ft ft-x"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="loading">
+            <td colspan="4">
+                Loading...
+            </td>
+        </tr>
+    </table>
+</section>
+
+<button type="button"
+        class="btn btn-fame btn-sm clickable-btn"
+        (click)="create()">
+    Create
+</button>
+
+<div class="quick-panel"
+     quickPanel=""
+     [open]="modalOpen">
+    <div class="quick-panel-close"
+         (click)="modalOpen = false">
+        &times;
+    </div>
+
+    <div class="quick-panel-inner">
+        <!--content goes here-->
+        <h3>
+            Add language
+        </h3>
+
+        <form action=""
+              (submit)="save()">
+            <div class="form-group">
+                <label for="">
+                    Language
+                </label>
+                <select [(ngModel)]="new.lang"
+                        name="lang"
+                        class="form-control form-control-sm">
+                    <option value="en">
+                        English
+                    </option>
+                    <option value="ar">
+                        Arabic
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Key
+                </label>
+                <input type="text"
+                       name="key"
+                       [(ngModel)]="new.key"
+                       class="form-control form-control-sm">
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Value
+                </label>
+                <input type="text"
+                       name="value"
+                       [(ngModel)]="new.value"
+                       class="form-control form-control-sm">
+            </div>
+
+            <button type="submit"
+                    class="btn btn-fame btn-sm clickable-btn">
+                SAVE
+            </button>
+        </form>
+
+        <!--content ends here -->
+    </div>
+</div>
+
+

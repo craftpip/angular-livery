@@ -191,7 +191,6 @@
                               #formTest="ngForm"
                               (submit)="submitForm()">
 
-
                             <div class="row gutter-5">
                                 <div class="col-sm-3">
                                     <div class="form-group"
@@ -207,10 +206,10 @@
                                                 }"
                                                 [allowedFormats]="['jpg','jpeg','png']"
                                                 (errorsUpdated)="errorsList = $event"
-                                                [url]="'http://localhost/assets-mg-portal/api/auth/upload'"
+                                                [url]="'http://localhost:81/kpmg/api/csvupload'"
                                                 [postData]="{'someId': 1}"
-                                                [files]="testForm.get('files').value"
-                                                (filesUploaded)="testForm.get('files').setValue($event)"
+                                                [files]="files"
+                                                (filesUploaded)="files = $event"
                                         ></file-uploader>
 
                                         <div class="error error-danger"

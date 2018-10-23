@@ -1,0 +1,251 @@
+<div class="navbar-mock">
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-faded">
+    <div class="navbar-page-title">
+        KPMG
+    </div>
+
+    <a class="navbar-brand mb-0 h1"
+       href="#">
+        <div class="logo-container"></div>
+    </a>
+
+    <!--<button type="button"-->
+            <!--class="navbar-toggle float-left"-->
+            <!--data-toggle="collapse">-->
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+    <!--</button>-->
+
+    <div class="container-fluid">
+
+        <div class="nav-master"
+             [ngClass]="{
+            'hide': !navShow
+            }">
+            <div class="nav-master-item active">
+                <img src="assets/img/newspaper-folded.svg"
+                     alt="">
+                <span>Masters</span>
+            </div>
+            <div class="nav-master-item">
+                <i class="ft ft-package font-medium-4"></i>
+                <span>Sales</span>
+            </div>
+            <div class="nav-master-item">
+                <i class="ft ft-user-x font-medium-4"></i>
+                <span>Management</span>
+            </div>
+        </div>
+
+        <ul class="navbar-nav navbar-master-selection">
+            <li class="nav-item">
+                <a class="nav-link position-relative"
+                   toggleMasterNav>
+                    <i class="ft-grid font-medium-4"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link position-relative"
+                   toggleSearchNav>
+                    <i class="ft-search font-medium-4"></i>
+                </a>
+
+                <div class="search-master"
+                     [ngClass]="{
+                        'hide': !searchShow
+                        }">
+                    <div class="search-input">
+                        <div class="search-loading text-right"
+                             *ngIf="searchLoading">
+                            <i class="ft ft-loader spinner"
+                               style="line-height: 14px;"></i>
+                        </div>
+
+                        <input type="text"
+                               name="search"
+                               id="searchbar"
+                               placeholder="Type to search app"
+                               (input)="startSearch()"
+                               [(ngModel)]="searchTerm"
+                               class="form-control">
+
+                    </div>
+
+                    <div *ngIf="searchRequestPlaced && searchTerm && !searchLoading && !searchResults.length"
+                         class="no-results">
+                        No matching results found
+                    </div>
+
+                    <div class="search-results"
+                         *ngIf="searchLoading || searchResults.length">
+
+                        <div class="">
+                            <div *ngFor="let g of searchResults">
+                                <div class="search-group">
+                                    {{g.group}}
+                                </div>
+
+                                <div *ngFor="let s of g.options"
+                                     (click)="searchClick(s)"
+                                     class="search-result">
+                                    <div class="search-result-title">
+                                        {{s.text}}
+                                    </div>
+                                    <div *ngIf="s.subText"
+                                         class="search-result-sub">
+                                        {{s.subText}}
+                                    </div>
+                                    <div *ngIf="s.tag"
+                                         class="search-result-tag">
+                                        {{s.tag}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="collapse navbar-collapse"
+             id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item"
+                    ngbDropdown
+                    placement="bottom-right">
+                    <a class="nav-link position-relative"
+                       id="dropdownBasic4"
+                       ngbDropdownToggle>
+                        <i class="ft-help-circle font-medium-3"></i>
+                        <p class="d-none">Help</p>
+                    </a>
+                    <div ngbDropdownMenu
+                         aria-labelledby="dropdownBasic4"
+                         class="">
+                        <a class="dropdown-item"
+                           *ngIf="isTourAvailable"
+                           (click)="startTour()"
+                           href="javascript:;">
+                            <i class="ft-play mr-1"></i>
+                            <span>
+                                    Page tour
+                                </span>
+                        </a>
+                        <a class="dropdown-item"
+                           href="javascript:;">
+                            <i class="ft-file mr-1"></i>
+                            <span>
+                                    User manual
+                                </span>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item"
+                    ngbDropdown
+                    placement="bottom-right">
+                    <a class="nav-link position-relative"
+                       id="dropdownBasic2"
+                       ngbDropdownToggle>
+                        <i class="ft-bell font-medium-3"></i>
+                        <span class="notification badge badge-pill badge-danger">4</span>
+                        <p class="d-none">Notifications</p>
+                    </a>
+                    <div ngbDropdownMenu
+                         aria-labelledby="dropdownBasic2"
+                         class="notification-dropdown">
+                        <div class="border-bottom d-block text-center text-bold-600">
+                            Notifications
+                        </div>
+                        <a class="dropdown-item noti-container"
+                           *ngFor="let n of notifications">
+                            <i class="ft-bell lighten-3 float-left d-block"></i>
+                            <div class="noti-wrapper">
+                                <div class="noti-title">
+                                    {{n.text}}
+                                </div>
+                                <div class="noti-text">
+                                    {{n.subText}}
+                                </div>
+                            </div>
+                        </a>
+                        <a class="noti-footer primary text-center d-block border-top border-top border-top-lighten-4 text-bold-400">Read All Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item"
+                    ngbDropdown
+                    placement="bottom-right">
+                    <a class="nav-link position-relative"
+                       id="dropdownBasic3"
+                       ngbDropdownToggle>
+                        <i class="ft-user font-medium-3"></i>
+                        <p class="d-none">User Settings</p>
+                    </a>
+                    <div ngbDropdownMenu
+                         aria-labelledby="dropdownBasic3">
+
+                        <div class="user-d">
+                            <div>
+                                <strong>{{user.company_name}}</strong>
+                                <br>
+                                <small>{{user.email}}</small>
+                            </div>
+                        </div>
+
+                        <a class="dropdown-item"
+                           href="javascript:;">
+                            <i class="ft-settings mr-1"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a class="dropdown-item"
+                           href="javascript:;">
+                            <i class="ft-edit mr-1"></i>
+                            <span>Edit Profile</span>
+                        </a>
+                        <a class="dropdown-item"
+                           href="javascript:;">
+                            <i class="ft-mail mr-1"></i>
+                            <span>My Inbox</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item"
+                           href="javascript:;"
+                           (click)="logout()"
+                        >
+                            <i class="ft-power mr-1"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item"
+                    *ngIf="user.group != 1">
+                    <a class="nav-link position-relative"
+                       (click)="openChat()">
+                        <i class="ft-message-circle font-medium-3"></i>
+                        <span class="notification badge badge-pill badge-danger"
+                              *ngIf="newChats">{{newChats}}</span>
+                        <p class="d-none">Chat</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="quick-panel quick-panel-3x"
+     style="z-index: 11"
+     quickPanel=""
+     *ngIf="user.group != 1"
+     [open]="chatIsOpen">
+    <div class="quick-panel-close"
+         (click)="chatIsOpen = false">
+        &times;
+    </div>
+
+    <app-chat [parent]="instance"
+              (totalUnread)="newChats = $event"
+    ></app-chat>
+</div>

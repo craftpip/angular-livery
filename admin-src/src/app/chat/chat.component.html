@@ -1,0 +1,279 @@
+<div class="chat-list-container custom-scroll"
+     [ngClass]="{
+     'show': showContactList || !chatContact.contact_id
+     }"
+>
+    <div class="search-users">
+        <input type="text"
+               (input)="filterContacts()"
+               [(ngModel)]="searchContactsTerm"
+               class=""
+               placeholder="Search">
+        <button class="btn clickable-btn"
+                ngbTooltip="Create group"
+                placement="left"
+                (click)="createGroupModal()">
+            <i class="ft ft-user-plus"></i>
+        </button>
+        <button class="btn clickable-btn"
+                [ngbTooltip]="isFullWidth ? 'Minimize': 'Maximize'"
+                placement="left"
+                (click)="expandWidth()">
+            <i class="ft ft-maximize"
+               *ngIf="!isFullWidth"></i>
+            <i class="ft ft-minimize"
+               *ngIf="isFullWidth"></i>
+        </button>
+    </div>
+    <div *ngFor="let contact of filteredContacts"
+         (click)="chat(contact.contact_id, contact.contact_type)"
+         class="chat-user cursor-pointer clickable"
+         [ngClass]="{
+            'active': chatContact.contact_id == contact.contact_id
+         }"
+    >
+        <span class="pull-right unread-messages"
+              *ngIf="unReadMessages[contact.contact_id]">{{unReadMessages[contact.contact_id]}}</span>
+
+        <div class="user-image">
+            <img src="assets/img/user.png"
+                 alt="">
+        </div>
+        <div class="user-name">
+            <div class="sub">
+                {{contact.name}}
+            </div>
+            <div class="sub2">
+                {{contact.sub_name}}
+            </div>
+        </div>
+    </div>
+
+    <!--<a class="chat-user cursor-pointer"-->
+    <!--(click)="createGroupModal()">-->
+    <!--<i class="ft ft-plus-circle"></i> Create group-->
+    <!--</a>-->
+</div>
+
+<div *ngIf="!chatContactActive"
+     class="chat-container">
+    <div class="not-active-user">
+        <div class="not-active-user-cell">
+            <div class="center">
+                Select a contact to start chat
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chat-container"
+     *ngIf="chatContactActive">
+    <div class="chat-head">
+        <div class="pull-right">
+            <div class="head-item head-item-icon px-2 cursor-pointer clickable"
+                 ngbTooltip="Add participants"
+                 *ngIf="chatContact.contact_type == 'group' && user.id == chatContact.admin"
+                 (click)="openGroupInfo()"
+                 placement="bottom"
+            >
+                <i class="ft ft-user-plus"></i>
+            </div>
+            <div class="head-item head-item-icon px-2 cursor-pointer clickable"
+                 ngbTooltip="Group info"
+                 *ngIf="chatContact.contact_type == 'group'"
+                 (click)="openGroupInfo()"
+                 placement="bottom"
+            >
+                <i class="ft ft-info"></i>
+            </div>
+            <div class="head-item head-item-icon px-2 cursor-pointer clickable"
+                 (click)="parent.chatIsOpen = false">
+                <i class="ft ft-x"></i>
+            </div>
+        </div>
+        <div class="head-item head-item-icon chat-list-toggle px-2 cursor-pointer clickable"
+             (click)="showContactList = !showContactList">
+            <i class="ft ft-menu"></i>
+        </div>
+
+        <div class="chat-name">
+            <img src="assets/img/user.png"
+                 alt="">
+            <span class="name">
+                {{chatContact.name}}
+            </span>
+        </div>
+    </div>
+    <div class="chat-area"
+         ng2FileDrop=""
+         [uploader]="uploader"
+         (fileOver)="fileDropOver($event)"
+    >
+        <div class="chat-scrollable custom-scroll">
+            <div *ngFor="let chat of chats"
+                 [ngClass]="{
+                 'chat-bar-me' : chat.from_user_id == user.id
+                 }"
+                 class="chat-bar">
+                <div class="chat">
+                    <div class="chat-name"
+                         [ngStyle]="{'color': '#' + chat.userColor}"
+                         *ngIf="chatContact.contact_type == 'group' && chat.from_user_id != user.id">
+                        <strong>{{chat.from_user_name}}</strong>
+                    </div>
+                    <span class="time pull-right">{{chat.created_at | dateFormat}}</span>
+                    <div [innerHTML]="chat.message | safeHtml"></div>
+                    <div *ngIf="chat.attachments.length"
+                         class="attachment-container">
+                        <div *ngFor="let a of chat.attachments"
+                             class="attachment-link">
+                            <span
+                                    (click)="downloadAttachment(a.upload_id)"
+                                    class="cursor-pointer "
+                                    ngbTooltip="Download"
+                                    placement="top"
+                            >
+                                <i class="ft ft-file"></i> {{a.name}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="files-upload-container"
+             *ngIf="uploader.queue.length || uploadedFiles.length">
+            <div class="item"
+                 *ngIf="uploader.queue.length">
+                <strong>Uploading {{uploader.queue.length}} files</strong>
+            </div>
+            <div *ngFor="let q of uploader.queue"
+                 class="item">
+                <span class="pull-right cursor-pointer"
+                      (click)="q.cancel();q.remove()">
+                    <i class="ft ft-delete"></i>
+                </span>
+
+                <div class="name">
+                    {{q._file.name}}
+                </div>
+                <span *ngIf="q.isUploading">(Uploading)</span>
+            </div>
+            <div class="item"
+                 *ngIf="uploadedFiles.length">
+                <strong>Uploaded {{uploadedFiles.length}} files</strong>
+            </div>
+            <div class="item"
+                 *ngFor="let f of uploadedFiles; let indx = index">
+
+                <span class="pull-right cursor-pointer"
+                      (click)="removeFromUploadedFiles(indx)">
+                    <i class="ft ft-delete"></i>
+                </span>
+                <div class="name">
+                    {{f.name}}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="autocomplete-suggestions"
+             *ngIf="isAutoComplete">
+            <div class="item"
+                 *ngIf="!isAutoCompleteSearching && autoCompleteList.length == 0">
+                <i class="ft ft-link text-warning"></i> Link mode active
+            </div>
+            <div class="item"
+                 *ngIf="isAutoCompleteSearching && autoCompleteList.length == 0">
+                Searching...
+            </div>
+            <div class="item cursor-pointer"
+                 [ngClass]="{
+                    'item-active': indx == autoCompleteKeyboardIndex
+                 }"
+                 (click)="autoCompleteClick(r)"
+                 *ngFor="let r of autoCompleteList; let indx = index">
+                <div class="tag">
+                    {{r.type}}
+                </div>
+                <div class="name">
+                    {{r.name}}
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="chat-noti chat-loading show">-->
+        <!--Loading chat-->
+        <!--</div>-->
+        <div class="chat-noti chat-loading"
+             [ngClass]="{
+                'show': loadingChats
+             }"
+        >
+            Loading chat
+        </div>
+        <div class="drop-files chat-noti"
+             [ngClass]="{
+                'show': hasFileDropOver
+             }"
+        >
+            Drop files
+        </div>
+    </div>
+    <div class="chat-input">
+        <div class="chat-input-container">
+
+            <input type="file"
+                   multiple
+                   #fileUploaderChat
+                   style="display: none"
+                   ng2FileSelect=""
+                   [uploader]="uploader"
+            >
+
+            <form (submit)="sendMsg()">
+                <div class="chat-input-inner">
+                    <textarea type="text"
+                              class="form-control"
+                              autocomplete="off"
+                              spellcheck="true"
+                              autocapitalize="off"
+                              name="composeMsg"
+                              #chatInput
+                              id="chat-compose"
+                              (input)="composing()"
+                              [readonly]="sendingMsg"
+                              [(ngModel)]="composeMessage"
+                              placeholder="Chat message"></textarea>
+
+                    <button class="btn clickable-btn"
+                            ngbTooltip="Attach link/file"
+                            (click)="fileUploaderChat.click()"
+                            type="button">
+                        <i class="ft ft-file"></i>
+                    </button>
+                    <button class="btn clickable-btn btn-send"
+                            ngbTooltip="Send"
+                            type="submit">
+                        <i class="ft ft-navigation"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="chat-cover"
+     [ngClass]="{
+        'show':_openGroupInfo
+     }"
+     (click)="_openGroupInfo = false"></div>
+<div class="chat-group-info"
+     [ngClass]="{
+        'show':_openGroupInfo
+     }">
+    <app-chat-group-info
+            *ngIf="_openGroupInfo"
+            [contactList]="contacts"
+            [contact]="chatContact"></app-chat-group-info>
+</div>

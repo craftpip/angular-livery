@@ -1,0 +1,15 @@
+<div class="table-responsive position-relative card-h"
+     style="overflow-x: auto;">
+    <table class="table table-condensed table-sm ">
+        <tr>
+            <th *ngFor="let h of headers">
+                {{h}}
+            </th>
+        </tr>
+        <tr *ngFor="let d of rows; let indx = index">
+            <td *ngFor="let h of headers">
+                {{d[h]}}
+            </td>
+        </tr>
+    </table>
+</div>

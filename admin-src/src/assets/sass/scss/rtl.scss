@@ -1,0 +1,113 @@
+body.rtl app-full-layout {
+  input, textarea, select, button {
+    direction: rtl;
+  }
+  form {
+    direction: rtl;
+  }
+  .form-group {
+    label {
+      text-align: right;
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  .card {
+    direction: rtl;
+    .media-body {
+      text-align: right;
+    }
+  }
+
+  table {
+    direction: rtl;
+
+    th, td{
+      text-align: right;
+    }
+
+    $tableBorderColor: #9d9d9d;
+
+    &.table-fame {
+      th:last-child {
+        border-left: solid 1px $tableBorderColor;
+        border-right: none;
+      }
+      th:first-child {
+        border-right: solid 1px $tableBorderColor;
+        border-left: none;
+      }
+      td:last-child {
+        border-left: solid 1px $tableBorderColor;
+        border-right: none;
+      }
+      td:first-child {
+        border-right: solid 1px $tableBorderColor;
+        border-left: none;
+      }
+    }
+
+  }
+
+  //  nav master
+  .nav-master-container {
+    direction: rtl;
+  }
+
+  .search-master {
+    direction: rtl;
+
+    .search-loading {
+      text-align: left;
+    }
+
+    .search-group {
+      text-align: right;
+    }
+    .no-results {
+      text-align: right;
+    }
+    .search-results {
+      .search-result-container {
+        text-align: right;
+      }
+
+      .search-result-tag {
+        right: auto;
+        left: 7px;
+      }
+    }
+  }
+
+  .nav-container {
+    direction: rtl;
+
+    .navigation {
+      padding-right: 0px;
+
+      a {
+        padding-right: 17px;
+        text-align: right;
+
+        > i {
+          float: right;
+          margin-right: 0;
+          margin-left: 10px;
+        }
+
+        .badge.badge-pill {
+          left: 32px;
+          right: auto;
+        }
+      }
+
+      li.has-sub > a:after {
+        right: auto;
+        left: 10px;
+      }
+    }
+
+  }
+
+}

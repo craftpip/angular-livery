@@ -1,230 +1,292 @@
 <div class="navbar-mock">
 </div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-faded">
-
+<nav class="navbar bg-faded">
     <div class="navbar-page-title">
-        ERA Properties
+        {{'KPMG' | lang}}
     </div>
 
     <a class="navbar-brand mb-0 h1"
-       href="#">
+       routerLink="/">
         <div class="logo-container"></div>
     </a>
 
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle d-lg-none float-left"
-                    data-toggle="collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <!--<form class="navbar-form navbar-right"-->
-            <!--role="search">-->
-            <!--<div class="position-relative has-icon-right">-->
-            <!--<input type="text"-->
-            <!--class="form-control round"-->
-            <!--placeholder="Search">-->
-            <!--<div class="form-control-position">-->
-            <!--<i class="ft-search"></i>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</form>-->
-
-            <div class="nav-master hide">
-                <div class="nav-master-item active">
-                    <img src="assets/img/newspaper-folded.svg"
-                         alt="">
-                    <span>Masters</span>
-                </div>
-                <div class="nav-master-item">
-                    <i class="ft ft-package font-medium-4"></i>
-                    <span>Sales</span>
-                </div>
-                <div class="nav-master-item">
-                    <i class="ft ft-user-x font-medium-4"></i>
-                    <span>Management</span>
-                </div>
+    <div class="nav-items">
+        <div class="left-nav">
+            <div class="n-item navbar-toggle-button">
+                <a class="nav-link position-relative navbar-toggle"
+                   data-toggle="collapse"
+                >
+                    <i class="ft-menu font-medium-4"></i>
+                </a>
             </div>
-
-            <ul class="navbar-nav navbar-master-selection">
-                <li class="nav-item">
-                    <a class="nav-link position-relative"
-                       toggleMasterNav>
-                        <i class="ft-grid font-medium-4"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link position-relative"
-                       toggleSearchNav>
-                        <i class="ft-search font-medium-4"></i>
-                    </a>
-
-                    <div class="search-master hide">
-                        <div class="search-input">
-                            <input type="text"
-                                   name="search"
-                                   id="searchbar"
-                                   placeholder="Type to search app"
-                                   (input)="searchApp()"
-                                   [(ngModel)]="searchTerm"
-                                   class="form-control">
-                        </div>
-
-                        <div class="search-results"
-                             *ngIf="searchLoading || searchResults.length">
-                            <div class="search-loading"
-                                 *ngIf="searchLoading"
-                                 style="text-align: center">
-                                Loading..
+            <div class="n-item">
+                <a class="nav-link position-relative"
+                   toggleMasterNav>
+                    <i class="ft-grid font-medium-4"></i>
+                </a>
+                <div class="nav-master-container nav-dropdown-position"
+                     [ngClass]="{
+                            'hide': !navShow
+                            }">
+                    <div class="row gutter-5">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="nav-master-item active">
+                                <img src="assets/img/newspaper-folded.svg"
+                                     alt="">
+                                <span>{{ 'masters' | lang }}</span>
                             </div>
-                            <div class=""
-                                 *ngIf="!searchLoading">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
 
-                                <div *ngFor="let g of searchResults">
-                                    <div class="search-group">
-                                        {{g.group}}
-                                    </div>
+                            <div class="nav-master-item">
+                                <i class="ft ft-package font-medium-4"></i>
+                                <span>{{ 'sales' | lang: 'Sales' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
 
-                                    <div *ngFor="let s of g.options"
-                                         class="search-result">
-                                        <div class="search-result-title">
-                                            {{s.text}}
-                                        </div>
-                                        <div *ngIf="s.subText"
-                                             class="search-result-sub">
-                                            {{s.subText}}
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="nav-master-item">
+                                <i class="ft ft-user-x font-medium-4"></i>
+                                <span>{{ 'management' | lang: 'Management' }}</span>
                             </div>
                         </div>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <div class="n-item">
+                <a class="nav-link position-relative"
+                   toggleSearchNav>
+                    <i class="ft-search font-medium-4"></i>
+                </a>
+                <div class="search-master nav-dropdown-position"
+                     [ngClass]="{
+                        'hide': !searchShow
+                        }">
+                    <div class="search-input">
+                        <div class="search-loading"
+                             *ngIf="searchLoading">
+                            <i class="ft ft-loader spinner"
+                               style="line-height: 14px;"></i>
+                        </div>
+
+                        <input type="text"
+                               name="search"
+                               id="searchbar"
+                               [placeholder]="'typeToSearchApp' | lang: 'Type to search app'"
+                               (input)="startSearch()"
+                               [(ngModel)]="searchTerm"
+                               #globalSearchInput
+                               class="form-control">
+
+                    </div>
+
+                    <div *ngIf="searchRequestPlaced && searchTerm && !searchLoading && !searchResults.length"
+                         class="no-results py-1">
+                        {{ 'noMatchingResultsFound' | lang}}
+                    </div>
+
+                    <div class="search-results"
+                         *ngIf="searchLoading || searchResults.length">
+
+                        <div class="">
+                            <div *ngFor="let g of searchResults; let indx = index"
+                                 class="search-result-parent">
+                                <div class="search-group"
+                                     *ngIf="g.type == 'group'">
+                                    {{g.data}}
+                                </div>
+
+                                <div *ngIf="g.type == 'result'"
+                                     (click)="searchClick(g.data)"
+                                     [ngClass]="{
+                                     'result-active': indx == searchKeyboardNavigationIndex
+                                     }"
+                                     class="search-result">
+                                    <div class="search-result-icon">
+                                        <i [ngClass]="
+                                            g.data.icon
+                                        "></i>
+                                    </div>
+                                    <div class="search-result-container"
+                                         [ngClass]="{
+                                         'has-icon': g.data.icon
+                                         }"
+                                    >
+                                        <div class="search-result-title">
+                                            {{g.data.text}}
+                                        </div>
+                                        <div *ngIf="g.data.subText"
+                                             class="search-result-sub">
+                                            {{g.data.subText}}
+                                        </div>
+                                        <div *ngIf="g.data.tag"
+                                             class="search-result-tag">
+                                            {{g.data.tag}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="navbar-container">
-            <div class="collapse navbar-collapse"
-                 id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <!--<li class="nav-item mr-1">-->
-                    <!--<a href="javascript:;"-->
-                    <!--class="nav-link"-->
-                    <!--appToggleFullscreen>-->
-                    <!--<i class="ft-maximize font-medium-3"></i>-->
-                    <!--<p class="d-none">fullscreen</p>-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <li class="nav-item"
-                        ngbDropdown
-                        placement="bottom-right">
-                        <a class="nav-link position-relative"
-                           id="dropdownBasic4"
-                           ngbDropdownToggle>
-                            <i class="ft-help-circle font-medium-3"></i>
-                            <p class="d-none">Help</p>
-                        </a>
-                        <div ngbDropdownMenu
-                             aria-labelledby="dropdownBasic4"
-                             class="">
-                            <a class="dropdown-item"
-                               *ngIf="isTourAvailable"
-                               (click)="startTour()"
-                               href="javascript:;">
-                                <i class="ft-play mr-1"></i>
-                                <span>
-                                    Page tour
-                                </span>
-                            </a>
-                            <a class="dropdown-item"
-                               href="javascript:;">
-                                <i class="ft-file mr-1"></i>
-                                <span>
-                                    User manual
-                                </span>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item"
-                        ngbDropdown
-                        placement="bottom-right">
-                        <a class="nav-link position-relative"
-                           id="dropdownBasic2"
-                           ngbDropdownToggle>
-                            <i class="ft-bell font-medium-3"></i>
-                            <span class="notification badge badge-pill badge-danger">4</span>
-                            <p class="d-none">Notifications</p>
-                        </a>
-                        <div ngbDropdownMenu
-                             aria-labelledby="dropdownBasic2"
-                             class="notification-dropdown">
-                            <div class="border-bottom d-block text-center text-bold-600">
-                                Notifications
-                            </div>
-                            <a class="dropdown-item noti-container"
-                               *ngFor="let n of notifications">
-                                <i class="ft-bell lighten-3 float-left d-block"></i>
-                                <div class="noti-wrapper">
-                                    <div class="noti-title">
-                                        {{n.text}}
-                                    </div>
-                                    <div class="noti-text">
-                                        {{n.subText}}
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="noti-footer primary text-center d-block border-top border-top border-top-lighten-4 text-bold-400">Read All Notifications</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"
-                        ngbDropdown
-                        placement="bottom-right">
-                        <a class="nav-link position-relative"
-                           id="dropdownBasic3"
-                           ngbDropdownToggle>
-                            <i class="ft-user font-medium-3"></i>
-                            <p class="d-none">User Settings</p>
-                        </a>
-                        <div ngbDropdownMenu
-                             aria-labelledby="dropdownBasic3">
-
-                            <div class="user-d">
-                                <div>
-                                    <strong>{{user.username}}</strong>
-                                    <br>
-                                    <small>{{user.email}}</small>
-                                </div>
-                            </div>
-
-                            <a class="dropdown-item"
-                               href="javascript:;">
-                                <i class="ft-settings mr-1"></i>
-                                <span>Settings</span>
-                            </a>
-                            <a class="dropdown-item"
-                               href="javascript:;">
-                                <i class="ft-edit mr-1"></i>
-                                <span>Edit Profile</span>
-                            </a>
-                            <a class="dropdown-item"
-                               href="javascript:;">
-                                <i class="ft-mail mr-1"></i>
-                                <span>My Inbox</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                               href="javascript:;"
-                               (click)="logout()"
-                            >
-                                <i class="ft-power mr-1"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+        <div class="right-nav nav-mobile-more">
+            <div class="n-item">
+                <a class="nav-link position-relative"
+                   (click)="rightNavShow = !rightNavShow">
+                    <i class="ft-more-vertical font-medium-3"></i>
+                </a>
             </div>
         </div>
+        <div class="right-nav right-nav-mobile"
+             [ngClass]="{
+            'show': rightNavShow
+        }">
+            <div class="n-item"
+                 ngbDropdown
+                 placement="bottom-right">
+
+                <a class="nav-link position-relative"
+                   id="tourDropdown"
+                   ngbDropdownToggle>
+                    <i class="ft-help-circle font-medium-3"></i>
+                    <p class="d-none">Help</p>
+                </a>
+                <div ngbDropdownMenu
+                     aria-labelledby="tourDropdown"
+                     class="">
+                    <!--<a class="dropdown-item"-->
+                       <!--*ngIf="isTourAvailable"-->
+                       <!--(click)="startTour()"-->
+                       <!--href="javascript:;">-->
+                        <!--<i class="ft-play mr-1"></i>-->
+                        <!--<span>-->
+                                    <!--Page tour-->
+                                <!--</span>-->
+                    <!--</a>-->
+                    <a class="dropdown-item"
+                       href="javascript:;">
+                        <i class="ft-file mr-1"></i>
+                        <span>
+                                    User manual
+                                </span>
+                    </a>
+                </div>
+            </div>
+            <div class="n-item"
+                 ngbDropdown
+                 placement="bottom-right">
+                <a class="nav-link position-relative"
+                   id="notificationDropdown"
+                   ngbDropdownToggle>
+                    <i class="ft-bell font-medium-3"></i>
+                    <span class="notification badge badge-pill badge-danger">4</span>
+                    <p class="d-none">Notifications</p>
+                </a>
+                <div ngbDropdownMenu
+                     aria-labelledby="notificationDropdown"
+                     class="notification-dropdown">
+                    <div class="border-bottom d-block text-center text-bold-600 py-1">
+                        Notifications
+                    </div>
+                    <a class="dropdown-item noti-container"
+                       *ngFor="let n of notifications">
+                        <i class="ft-bell lighten-3 float-left d-block"></i>
+                        <div class="noti-wrapper">
+                            <div class="noti-title">
+                                {{n.text}}
+                            </div>
+                            <div class="noti-text">
+                                {{n.subText}}
+                            </div>
+                        </div>
+                    </a>
+                    <a class="noti-footer primary text-center d-block border-top border-top border-top-lighten-4 text-bold-400 py-1">Read All Notifications</a>
+                </div>
+            </div>
+            <div class="n-item"
+                 ngbDropdown
+                 placement="bottom-right">
+                <a class="nav-link position-relative"
+                   id="dropdownBasic3"
+                   ngbDropdownToggle>
+                    <i class="ft-user font-medium-3"></i>
+                    <p class="d-none">User Settings</p>
+                </a>
+                <div ngbDropdownMenu
+                     aria-labelledby="dropdownBasic3">
+
+                    <div class="user-d">
+                        <div>
+                            <strong>{{user.company_name}}</strong>
+                            <br>
+                            <small>{{user.email}}</small>
+                        </div>
+                    </div>
+
+                    <a class="dropdown-item"
+                       href="javascript:;">
+                        <i class="ft-settings mr-1"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a class="dropdown-item"
+                       (click)="changeLanguage()"
+                       href="javascript:;">
+                        <i class="ft-globe mr-1"></i>
+                        <span>Language</span>
+                    </a>
+                    <a class="dropdown-item"
+                       href="javascript:;">
+                        <i class="ft-edit mr-1"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                    <a class="dropdown-item"
+                       href="javascript:;">
+                        <i class="ft-mail mr-1"></i>
+                        <span>My Inbox</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item"
+                       href="javascript:;"
+                       (click)="logout()"
+                    >
+                        <i class="ft-power mr-1"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+            <div class="n-item">
+                <a class="nav-link position-relative"
+                   (click)="openChat();rightNavShow = false">
+                    <i class="ft-message-circle font-medium-3"></i>
+                    <span class="notification badge badge-pill badge-danger"
+                          *ngIf="newChats">{{newChats}}</span>
+                    <p class="d-none">Chat</p>
+                </a>
+            </div>
+        </div>
+
     </div>
 </nav>
+
+
+<div class="quick-panel quick-panel-3x"
+     [ngClass]="{
+        'quick-panel-fx': chatFullWidth
+     }"
+     style="z-index: 11"
+     quickPanel=""
+     *ngIf="user.group != 1"
+     [open]="chatIsOpen">
+    <div class="quick-panel-close"
+         (click)="chatIsOpen = false">
+        &times;
+    </div>
+
+    <app-chat [parent]="instance"
+              (totalUnread)="newChats = $event"
+    ></app-chat>
+</div>

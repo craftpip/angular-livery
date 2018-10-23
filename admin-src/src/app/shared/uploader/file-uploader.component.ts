@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, NgModule, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FileItem, FileUploader} from "ng2-file-upload";
 import {Utils} from "../helper.service";
 
@@ -58,6 +58,45 @@ export class FileUploaderComponent implements OnInit {
 
     @Input('allowedFormats')
     allowedFormats: string;
+    /**
+     * Data to be sent when file is uploaded.
+     */
+    @Input()
+    postData: any = {};
+    /**
+     * Emit changes to files array when file is uploaded
+     * @type {EventEmitter<any>}
+     */
+    @Output()
+    filesUploaded: EventEmitter<any> = new EventEmitter();
+    /**
+     * Emit state of uploader, if its uploading or not
+     * @type {EventEmitter<boolean>}
+     */
+    @Output()
+    isUploading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    /**
+     * List of failure uploads
+     *
+     * @type {EventEmitter<any[]>}
+     */
+    @Output()
+    errorsUpdated: EventEmitter<any[]> = new EventEmitter<any[]>();
+    errors: any[] = [];
+    uploading: boolean = false;
+    previousUpdatedPercent: any = 0;
+    /**
+     * The parent component can remove from the responses
+     * @type {any[]}
+     */
+    @Input('files')
+    responses: any[] = [];
+
+    constructor(
+        public utils: Utils,
+    ) {
+
+    }
 
     /**
      * Url to upload the file.
@@ -77,45 +116,6 @@ export class FileUploaderComponent implements OnInit {
         }
     }
 
-    /**
-     * Data to be sent when file is uploaded.
-     */
-    @Input()
-    postData: any;
-
-    /**
-     * Emit changes to files array when file is uploaded
-     * @type {EventEmitter<any>}
-     */
-    @Output()
-    filesUploaded: EventEmitter<any> = new EventEmitter();
-
-    /**
-     * Emit state of uploader, if its uploading or not
-     * @type {EventEmitter<boolean>}
-     */
-    @Output()
-    isUploading: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-    /**
-     * List of failure uploads
-     *
-     * @type {EventEmitter<any[]>}
-     */
-    @Output()
-    errorsUpdated: EventEmitter<any[]> = new EventEmitter<any[]>();
-    errors: any[] = [];
-
-    constructor(
-        public utils: Utils,
-    ) {
-
-    }
-
-    uploading: boolean = false;
-
-    previousUpdatedPercent: any = 0;
-
     getUploadedPercent() {
         let u = this.uploader.progress;
 
@@ -131,13 +131,6 @@ export class FileUploaderComponent implements OnInit {
         }
     }
 
-    /**
-     * The parent component can remove from the responses
-     * @type {any[]}
-     */
-    @Input('files')
-    responses: any[] = [];
-
     ngOnInit() {
         this.uploader = new FileUploader({
             url: this._url,
@@ -146,8 +139,10 @@ export class FileUploaderComponent implements OnInit {
             /**
              * Append post data to the form.
              */
-            for (let key of Object.keys(this.postData)) {
-                form.append(key, this.postData[key]);
+            if (this.postData && typeof this.postData === 'object') {
+                for (let key of Object.keys(this.postData)) {
+                    form.append(key, this.postData[key]);
+                }
             }
         };
         this.uploader.onBeforeUploadItem = (file: FileItem) => {
@@ -157,7 +152,7 @@ export class FileUploaderComponent implements OnInit {
         this.uploader.onCompleteItem = (file: FileItem, r: any) => {
             this.uploading = false;
             this.isUploading.emit(this.uploading);
-            console.log(r, file);
+            // console.log(r, file);
             this.uploader.removeFromQueue(file);
 
             let response;
@@ -203,6 +198,7 @@ export class FileUploaderComponent implements OnInit {
                 this.uploader.removeFromQueue(file);
                 return false;
             }
+            console.log('upload file');
             this.uploader.uploadAll();
         };
     }

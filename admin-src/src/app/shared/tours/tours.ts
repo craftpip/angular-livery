@@ -9,7 +9,7 @@ export var tours: {
             {
                 title: 'Cards',
                 content: 'Standard cards to show important information',
-                target: 'tour-card',
+                target: 'tour-card1',
                 placement: 'bottom',
             },
             {

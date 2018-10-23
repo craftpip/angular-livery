@@ -6,7 +6,7 @@
           content="IE=edge">
     <!--<meta name="viewport"-->
     <!--content="width=device-width, initial-scale=1">-->
-    <title>MIS iBase template</title>
+    <title> Ibase angular template </title>
     <!--<base href="/assets-mg-portal/admin/">-->
     <base href="/">
     <link rel="icon"
@@ -76,4 +76,38 @@
         'theme': 'light'
     }
 </script>
+
+
+<script id="databaseWorker"
+        type="javascript/worker">
+
+    importScripts('https://cdnjs.cloudflare.com/ajax/libs/alasql/0.4.11/alasql.min.js');
+    self.onmessage = function(q){
+        var payload = q.data;
+        console.log('Q id: ' + payload.id + ': ', payload.payload);
+        var start = (+new Date());
+        if(typeof payload.payload == 'string'){
+            var result = alasql(payload.payload);
+            self.postMessage({
+                id: payload.id,
+                payload: result,
+            });
+        }else{
+            var r = []
+            for(var q of payload.payload){
+                r.push(alasql(q));
+            }
+            self.postMessage({
+                id: payload.id,
+                payload: r,
+            });
+        }
+
+        var end = (+new Date());
+        console.log('Q id: ' + payload.id + ' took ' + (end - start) / 1000 + 's');
+    }
+
+
+</script>
+
 </html>

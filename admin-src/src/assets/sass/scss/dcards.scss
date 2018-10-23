@@ -1,0 +1,76 @@
+.dcards-container {
+  //background-color: orange;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-content: flex-start;
+  justify-items: center;
+  margin: 0 -5px 0;
+
+  .dcard {
+    //background-color: dodgerblue;
+    flex: 1;
+    max-width: 33.333%;
+    min-width: 33.333%;
+    padding: 10px 5px 0;
+    margin-bottom: 12px;
+
+    &.dcard2 {
+      max-width: 66.666%;
+      min-width: 66.666%;
+    }
+    &.dcard3 {
+      max-width: 99.999%;
+      min-width: 99.999%;
+    }
+
+    .card-title {
+      cursor: grab;
+
+      &:hover{
+        border-bottom: solid 1px #aaa;
+      }
+    }
+
+    .card-right-icons {
+      opacity: 0;
+      transform: translate(15px, 0px);
+      transition: all .4s;
+    }
+
+    &:hover {
+      .card-right-icons {
+        opacity: 1;
+        transform: translate(0px, 0px);
+      }
+    }
+  }
+
+  .dcard-content {
+    display: block;
+    height: inherit;
+
+    .card {
+      height: inherit;
+
+      .card-title {
+        //font-weight: bold;
+      }
+
+      app-card {
+        overflow: hidden;
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
+.dcard {
+  height: 300px;
+  max-height: 300px;
+
+  .card-h {
+    height: 264px;
+  }
+}

@@ -1,0 +1,149 @@
+<div class="chat-group-info-comp pt-2">
+    <div>
+        <div class="mb-1 px-2"
+             *ngIf="!editName">
+            <span class="font-medium-3 valign-middle f-m">
+                <strong>
+                    {{contact.name}}
+                </strong>
+            </span>
+            <span class="valign-middle cursor-pointer clickable-btn"
+                  (click)="startEditName()"
+                  ngbTooltip="Edit name"
+                  placement="bottom">
+                <i class="ft ft-edit-2"></i>
+            </span>
+        </div>
+        <div class="mb-1 px-2"
+             *ngIf="editName">
+            <form (submit)="saveName()">
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Recipient's username"
+                           [(ngModel)]="editNameValue"
+                           name="edit-name"
+                           id="chat-edit-name"
+                           [disabled]="editNameSaving"
+                           aria-label="Recipient's username"
+                           aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <!--<button class="btn btn-outline-secondary"-->
+                        <!--[disabled]="editNameSaving"-->
+                        <!--type="submit">-->
+                        <!--{{editNameSaving ? 'Saving': 'Save'}}-->
+                        <!--</button>-->
+                        <button class="btn btn-outline-secondary"
+                                [disabled]="editNameSaving"
+                                (click)="editName = false;"
+                                type="button">Close
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="px-2 pb-1">
+            {{contact.sub_name}}
+        </div>
+
+        <!--<div class="px-2"-->
+        <!--*ngIf="!_showAddParticipant">-->
+        <!--<div class="py-1 cursor-pointer"-->
+        <!--(click)="addParticipantShow()">-->
+        <!--<i class="ft ft-plus-circle valign-middle"></i>-->
+        <!--<span class="valign-middle ml-1">Add participant</span>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="px-2 py-1 my-1 participant-add-container"
+             *ngIf="_showAddParticipant">
+            <div class="form-group">
+                <label>
+                    Select participant
+                </label>
+
+                <p-dropdown [options]="addParticipantDropdown"
+                            optionLabel="name"
+                            [autoDisplayFirst]="false"
+                            [filter]="true"
+                            filterBy="label"
+                            [disabled]="addingNewParticipant"
+                            [(ngModel)]="addParticipantSelection"></p-dropdown>
+
+                <div class="mt-1">
+                    <button (click)="addNewParticipant()"
+                            [disabled]="!addParticipantSelection || addingNewParticipant"
+                            class="btn btn-fame btn-sm mr-1 clickable-btn">Add
+                    </button>
+                    <button (click)="_showAddParticipant = false"
+                            [disabled]="addingNewParticipant"
+                            class="btn btn-default btn-sm clickable-btn">
+                        Close
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="px-2">
+
+            <div class="py-1">
+                <div class="pull-right"
+                     ngbTooltip="Add a new participant"
+                     placement="left"
+                     *ngIf="!_showAddParticipant && user.id == contact.admin">
+                    <div class="cursor-pointer clickable"
+                         (click)="addParticipantShow()">
+                        <i class="ft ft-plus-circle valign-middle"></i>
+                        <span class="valign-middle ml-1">Add</span>
+                    </div>
+                </div>
+                <strong class="f-m">
+                    {{participantCount}} participants
+                </strong>
+            </div>
+            <div class="border-top py-1"
+                 *ngFor="let c of participantContacts">
+                <div class="user-list">
+                    <div class="pull-right"
+                         *ngIf="c.contact_id == contact.admin">
+                        <span class="badge badge-dark">
+                            Admin
+                        </span>
+                    </div>
+                    <!-- Only the current user if admin can remove other users -->
+                    <div class="pull-right remove-btn"
+                         *ngIf="c.contact_id != contact.admin && contact.admin == user.id">
+                        <a (click)="removeParticipant(c.contact_id)"
+                           class="cursor-pointer">Remove</a>
+                    </div>
+
+                    <div class="pull-left">
+                        <img src="assets/img/user.png"
+                             class="mr-1"
+                             alt="">
+                    </div>
+                    <div>
+                        <span class="name">
+                            <strong class="f-m">
+                                {{c.name}}
+                            </strong>
+                        </span>
+                        <span class="sub_name">
+                            {{c.sub_name}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-danger mt-3 btn-sm clickable-btn"
+                    (click)="deleteGroup()">
+                Delete group
+            </button>
+
+
+        </div>
+
+    </div>
+</div>

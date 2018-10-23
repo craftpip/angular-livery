@@ -1,5 +1,13 @@
 @import "scss/variables";
+
+.transition {
+  transition: all;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-function;
+}
+
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../fonts/kiro/stylesheet.css";
 @import "scss/core/palette";
 @import "scss/app-variables";
 @import "scss/mixins";
@@ -14,9 +22,51 @@
 @import "~angular-calendar/css/angular-calendar.css";
 //@import "~bootstrap-tour/build/css/bootstrap-tour-standalone.css";
 @import "~noty/lib/noty.css";
-@import "~noty/lib/themes/bootstrap-v4.css";
+//@import "~noty/lib/themes/bootstrap-v4.css";
 @import "~noty/lib/themes/light.css";
 @import "scss/login";
+@import "scss/chat";
+@import "../../../node_modules/dragula/dist/dragula.css";
+
+.gu-mirror {
+  position: fixed !important;
+  margin: 10px 0 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  //-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  //filter: alpha(opacity=80);
+  pointer-events: none;
+  transform: translateZ(0);
+  transition: all 10s !important;
+
+  .card {
+    @extend .shadow-z-2;
+  }
+}
+
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+
+  * {
+    cursor: grabbing !important;
+  }
+}
+
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
 
 // custom
 
@@ -59,13 +109,29 @@ p-calendar {
   transform: translate(420px, 0);
   background: white;
   width: 400px;
-  transition: all .2s;
   box-shadow: -3px 0px 30px rgba(0, 0, 0, .3);
+  overflow: hidden;
   overflow-y: auto;
   z-index: 9;
   bottom: 0px;
   top: 60px;
+  @extend .transition;
   opacity: 0;
+
+  &.quick-panel-2x {
+    width: 800px;
+    transform: translate(820px, 0);
+  }
+
+  &.quick-panel-3x {
+    width: 1000px;
+    transform: translate(1020px, 0);
+  }
+
+  &.quick-panel-fx {
+    width: 100%;
+    transform: translate(102%, 0);
+  }
 
   &.open {
     transform: translate(0px, 0);
@@ -81,6 +147,10 @@ p-calendar {
   .quick-panel-inner {
     padding: 20px;
   }
+
+  @media (max-width: 1050px) {
+    width: 100% !important;
+  }
 }
 
 .validator-code {
@@ -90,125 +160,6 @@ p-calendar {
 
 .m-l {
   margin-left: 7px;
-}
-
-.nav-master {
-  position: fixed;
-  background: white;
-  top: 52px;
-  padding: 0 10px 10px 0;
-  width: 401px;
-  box-shadow: $shadow-8dp;
-  border-radius: 4px;
-  transition: all .2s;
-  overflow: hidden;
-  opacity: 1;
-  transform-origin: top;
-
-  &.hide {
-    transform: rotateX(90deg);
-    opacity: 0;
-  }
-
-  .nav-master-item {
-    background: #eee;
-    //color: white;
-    width: 47%;
-    padding: 7px 5px;
-    border-radius: 4px;
-    float: left;
-    margin-top: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-    position: relative;
-
-    &:hover {
-      background-color: #ddd;
-    }
-
-    &.active {
-      background-color: rgba(2, 157, 159, 0.38);
-
-      i {
-        color: inherit;
-      }
-    }
-
-    img {
-      height: 23px;
-    }
-    i, img {
-      position: absolute;
-      top: 7px;
-      left: 9px;
-    }
-    i, span, img {
-      vertical-align: middle;
-    }
-    span {
-      padding-left: 40px;
-    }
-  }
-}
-
-.search-master {
-  position: absolute;
-  background: white;
-  border-radius: 4px;
-  width: 300px;
-  box-shadow: $shadow-8dp;
-  transition: all .2s;
-  overflow: hidden;
-  top: 52px;
-  opacity: 1;
-  transform-origin: top;
-
-  &.hide {
-    transform: rotateX(90deg);
-    opacity: 0;
-  }
-
-  .search-input {
-    //padding: 10px;
-  }
-
-  .search-group {
-    padding: 0px 10px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .search-results {
-    margin-top: 4px;
-    overflow: hidden;
-    overflow-y: auto;
-    max-height: 280px;
-
-    .search-result {
-      padding: 10px 10px;
-      display: block;
-      border-top: solid 1px #ddd;
-      cursor: pointer;
-      transition: all .1s;
-
-      &:first-child {
-        border-top: none;
-      }
-
-      &:hover {
-        background: #eee;
-      }
-    }
-    .search-result-title {
-      font-size: 15px;
-      line-height: 15px;
-    }
-    .search-result-sub {
-      font-size: 13px;
-      line-height: 13px;
-      margin-top: 4px;
-    }
-  }
 }
 
 .nav-item {
@@ -408,7 +359,7 @@ tag {
         background-color: #506EEC;
         left: -22px;
         border-radius: 50px;
-        transition: all .4s;
+        transition: all .2s;
         transform: scale(0);
       }
     }
@@ -1007,5 +958,304 @@ p-inputmask {
     > input.ui-state-default {
       border-color: $color-danger;
     }
+  }
+}
+
+.btn-clear {
+  border: none !important;
+  background: none !important;
+}
+
+.alert {
+  &.alert-info {
+    background-color: rgba(51, 202, 229, 0.3215686274509804) !important
+  }
+  &.alert-danger {
+    background-color: rgba(255, 124, 139, 0.32941176470588235) !important;
+  }
+  &.alert-success {
+    background-color: rgba(14, 228, 148, 0.34901960784313724) !important;
+  }
+  &.alert-primary {
+    background-color: rgba(0, 192, 196, 0.2901960784313726) !important;
+  }
+}
+
+.table-valign {
+  td, th {
+    vertical-align: middle;
+  }
+}
+
+.pill {
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: white;
+
+  &.pill-success {
+    background-color: $color-success;
+    color: white;
+  }
+  &.pill-warning {
+    background-color: $color-warning;
+    color: white;
+  }
+  &.pill-danger {
+    background-color: $color-danger;
+    color: white;
+  }
+  &.pill-info {
+    background-color: $color-info;
+    color: white;
+  }
+
+  &.pill-button {
+    opacity: .8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.table-fame {
+  cursor: default;
+
+  td, th {
+    padding: 3px 11px;
+  }
+  td {
+    border-right: none;
+    border-left: none;
+    font-size: 13px;
+
+    &:first-child {
+      border-left: solid 1px #9d9d9d;
+    }
+    &:last-child {
+      border-right: solid 1px #9d9d9d;
+    }
+  }
+  th {
+    font-weight: 100;
+    color: #666;
+    font-size: 13px;
+    border-top-color: #9d9d9d;
+    border-bottom-color: #9d9d9d;
+    border-right-color: transparent;
+    border-left-color: transparent;
+
+    &:first-child {
+      border-left-color: #9d9d9d;
+    }
+    &:last-child {
+      border-right-color: #9d9d9d;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        border-bottom-color: #9d9d9d;
+      }
+    }
+  }
+}
+
+.btn.btn-table {
+  padding: 0 6px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.code {
+  font-family: Consolas;
+  font-size: 12px;
+  //font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+// table validation
+.invalid-cell {
+  background-color: rgba(220, 20, 60, 0.23);
+  box-shadow: inset 0 0 0px 1px rgba(237, 20, 61, 0.52);
+
+  .table-cell-edit-button {
+    display: none;
+  }
+  &:hover {
+    .table-cell-edit-button {
+      display: inline;
+    }
+  }
+}
+
+.emptyCell {
+  position: relative;
+
+  &:after {
+    content: 'Drop here';
+    color: black;
+    opacity: .4;
+    position: absolute;
+    text-align: center;
+    right: 12px;
+  }
+}
+
+.dropIndicator {
+  background: lighten($color-success, 50%);
+  position: relative;
+
+  &.dropHover {
+    box-shadow: inset 0 0 0 1px $color-success;
+  }
+}
+
+.dropIndicatorSource {
+  background: lighten($color-success, 50%);
+  border: none !important;
+  box-shadow: inset 0 0 0 1px $color-success;
+}
+
+.reset-mapping-btn {
+  font-size: 20px;
+  vertical-align: middle;
+  float: left;
+  opacity: .4;
+  transition: all .2s;
+}
+
+td:hover {
+  .reset-mapping-btn {
+    opacity: 1;
+  }
+}
+
+.no-select {
+  user-select: none;
+}
+
+.jconfirm {
+  z-index: 99;
+}
+
+.form-control-table {
+  padding: 0;
+  padding-left: 4px;
+  height: 21px;
+  display: inline-block;
+  width: auto;
+}
+
+.custom-scroll {
+  &::-webkit-scrollbar-track {
+    //-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    //border-radius: 10px;
+    //background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    //border-radius: 10px;
+    background-color: rgba(85, 85, 83, 0.1);
+    transition: all .1s;
+
+    &:hover {
+      background-color: rgba(85, 85, 83, 0.3);
+    }
+  }
+}
+
+.clickable {
+  @extend .transition;
+  transition-duration: .1s;
+  transform-origin: center;
+
+  &:active {
+    transform: scale(0.95) !important;
+    opacity: .8 !important;
+  }
+}
+
+.clickable-btn {
+  @extend .transition;
+  transition-duration: .1s;
+  transform-origin: center;
+
+  &:hover {
+    transform: scale(1.05) !important;
+  }
+
+  &:active {
+    transform: scale(1) !important;
+    opacity: .5 !important;
+  }
+}
+
+@import "scss/rtl";
+/**
+Had to name it DCARDS,
+d cards dashboard cards
+because card is taken by bootstrap.
+ */
+@import "scss/dcards";
+
+.viewSelection {
+  display: block;
+
+  .selectView {
+    display: inline-block;
+    width: 80px;
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: solid 1px #ddd;
+
+    span {
+      text-align: center;
+      display: block;
+      font-size: 12px;
+      margin-top: 8px;
+      line-height: 12px;
+    }
+    img {
+      width: 100%;
+      opacity: .5;
+      @extend .transition;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
+
+    &.selected {
+      background-color: rgba(30, 144, 255, 0.21176470588235294);
+      border-color: #a6a9ae;
+      img {
+        opacity: .8;
+      }
+    }
+  }
+}
+
+.view-blocked {
+  position: relative;
+  user-select: none;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .4);
+    border-radius: 6px;
   }
 }

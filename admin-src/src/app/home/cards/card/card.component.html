@@ -1,0 +1,21 @@
+<graph-table *ngIf="viewType == 'table'"
+             [tableHeaders]="tableHeaders"
+             [card]="card"></graph-table>
+<graph-pie *ngIf="viewType == 'pie'"
+           [tableHeaders]="tableHeaders"
+           [card]="card"></graph-pie>
+<graph-donut *ngIf="viewType == 'donut'"
+             [tableHeaders]="tableHeaders"
+             [card]="card"></graph-donut>
+<graph-line *ngIf="viewType == 'line'"
+            [tableHeaders]="tableHeaders"
+            [card]="card"></graph-line>
+<graph-bar *ngIf="viewType == 'bar'"
+           [tableHeaders]="tableHeaders"
+           [card]="card"></graph-bar>
+<graph-column *ngIf="viewType == 'column'"
+              [tableHeaders]="tableHeaders"
+              [card]="card"></graph-column>
+<graph-count *ngIf="viewType == 'count'"
+             [tableHeaders]="tableHeaders"
+             [card]="card"></graph-count>

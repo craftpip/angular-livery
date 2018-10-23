@@ -1,4 +1,4 @@
-import {Injectable, ApplicationRef, ComponentFactoryResolver, Injector, Component, Type} from "@angular/core";
+import {ApplicationRef, ComponentFactoryResolver, Injectable, Injector, Type} from "@angular/core";
 
 declare const jQuery: any;
 declare const $: any;
@@ -170,6 +170,10 @@ export interface JConfirmInstance {
     isClosed(): boolean,
 
     isOpen(): boolean,
+
+    buttons: {
+        [key: string]: JConfirmButton
+    }
 }
 
 export interface JConfirmInstanceComponent {

@@ -1,5 +1,14 @@
+
 label {
   margin-bottom: 0px;
+  color: #495057;
+  font-size: 0.75rem;
+  text-transform: initial;
+  font-weight: 300;
+}
+
+.form-group {
+  margin-bottom: 0.5rem;
 }
 
 form {
@@ -13,7 +22,7 @@ form {
     /** updated by gaurish */
     color: #495057;
     font-size: 0.75rem;
-    text-transform: capitalize;
+    text-transform: initial;
     font-weight: 300;
   }
   .labelfocus {
@@ -283,4 +292,8 @@ select.form-control-xl:not([size]):not([multiple]) {
 
 .ng-touched.ng-valid {
   //border-color: $color-success;
+}
+
+textarea.form-control.form-control-sm {
+  min-height: 30px;
 }

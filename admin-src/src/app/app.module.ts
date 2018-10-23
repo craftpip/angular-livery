@@ -4,33 +4,34 @@ import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from "./shared/shared.module";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+
 import {AppComponent} from './app.component';
 import {ContentLayoutComponent} from "./layouts/content/content-layout.component";
 import {FullLayoutComponent} from "./layouts/full/full-layout.component";
 
 import {AuthService} from './shared/auth/auth.service';
 import {AuthGuard} from './shared/auth/auth-guard.service';
-
-import * as $ from 'jquery';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AppEvents, FormHelper, HttpHelper, Utils} from "./shared/helper.service";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {AppEvents, HttpHelper, SearchService, Utils} from "./shared/helper.service";
+import {HttpClientModule} from "@angular/common/http";
 import {AgGridModule} from "ag-grid-angular";
 import {JConfirm} from "./shared/jconfirm";
-import {TagInputModule} from "ngx-chips";
+// import {TagInputModule} from "ngx-chips";
 import {FlatpickrModule} from "angularx-flatpickr";
 import {CalendarModule} from "angular-calendar";
 import {TableCellDeleteButtonComponent} from "./shared/table/table-cell-delete-button.component";
 import {TableCellEditButtonComponent} from "./shared/table/table-cell-edit-button.component";
-import {CardCollapseDirective} from "./shared/directives/card-collapse.directive";
-import {QuickPanelModule} from "./shared/directives/quick-panel.directive";
-import {FileUploaderComponent} from "./shared/uploader/file-uploader.component";
-import {FileUploadModule} from "ng2-file-upload";
 import {TourService} from "./shared/tours/tours.service";
-
+import {BrowserModule} from "@angular/platform-browser";
+import {LanguagePipe, LanguageService} from "./shared/language.service";
+import {Database} from "./shared/database.service";
+import {DragulaModule} from "ng2-dragula";
 
 @NgModule({
+    entryComponents: [
+        // Something,
+    ],
     declarations: [
         AppComponent,
         FullLayoutComponent,
@@ -38,13 +39,13 @@ import {TourService} from "./shared/tours/tours.service";
         LoginComponent,
         TableCellDeleteButtonComponent,
         TableCellEditButtonComponent,
-
     ],
     imports: [
         BrowserAnimationsModule,
         AppRoutingModule,
         SharedModule,
         NgbModule.forRoot(),
+        BrowserModule,
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
@@ -52,7 +53,7 @@ import {TourService} from "./shared/tours/tours.service";
             TableCellDeleteButtonComponent,
             TableCellEditButtonComponent,
         ]),
-        TagInputModule,
+        // TagInputModule,
         FlatpickrModule.forRoot(),
         CalendarModule.forRoot(),
     ],
@@ -64,7 +65,9 @@ import {TourService} from "./shared/tours/tours.service";
         Utils,
         TourService,
         AppEvents,
-        FormHelper,
+        Database,
+        SearchService,
+        LanguageService,
     ],
     bootstrap: [AppComponent]
 })

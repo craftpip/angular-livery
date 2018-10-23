@@ -31,33 +31,6 @@
          [ngClass]="{'card-loading': loading}">
         <div class="card-header">
             <div class="pull-right">
-                <span class="has-field mr-1">
-                    <button type="button"
-                            id="tour-card-collapse"
-                            (click)="isOpen = !isOpen"
-                            class="btn btn-outline-danger btn-sm">
-                        Toggle collapse
-                    </button>
-                </span>
-                <span class="has-field mr-1">
-                    <select class="form-control form-control-sm"
-                    >
-                        <option value="option1">option 1</option>
-                        <option value="option2">option 2</option>
-                    </select>
-                </span>
-                <span class="has-field mr-1">
-                    <input type="text"
-                           class="form-control form-control-sm"
-                           placeholder="example input">
-                </span>
-                <span class="mr-1 pr-1 pl-1"
-                      ngbTooltip="Toggle loading"
-                      id="tour-toggle-loading"
-                      placement="left">
-                    <i class="ft ft-refresh-ccw"
-                       (click)="showLoading()"></i>
-                </span>
                 <span class="card-collapse-toggle"
                       id="tour-card-arrow">
                     <i class="ft ft-arrow-up"></i>
@@ -76,19 +49,19 @@
             <!--*ngIf="loading">-->
             <!--Loading...-->
             <!--</div>-->
-            <form (submit)="save($event)">
+            <form [formGroup]="userForm"
+                  (submit)="editUser($event)">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="user-group">Group</label>
                             <select name="user-group"
                                     id="user-group"
-                                    [(ngModel)]="user.group"
+                                    formControlName="group"
                                     class="form-control form-control-sm">
-                                <option [value]="u.value"
-                                        *ngFor="let u of groups">
-                                    {{u.name}}
-                                </option>
+                                <option>91</option>
+                                <option>90</option>
+                                <option>100</option>
                             </select>
                         </div>
                     </div>
@@ -98,7 +71,17 @@
                             <input class="form-control form-control-sm"
                                    id="name"
                                    name="name"
-                                   [(ngModel)]="user.profile_fields.name"
+                                   formControlName="name"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="name">User Name</label>
+                            <input class="form-control form-control-sm"
+                                   id="user_name"
+                                   name="user_name"
+                                   formControlName="user_name"
                                    type="text">
                         </div>
                     </div>
@@ -110,7 +93,7 @@
                                    placeholder="e-mail"
                                    name="email"
                                    id="email"
-                                   [(ngModel)]="user.email"
+                                   formControlName="email"
                                    required>
                         </div>
                     </div>
@@ -120,9 +103,8 @@
                             <select
                                     name="email-verification"
                                     id="email-verification"
-                                    [(ngModel)]="user.email_verified"
-                                    class="form-control form-control-sm"
-                            >
+                                    formControlName="email_verify"
+                                    class="form-control form-control-sm">
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
                             </select>
@@ -133,7 +115,7 @@
                             <label for="account_active">Account active</label>
                             <select name="account_active"
                                     id="account_active"
-                                    [(ngModel)]="user.account_active"
+                                    formControlName="account_active"
                                     required
                                     class="form-control form-control-sm">
                                 <option value="1">Active</option>
@@ -146,24 +128,21 @@
                             <label for="country">Country</label>
                             <select name="country"
                                     id="country"
-                                    [(ngModel)]="user.country"
-                                    required
+                                    formControlName="country"
                                     class="form-control form-control-sm">
-                                <option value="973">Baharain</option>
-                                <option value="91">India</option>
+                                <option value="bahrain">Baharain</option>
+                                <option value="india">India</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label for="mobile">Mobile
-                                <span *ngIf="user.country">+{{user.country}}</span>
-                            </label>
+                            <label for="mobile">Mobile</label>
                             <input type="number"
                                    placeholder="Mobile no."
                                    name="mobile"
                                    id="mobile"
-                                   [(ngModel)]="user.mobile"
+                                   formControlName="mobile"
                                    required
                                    maxlength="10"
                                    class="form-control form-control-sm">
@@ -173,7 +152,7 @@
                         <div class="form-group">
                             <label for="mobile-verified">Mobile verified</label>
                             <select name="mobile-verified"
-                                    [(ngModel)]="user.mobile_verified"
+                                    formControlName="mobile_verified"
                                     class="form-control form-control-sm"
                                     id="mobile-verified">
                                 <option value="1">Yes</option>
@@ -181,71 +160,49 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label for="currency">Currency
-                                <span *ngIf="loadingCurrency">(Loading)</span>
-                            </label>
-                            <select name="currency"
-                                    id="currency"
-                                    [(ngModel)]="user.currency"
-                                    required
-                                    class="form-control form-control-sm">
-                                <option [value]="i.code"
-                                        *ngFor="let i of currencyList">{{i.currency_name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label for="password">Password (optional)</label>
-                            <input type="password"
-                                   name="password"
-                                   id="password"
-                                   [(ngModel)]="user.password"
-                                   required
-                                   class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="password">Tag input</label>
-                            <tag-input [(ngModel)]="tags"
-                                       name="enter-tag"
-                                       [editable]="true"
-                                       [allowDupes]="false"></tag-input>
-                        </div>
-                    </div>
 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label for="password">Date</label>
-                            <div class="input-group input-group-sm">
-                                <input class="form-control"
-                                       placeholder="yyyy-mm-dd"
-                                       placement="top-left"
-                                       name="dp"
-                                       [(ngModel)]="user.date"
-                                       ngbDatepicker
-                                       #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary"
-                                            (click)="d.toggle()"
-                                            type="button">
-                                        <i class="ft ft-calendar"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!--<input type="text"-->
-                            <!--name="enter-date"-->
-                            <!--id="enter-date"-->
-                            <!--[(ngModel)]="user.date"-->
-                            <!--required-->
-                            <!--ngbDatepicker=""-->
-                            <!--class="form-control form-control-sm">-->
-                        </div>
-                    </div>
+                    <!--<div class="col-sm-3">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="password">Password (optional)</label>-->
+                    <!--<input type="password"-->
+                    <!--name="password"-->
+                    <!--id="password"-->
+                    <!--[disabled]="true"-->
+                    <!--formControlName="password"-->
+                    <!--class="form-control form-control-sm">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="password">Tag input</label>-->
+                    <!--<tag-input [(ngModel)]="tags"-->
+                    <!--name="enter-tag"-->
+                    <!--[editable]="true"-->
+                    <!--[allowDupes]="false"></tag-input>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-sm-3">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="password">Date</label>-->
+                    <!--<div class="input-group input-group-sm">-->
+                    <!--<input class="form-control"-->
+                    <!--placeholder="yyyy-mm-dd"-->
+                    <!--placement="top-left"-->
+                    <!--name="dp"-->
+                    <!--[(ngModel)]="user.date"-->
+                    <!--ngbDatepicker-->
+                    <!--#d="ngbDatepicker">-->
+                    <!--<div class="input-group-append">-->
+                    <!--<button class="btn btn-outline-secondary"-->
+                    <!--(click)="d.toggle()"-->
+                    <!--type="button">-->
+                    <!--<i class="ft ft-calendar"></i>-->
+                    <!--</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <!-- <hr> -->
                 <div class="row">
@@ -253,7 +210,7 @@
                         <div class="mb-1 mt-1">
                             <button class="btn btn-dark btn-raised btn-sm"
                                     type="submit">
-                                {{saving ? 'Saving' : 'Save'}}
+                                {{(!editing)?'Edit':'Editing'}}
                             </button>
                         </div>
                     </div>

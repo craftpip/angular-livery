@@ -12,9 +12,19 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderComponent} from "./uploader/file-uploader.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
-import {ColorPickerModule, Dropdown, DropdownModule, EditorModule, InputMaskModule} from "primeng/primeng";
+import {AutoCompleteModule, ColorPickerModule, DropdownModule, EditorModule, InputMaskModule} from "primeng/primeng";
+import {CardCollapseDirective} from "./directives/card-collapse.directive";
+import {QuickPanelModule} from "./directives/quick-panel.directive";
+import {ChatComponent} from "../chat/chat.component";
+import {DateFormatPipe, SafeHtmlPipe} from "./helper.pipe";
+import {ChatGroupInfoComponent} from "../chat/group/chat-group-info.component";
+import {LanguagePipe, LanguageService} from "./language.service";
 
-
+/**
+ * This is a shared module,
+ * create all ur classes and include it here.
+ * and add this module to every module you create
+ */
 @NgModule({
     exports: [
         CommonModule,
@@ -25,10 +35,19 @@ import {ColorPickerModule, Dropdown, DropdownModule, EditorModule, InputMaskModu
         NgbModule,
         FileUploaderComponent,
         DateRangeSelectorDirective,
+        FileUploadModule,
         ColorPickerModule,
         DropdownModule,
         EditorModule,
         InputMaskModule,
+        CardCollapseDirective,
+        QuickPanelModule,
+        AutoCompleteModule,
+        ChatComponent,
+        ChatGroupInfoComponent,
+        DateFormatPipe,
+        SafeHtmlPipe,
+        LanguagePipe,
     ],
     imports: [
         RouterModule,
@@ -41,6 +60,8 @@ import {ColorPickerModule, Dropdown, DropdownModule, EditorModule, InputMaskModu
         DropdownModule,
         EditorModule,
         InputMaskModule,
+        QuickPanelModule,
+        AutoCompleteModule,
     ],
     declarations: [
         FooterComponent,
@@ -49,6 +70,12 @@ import {ColorPickerModule, Dropdown, DropdownModule, EditorModule, InputMaskModu
         ToggleFullscreenDirective,
         FileUploaderComponent,
         DateRangeSelectorDirective,
+        CardCollapseDirective,
+        ChatComponent,
+        ChatGroupInfoComponent,
+        DateFormatPipe,
+        SafeHtmlPipe,
+        LanguagePipe,
     ]
 })
 export class SharedModule {

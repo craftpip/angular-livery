@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../admin",
+            "outputPath": "../portal",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -38,7 +38,10 @@
               "node_modules/jquery-confirm/js/jquery-confirm.js",
               "node_modules/hopscotch/dist/js/hopscotch.js",
               "node_modules/noty/lib/noty.js",
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/muuri/dist/muuri.min.js",
+              "node_modules/alasql/dist/alasql.min.js"
             ]
           },
           "configurations": {

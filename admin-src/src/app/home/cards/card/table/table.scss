@@ -1,0 +1,25 @@
+page-modules {
+  ion-segment {
+    overflow: scroll;
+    width: 100%;
+
+    ion-segment-button.segment-button {
+      width: auto !important;
+      flex: none !important;
+    }
+  }
+  ion-toolbar {
+    padding: 0 !important;
+    min-height: 43px !important;
+
+    .toolbar-background {
+      border-color: #b2b2b2;
+      background: #f8f8f8;
+    }
+  }
+
+  .table-responsive{
+    width: 100%;
+    overflow: scroll;
+  }
+}

@@ -1,149 +1,326 @@
 <div class="login-bg">
 
 </div>
-<div class="bottom-left-mock">
-    <div class="make-relative">
-
-        <div class="tag-line">
-            Creating Impact Through Innovation.
-        </div>
-
-        <div class="login-footer">checkingLogin
-            Phone: (+973) 17 217 991
-            |
-            Email: <a href="mailto:support@fameerp.com">support@fameerp.com</a>
-            |
-
-            <a href="#"
-               class="social-icon">
-                <img src="assets/img/social/facebook.png"
+<div class="left-mock">
+    <div class="left-relative">
+        <div class="left-head">
+            <div>
+                <img src="assets/img/kpmg_logo.png"
+                     style="width: 60%"
                      alt="">
-            </a>
-            <a href="#"
-               class="social-icon">
-                <img src="assets/img/social/twitter.png"
-                     alt="">
-            </a>
-            <a href="#"
-               class="social-icon">
-                <img src="assets/img/social/linkedin.png"
-                     alt="">
-            </a>
-
+            </div>
+            <div class="left-title" style="font-size: 25px !important;">
+                Tomorrow’s experience, today.
+            </div>
+            <div class="left-content">
+                Find out what customers expect from their next experience and how you can deliver it.
+            </div>
         </div>
     </div>
 </div>
 <div class="right-mock">
-    <div class="right-relative">
+    <!-- to right -->
+    <div class="right-relative clip clip1">
+        <!-- makes relative -->
+        <div class="right-relative mock-clip clip clip2">
+            <div class="right-relative right-table-container">
+                <div class="right-relative right-table">
+                    <div class="right-table-cell">
+                        <div class="panel-right">
+                            <div class="">
+                                <div class=""
+                                     *ngIf="form == 'login'">
+                                    <form [formGroup]="loginForm"
+                                          (submit)="login($event)">
+                                        <!--<form>-->
+                                        <h2 class="panel-title">
+                                            WELCOME KPMG
+                                        </h2>
 
-        <div class="panel-right">
-            <div class="">
-                <div class="">
-                    <form [formGroup]="loginForm"
-                          (submit)="login($event)">
-                        <!--<form>-->
-                        <h2 class="panel-title">
-                            Secure user login
-                        </h2>
-                        <p class="panel-subtext">
-                            Please login with your existing Username &amp; Password
-                        </p>
+                                        <p class="panel-subtext">
+                                            Login Panel
+                                        </p>
 
-                        <div *ngIf="!checkingLogin">
-                            <div class="form-group">
-                                <label for="">
-                                    E-mail
-                                </label>
-                                <input type="email"
-                                       class="form-control"
-                                       name="inputEmail"
-                                       id="inputEmail"
-                                       placeholder="Email or Username"
-                                       formControlName="username"
-                                       required>
+                                        <p class="panel-subsubtext">
+                                            Member Login
+                                        </p>
+
+                                        <div *ngIf="!checkingLogin"
+                                             class="login-form">
+                                            <div class="form-group">
+                                                <input type="email"
+                                                       class="form-control login-username-input"
+                                                       name="inputEmail"
+                                                       id="inputEmail"
+                                                       placeholder="Email or Username"
+                                                       formControlName="username"
+                                                       required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password"
+                                                       class="form-control"
+                                                       name="inputPass"
+                                                       id="inputPass"
+                                                       formControlName="password"
+                                                       placeholder="Password"
+                                                       required>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="submit"
+                                                            [disabled]="!loginForm.valid || loading"
+                                                            class="btn btn-block btn-login-page">
+                                                        {{loading ? 'Please wait..': 'Login'}}
+                                                    </button>
+                                                </div>
+                                                <!--<div class="col-md-6">-->
+                                                <!--<button type="button"-->
+                                                <!--(click)="form = 'register'"-->
+                                                <!--class="btn btn-outline-warning btn-clear btn-block btn-lg">-->
+                                                <!--Register-->
+                                                <!--</button>-->
+                                                <!--</div>-->
+                                            </div>
+
+                                            <div class="below-login">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-xs-6">
+                                                        <div class="form-check">
+                                                            <div>
+                                                                <input class="form-check-input"
+                                                                       type="checkbox"
+                                                                       name="rem"
+                                                                       id="formCheckbox_1"
+                                                                >
+                                                                <label class="form-check-label"
+                                                                       for="formCheckbox_1">
+                                                                    Remember me
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-xs-6">
+                                                        <div class="fp">
+                                                    <span class="cursor-pointer"
+                                                          (click)="form = 'register'">
+                                                        Create an account
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="checkingLogin">
+                                            <h4 class="authenticating">
+                                                Authenticating...
+                                            </h4>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                                <div class=""
+                                     *ngIf="form == 'register'">
+                                    <form [formGroup]="registerForm"
+                                          #formRegister="ngForm"
+                                          (submit)="register($event)">
+                                        <!--<form>-->
+                                        <h2 class="panel-title">
+                                    <span class="valign-middle">
+                                        WELCOME KPMG
+                                     </span>
+                                        </h2>
+                                        <p class="panel-subtext">
+                                            Sign up for a Free Membership
+                                        </p>
+
+                                        <p class="panel-subsubtext">
+                                            <i
+                                                    (click)="form = 'login'"
+                                                    class="ft ft-arrow-left valign-middle cursor-pointer"></i>
+                                            <span class="valign-middle">
+                                        Member Signup
+                                    </span>
+                                        </p>
+
+                                        <div *ngIf="!checkingLogin">
+                                            <div class="form-group">
+                                                <!--<label>-->
+                                                <!--Company name-->
+                                                <!--</label>-->
+                                                <input type="text"
+                                                       class="form-control form-control-sm"
+                                                       placeholder="Company name"
+                                                       formControlName="name"
+                                                       required>
+
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('required', 'name')"
+                                                >
+                                                    Please enter the company's name
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <!--<label>-->
+                                                <!--E-mail-->
+                                                <!--</label>-->
+                                                <input type="email"
+                                                       class="form-control form-control-sm"
+                                                       name="inputPass"
+                                                       formControlName="email"
+                                                       placeholder="E-mail">
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('required', 'email')"
+                                                >
+                                                    Please enter valid e-mail
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <!--<label>-->
+                                                <!--Country-->
+                                                <!--</label>-->
+                                                <select class="form-control form-control-sm"
+                                                        formControlName="country">
+                                                    <option [value]="null">Select country</option>
+                                                    <option value="bahrain">Bahrain</option>
+                                                    <option value="india">India</option>
+                                                </select>
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('required', 'country')"
+                                                >
+                                                    Please select country
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <!--<label>-->
+                                                <!--Mobile-->
+                                                <!--</label>-->
+                                                <input type="text"
+                                                       placeholder="Mobile"
+                                                       formControlName="mobile"
+                                                       class="form-control form-control-sm">
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('required', 'mobile')"
+                                                >
+                                                    Please enter your mobile
+                                                </div>
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('pattern', 'mobile')"
+                                                >
+                                                    Please enter a valid mobile
+                                                </div>
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('maxlength', 'mobile')"
+                                                >
+                                                    Mobile number should not be more than 12 digits
+                                                </div>
+
+                                                <div class="error error-danger"
+                                                     *ngIf="formRegister.form.hasError('minlength', 'mobile')"
+                                                >
+                                                    Mobile number should not be less than 10 digits
+                                                </div>
+                                            </div>
+
+                                            <div class="row gutter-5">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <!--<label>-->
+                                                        <!--Password-->
+                                                        <!--</label>-->
+                                                        <input type="password"
+                                                               placeholder="Password"
+                                                               formControlName="password"
+                                                               class="form-control form-control-sm">
+                                                        <div class="error error-danger"
+                                                             *ngIf="formRegister.form.hasError('required', 'password')"
+                                                        >
+                                                            Please enter password
+                                                        </div>
+
+                                                        <div class="error error-danger"
+                                                             *ngIf="formRegister.form.hasError('minlength', 'password')"
+                                                        >
+                                                            Password must be atleast 6 chars long
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <!--<label>-->
+                                                        <!--Confirm Password-->
+                                                        <!--</label>-->
+                                                        <input type="password"
+                                                               placeholder="Confirm password"
+                                                               formControlName="confirmPassword"
+                                                               class="form-control form-control-sm">
+
+                                                        <div class="error error-danger"
+                                                             *ngIf="formRegister.form.hasError('required', 'confirmPassword')"
+                                                        >
+                                                            Please re-enter password
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-1">
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="submit"
+                                                            class="btn btn-block btn-login-page">
+                                                        {{registerLoading ? 'Please wait..': 'Submit'}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="checkingLogin">
+                                            <h4 class="authenticating">
+                                                Authenticating...
+                                            </h4>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="">
-                                    Password
-                                </label>
-                                <input type="password"
-                                       class="form-control"
-                                       name="inputPass"
-                                       id="inputPass"
-                                       formControlName="password"
-                                       placeholder="Password"
-                                       required>
-                            </div>
 
-                            <p class="text-right fp">
-                                <a href="#"
-                                   (click)="forgotPassword()">
-                                    Forgot password
-                                </a>
-                            </p>
+                            <!--<div class="cr">-->
+                            <!--© Copyright 2018 Fame Technology Solutions WLL. All Rights Reserved.-->
+                            <!--</div>-->
 
-                            <button type="submit"
-                                    [disabled]="!loginForm.valid"
-                                    style="width: 50%"
-                                    class="btn btn-outline-warning btn-block btn-lg">
-                                {{loading ? 'Please wait..': 'Login'}}
-                            </button>
-
-                            <div class="inline-select mt-2">
-                                <div>
-                                    Company
-                                </div>
-                                <div>
-                                    <select name=""
-                                            id="login-company">
-                                        <option value="test">Eskan property</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="inline-select mt-1">
-                                <div>
-                                    Site
-                                </div>
-                                <div>
-                                    <select name=""
-                                            id="login-site">
-                                        <option value="test">Site 1</option>
-                                        <option value="test">Site 2</option>
-                                        <option value="test">Site 3</option>
-                                        <option value="test">Site 4</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="inline-select mt-1">
-                                <div>
-                                    Language
-                                </div>
-                                <div>
-                                    <select name=""
-                                            id="login-language">
-                                        <option value="test">English - (US)</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
-                        <div *ngIf="checkingLogin">
-                            <h4 style="color: black; margin: 20px 0 15px">
-                                Authenticating...
-                            </h4>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-
-            <div class="cr">
-                © Copyright 2018 Fame Technology Solutions WLL. All Rights Reserved.
+            <div class="right-footer">
+                <div class="powered-by">
+                    <div class="by">
+                        Powered by
+                    </div>
+                    <div class="fame">
+                        <img src="assets/img/fame_logo.png">
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>
+                        Phone: +973 17 217 991
+                    </span>
+                    <span>
+                        E-mail: support@fameerp.com
+                    </span>
+                </div>
             </div>
-
         </div>
     </div>
-</div>
-<div class="fame-logo">
-
 </div>

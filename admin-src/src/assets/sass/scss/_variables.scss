@@ -45,3 +45,6 @@ $font-family-sans-serif: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Ari
 $font-family-content: 'Roboto', sans-serif;
 
 $font-size-root: 16px;
+
+$transition-function:cubic-bezier(.22,.98,.22,.98);
+$transition-duration: .4s;
