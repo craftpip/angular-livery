@@ -110,8 +110,6 @@ export class LineGraphComponent implements AfterViewInit {
                     from ${this.tableName}
                     `);
 
-            console.log(legendListObj, 'nice');
-
             let legendList = legendListObj.map((a) => {
                 return a.l;
             });

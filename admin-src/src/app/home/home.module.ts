@@ -29,7 +29,6 @@ import {DragulaModule} from "ng2-dragula";
         ReactiveFormsModule,
         ChartModule,
         SharedModule,
-        DragulaModule.forRoot(),
     ],
     exports: [],
     declarations: [

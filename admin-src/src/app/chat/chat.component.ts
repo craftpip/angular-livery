@@ -177,7 +177,7 @@ export class ChatComponent implements OnDestroy, AfterViewInit {
         });
 
         this.initUploader();
-        this.initFirebase();
+        // this.initFirebase();
         this.initChatHelpers();
     }
 

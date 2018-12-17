@@ -22,7 +22,6 @@ export class HomeComponent implements OnDestroy, OnInit {
                 public events: AppEvents,) {
 
         this.user = this.authService.getUser();
-        console.log(this.user);
 
         this.events.on(this.authService.userUpdateEvent, () => {
             this.user = this.authService.getUser();
