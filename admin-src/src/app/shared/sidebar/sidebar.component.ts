@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ROUTES} from './sidebar-routes.config';
-import {RouteInfo} from "./sidebar.metadata";
-import {Router, ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
 
 declare var $: any;
@@ -25,13 +24,52 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit() {
         $.getScript('./assets/js/app-sidebar.js');
-        let g = this.user.group;
-        if (typeof ROUTES[g] === 'undefined') {
-            this.menuItems = [];
-        } else {
-            this.menuItems = ROUTES[this.user.group].filter(menuItem => {
-                return !menuItem.hide;
-            });
+
+        let currentUrl = this.router.url;
+        this.updateMenuByUrl(currentUrl);
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                let url = event.urlAfterRedirects;
+                this.updateMenuByUrl(url);
+            }
+        });
+    }
+
+    updateMenuByUrl(url) {
+        url = url.substr(1);
+        let selectedPages = ROUTES.filter(a => {
+            if (a.submenu.length) {
+                let selectedSubMenu = a.submenu.filter(b => {
+                    return url.indexOf(a.path.substr(1)) != -1;
+                });
+                if (selectedSubMenu.length) {
+                    return true;
+                }
+            }
+
+            if (a.path.trim()) {
+                // ?
+                // God damn
+                // we have to search in child menu's too.
+                return url.indexOf(a.path.substr(1)) != -1;
+            }
+        });
+
+        console.log(selectedPages);
+        console.log(url);
+
+
+        if (selectedPages.length) {
+            let routeGroupKey = selectedPages[0].routeGroupKey;
+            this.updateMenu(routeGroupKey);
         }
+    }
+
+    updateMenu(routeGroupKey) {
+        let g = this.user.group;
+
+        this.menuItems = ROUTES.filter(menuItem => {
+            return !menuItem.hide && menuItem.userGroup == this.user.group && menuItem.routeGroupKey == routeGroupKey;
+        });
     }
 }
