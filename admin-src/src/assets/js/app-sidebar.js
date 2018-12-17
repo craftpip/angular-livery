@@ -141,32 +141,43 @@ $(document).ready(function(){
         }
     });
 
+    // @todo: add why these changes were done
+
     $sidebar.on('mouseenter', function(){
-        if($wrapper.hasClass('nav-collapsed')){
-            $wrapper.removeClass('menu-collapsed');
-            var $listItem = $('.navigation li.nav-collapsed-open'),
-                $subList = $listItem.children('ul');
-
-            $subList.hide().slideDown(300, function(){
-                $(this).css('display', '');
-            });
-
-            $listItem.addClass('open').removeClass('nav-collapsed-open');
-        }
+        window.sidebar.mouseEnter();
     }).on('mouseleave', function(event){
-        if($wrapper.hasClass('nav-collapsed')){
-            $wrapper.addClass('menu-collapsed');
-            var $listItem = $('.navigation li.open'),
-                $subList = $listItem.children('ul');
-            $listItem.addClass('nav-collapsed-open');
-
-            $subList.show().slideUp(300, function(){
-                $(this).css('display', '');
-            });
-
-            $listItem.removeClass('open');
-        }
+        window.sidebar.mouseLeave();
     });
+
+    window.sidebar = {
+        mouseEnter: function(){
+            if($wrapper.hasClass('nav-collapsed')){
+                $wrapper.removeClass('menu-collapsed');
+                var $listItem = $('.navigation li.nav-collapsed-open'),
+                    $subList = $listItem.children('ul');
+
+                $subList.hide().slideDown(300, function(){
+                    $(this).css('display', '');
+                });
+
+                $listItem.addClass('open').removeClass('nav-collapsed-open');
+            }
+        },
+        mouseLeave: function(){
+            if($wrapper.hasClass('nav-collapsed')){
+                $wrapper.addClass('menu-collapsed');
+                var $listItem = $('.navigation li.open'),
+                    $subList = $listItem.children('ul');
+                $listItem.addClass('nav-collapsed-open');
+
+                $subList.show().slideUp(300, function(){
+                    $(this).css('display', '');
+                });
+
+                $listItem.removeClass('open');
+            }
+        }
+    };
 
     if($(window).width() < 992){
         $sidebar.addClass('hide-sidebar');
