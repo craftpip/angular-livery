@@ -28,6 +28,7 @@
 @import "scss/chat";
 @import "../../../node_modules/dragula/dist/dragula.css";
 
+// drag drop mirror used by dragula
 .gu-mirror {
   position: fixed !important;
   margin: 10px 0 0 !important;
@@ -67,12 +68,16 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
-
-// custom
+// drag drop end.
 
 p-calendar {
   width: 100%;
   display: block;
+
+  .ui-widget-header {
+    background: #f6f7f9;
+  }
+
   span {
     width: 100%;
     display: block;
@@ -359,7 +364,7 @@ tag {
         background-color: #506EEC;
         left: -22px;
         border-radius: 50px;
-        transition: all .2s;
+        transition: all .08s;
         transform: scale(0);
       }
     }
@@ -899,13 +904,47 @@ div.gutter-10 {
   }
 }
 
+p-multiSelect {
+  width: 100%;
+  display: block;
+  height: 31px;
+
+  > div.ui-state-default {
+    border: 1px solid #ced4da;
+    color: #75787d;
+
+    width: inherit !important;
+    display: block;
+    height: inherit;
+  }
+  .ui-multiselect-panel .ui-multiselect-item {
+    padding-left: 10px;
+  }
+  .ui-state-highlight {
+    background-color: dodgerblue;
+
+    label {
+      color: white;
+    }
+  }
+  .ui-multiselect {
+    .ui-multiselect-label {
+      line-height: 29px;
+      padding-top: 0px;
+      padding-bottom: 0;
+      padding-left: 9px;
+      font-size: 14px;
+    }
+  }
+}
+
 p-dropdown {
   width: 100%;
   display: block;
   height: 31px;
 
   > div.ui-state-default {
-    border: 1px solid #A6A9AE;
+    border: 1px solid #ced4da;
     color: #75787d;
 
     width: inherit !important;
@@ -1157,6 +1196,10 @@ td:hover {
     width: 8px;
     background-color: #F5F5F5;
   }
+  &::-webkit-scrollbar:horizontal {
+    height: 8px;
+    background-color: #F5F5F5;
+  }
 
   &::-webkit-scrollbar-thumb {
     //border-radius: 10px;
@@ -1257,5 +1300,13 @@ because card is taken by bootstrap.
     bottom: 0;
     background-color: rgba(255, 255, 255, .4);
     border-radius: 6px;
+    z-index: 10;
   }
 }
+
+.btn:focus {
+  box-shadow: 0px 0px 0px 2px turquoise !important;
+}
+
+@import 'scss/daily-sales-entry';
+@import "scss/report-table";
