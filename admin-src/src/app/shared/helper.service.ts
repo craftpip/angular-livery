@@ -228,8 +228,138 @@ export class Eval {
     }
 }
 
+declare const alasql: any;
+
+export interface GraphLinesMergerArg {
+    data?: any,
+    l?: string[],
+    v?: any[],
+    sort?: any,
+};
+
+export interface GraphLineMergerResult {
+    headers: string[],
+    lines: {
+        data: any,
+        line: any[]
+    }[]
+}
+
+export interface GraphLineMergerOptions {
+    sortLegend?: string,
+    defaultValue?: string | number,
+}
+
 @Injectable()
 export class Utils {
+
+    public graphLineMerger(arr: GraphLinesMergerArg[], options: GraphLineMergerOptions = {}): GraphLineMergerResult {
+        let defaultValue = typeof options.defaultValue == undefined ? null : options.defaultValue;
+        let length = arr.length;
+        let a = alasql;
+
+        let cols = ['l'];
+        for (let i in arr) {
+            let i2 = parseInt(i) + 1;
+            cols.push(`v${i2}`);
+        }
+        // console.log(cols);
+        let tempTable = "A" + Math.round(Math.random() * 9999);
+        // let tempTable = "T";
+        a(`DROP TABLE IF EXISTS ${tempTable}`);
+        a(`CREATE TABLE ${tempTable} (${cols.join(', ')})`);
+
+
+        for (let lineIndx in arr) {
+            // lineIndex
+            let lineCol = 'v' + (parseInt(lineIndx) + 1);
+            let line = arr[lineIndx];
+
+            for (let entryIndx in line.l) {
+                let l = line.l[entryIndx];
+                let v = line.v[entryIndx];
+
+                // check if the legend exists
+                let res = a(`select * from ${tempTable} where l = '${l}'`);
+                if (res.length) {
+                    if (typeof v == 'string') {
+                        a(`update ${tempTable} set ${lineCol} = '${v}' where l = '${l}'`);
+                    }
+                    else {
+                        // console.log(lineCol, v);
+                        a(`update ${tempTable} set ${lineCol} = ${v} where l = '${l}'`);
+                    }
+                } else {
+                    // insert new
+                    let values = {};
+                    values['l'] = l;
+                    values[lineCol] = v;
+
+                    // console.log('insert', values);
+                    a(`insert into ${tempTable} VALUES ?`, [values]);
+                }
+                let r = a(`select * from ${tempTable}`);
+                // console.table(r);
+            }
+        }
+
+        let sortQ = '';
+        // let sortList = arr.filter(a => {
+        //     return a.sort;
+        // }).map(a => {
+        //     return a.sort;
+        // });
+        // if (sortList && sortList.length) {
+        sortQ += ` order by `;
+        let sortQList = [];
+        for (let i in arr) {
+            let a = arr[i];
+            if (a.sort) {
+                let indx = 'v' + (parseInt(i) + 1);
+                sortQList.push(` ${indx} ${a.sort} `);
+            }
+        }
+        if (options.sortLegend) {
+            sortQList.push(` l ${options.sortLegend} `);
+        }
+        sortQ += sortQList.join(', ');
+
+        // console.log(sortQ);
+        let sq = `select * from ${tempTable} ${sortQList.length ? sortQ : ''}`;
+        // console.log(sq);
+        let results = a(sq);
+        // console.table(results);
+        let headers = results.map((a) => {
+            return a.l;
+        });
+
+        let lines = [];
+        for (let lineIndx in arr) {
+
+            let i2 = parseInt(lineIndx) + 1;
+            let lineName = `v${i2}`;
+            let line = results.map(a => {
+                    let v = a[lineName];
+                    if (typeof v == 'undefined')
+                        v = defaultValue;
+                    return v;
+                }
+            );
+            lines.push({
+                data: arr[lineIndx].data,
+                line: line,
+            });
+        }
+
+        // a(`DROP TABLE ${tempTable}`);
+
+        return {
+            headers: headers,
+            lines: lines,
+        };
+    }
+
+
     storagePrefix: string;
 
     public countries: { 'code': string, 'name': string }[] = [
@@ -403,7 +533,8 @@ export class Utils {
     }
 
     /**
-     * Create a deep copy of objects.
+     * Create a deep copy of objects. *
+     * similar to angular.copy
      *
      * @param obj
      */
@@ -633,14 +764,15 @@ export class HttpHelper {
     }
 
     get(url: string, data?, options?) {
+        options = {...this.defaultOptions, ...options};
         data = {
             ...data, ...{
                 'token': window.localStorage.getItem('token')
             }
         };
-        return this.http.get(this.baseUrl + url, {
-            params: data
-        });
+
+        options['params'] = data;
+        return this.http.get(this.baseUrl + url, options);
     }
 }
 
@@ -830,11 +962,13 @@ export interface SearchResult {
 
 export interface KeyboardListenerKeyOptions {
     disable_in_input?: boolean,
+    prevent_default?: boolean
 }
 
 interface KeyboardRegisteredCombination {
     callback: Function,
     disable_in_input: boolean,
+    prevent_default: boolean,
     combination: string,
     combinationKeys: string[],
 }
@@ -849,6 +983,7 @@ export class KeyboardListener {
     } = {};
     private defaultKeyOptions: KeyboardListenerKeyOptions = {
         disable_in_input: true,
+        prevent_default: false,
     };
     private listenersCounter: number = 1;
 
@@ -908,11 +1043,12 @@ export class KeyboardListener {
 
         let id = (++this.listenersCounter).toString();
 
-        console.log('Registered', combination, combinationKeys);
+        // console.log('Registered', combination, combinationKeys);
 
         this.registeredShortcuts[id] = {
             callback: callback,
             disable_in_input: keyOptions.disable_in_input,
+            prevent_default: keyOptions.prevent_default,
             combination: combination,
             combinationKeys: combinationKeys,
         };
@@ -1023,15 +1159,21 @@ export class KeyboardListener {
     };
     keysDown: number = 0;
 
+    /**
+     * Returns the gotten matches if all values in hasAr in present in ar.
+     * @param ar
+     * @param hasAr
+     */
     private match(ar: any[], hasAr: any[]) {
-        if (ar.length !== hasAr.length)
-            return false;
+        // if (ar.length !== hasAr.length)
+        //     return false;
+
         let matches = 0;
         for (let a of hasAr) {
             if (ar.indexOf(a) != -1)
                 matches += 1;
         }
-        return matches == hasAr.length;
+        return matches;
     }
 
     event: any;
@@ -1055,28 +1197,33 @@ export class KeyboardListener {
             // console.log('keydown', this.keysDown);
             this.keyPressed.push(key);
 
-            if (this.match(this.keyPressed, [17, 83])) { // save
-                // console.log('pressed ctrl s');
-                event.preventDefault();
-            }
+            let keyPressedTemp = this.keyPressed.slice();
 
-            if (this.match(this.keyPressed, [17, 82])) { // reload
-                // console.log('pressed ctrl r');
-                event.preventDefault();
+
+            if (event.ctrlKey)
+                keyPressedTemp.push(this.keyMap['CTRL']);
+            if (event.shiftKey)
+                keyPressedTemp.push(this.keyMap['SHIFT']);
+            if (event.altKey)
+                keyPressedTemp.push(this.keyMap['ALT']);
+
+            for (let shortcutId of Object.keys(this.registeredShortcuts)) {
+                let shortcut = this.registeredShortcuts[shortcutId];
+                let combination = shortcut.combinationKeys;
+
+                if (shortcut.prevent_default) {
+                    if (this.match(keyPressedTemp, combination) > 1) {
+                        console.log('prevent default', shortcut.combinationKeys);
+                        event.preventDefault();
+                    }
+                }
             }
         }
-
-        // // console.log(event.which);
-        // // console.log(event.altKey, event.ctrlKey, event.shiftKey);
-        // console.log(this.keyPressed);
     }
 
     private keyUp(event?: KeyboardEvent) {
         this.keysDown -= 1;
         if (this.isKeyDown) {
-            if (this.keyPressed.indexOf(17) != -1 && this.keyPressed.indexOf(83) != -1) {
-                console.log('ctrl save ?');
-            }
             // console.log('FIRE!', this.keyPressed.join('+'));
             this.fireCombination(this.keyPressed.slice(0), this.event);
             this.isKeyDown = false;
@@ -1084,11 +1231,35 @@ export class KeyboardListener {
         }
     }
 
-    private fireCombination(keysPressed, event) {
+    private findCombination(keysPressed) {
+        let foundCombinations = [];
+        // there can be multiple found combinations
+        // pick the one that has the most matched keys, of the highest length
+
         for (let shortcutId of Object.keys(this.registeredShortcuts)) {
             let shortcut = this.registeredShortcuts[shortcutId];
             let combination = shortcut.combinationKeys;
-            let yes = this.match(combination, keysPressed);
+            let yes = (this.match(combination, keysPressed) == combination.length);
+            if (yes) {
+                if (shortcut.disable_in_input) {
+                    // check if input is focused
+                    let $focused = $(':focus');
+                    if ($focused.length > 0)
+                        return;
+                }
+                shortcut.callback(event);
+            } else {
+            }
+        }
+    }
+
+    private fireCombination(keysPressed, event) {
+        let matchedShortcuts: KeyboardRegisteredCombination[] = [];
+
+        for (let shortcutId of Object.keys(this.registeredShortcuts)) {
+            let shortcut = this.registeredShortcuts[shortcutId];
+            let combination = shortcut.combinationKeys;
+            let yes = (this.match(combination, keysPressed) == combination.length);
             if (yes) {
                 if (shortcut.disable_in_input) {
                     // check if input is focused
