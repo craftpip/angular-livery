@@ -12,13 +12,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderComponent} from "./uploader/file-uploader.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {DateRangeSelectorDirective} from "./directives/date-selector.directive";
-import {AutoCompleteModule, ColorPickerModule, DropdownModule, EditorModule, InputMaskModule} from "primeng/primeng";
+import {AutoCompleteModule, ColorPickerModule, DropdownModule, EditorModule, InputMaskModule, KeyFilterModule, MultiSelectModule} from "primeng/primeng";
 import {CardCollapseDirective} from "./directives/card-collapse.directive";
 import {QuickPanelModule} from "./directives/quick-panel.directive";
 import {ChatComponent} from "../chat/chat.component";
 import {DateFormatPipe, SafeHtmlPipe} from "./helper.pipe";
 import {ChatGroupInfoComponent} from "../chat/group/chat-group-info.component";
-import {LanguagePipe, LanguageService} from "./language.service";
+import {LanguagePipe} from "./language.service";
+import {ChartModule} from "angular-highcharts";
+import {DragulaModule} from "ng2-dragula";
 
 /**
  * This is a shared module,
@@ -48,6 +50,10 @@ import {LanguagePipe, LanguageService} from "./language.service";
         DateFormatPipe,
         SafeHtmlPipe,
         LanguagePipe,
+        ChartModule,
+        DragulaModule,
+        KeyFilterModule,
+        MultiSelectModule,
     ],
     imports: [
         RouterModule,
@@ -62,6 +68,10 @@ import {LanguagePipe, LanguageService} from "./language.service";
         InputMaskModule,
         QuickPanelModule,
         AutoCompleteModule,
+        ChartModule,
+        DragulaModule.forRoot(),
+        KeyFilterModule,
+        MultiSelectModule,
     ],
     declarations: [
         FooterComponent,
@@ -76,6 +86,9 @@ import {LanguagePipe, LanguageService} from "./language.service";
         DateFormatPipe,
         SafeHtmlPipe,
         LanguagePipe,
+    ],
+    providers: [
+
     ]
 })
 export class SharedModule {
