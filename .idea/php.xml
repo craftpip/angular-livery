@@ -86,6 +86,27 @@
       <path value="$PROJECT_DIR$/fuel/vendor/sendgrid/sendgrid" />
       <path value="$PROJECT_DIR$/fuel/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/fuel/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/fuel/vendor/tecnickcom/tcpdf" />
+      <path value="$PROJECT_DIR$/fuel/vendor/rize/uri-template" />
+      <path value="$PROJECT_DIR$/fuel/vendor/fig/http-message-util" />
+      <path value="$PROJECT_DIR$/fuel/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/fuel/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/fuel/vendor/giggsey/libphonenumber-for-php" />
+      <path value="$PROJECT_DIR$/fuel/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/fuel/vendor/giggsey/locale" />
+      <path value="$PROJECT_DIR$/fuel/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/fuel/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/fuel/vendor/google/cloud-storage" />
+      <path value="$PROJECT_DIR$/fuel/vendor/google/cloud-core" />
+      <path value="$PROJECT_DIR$/fuel/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/fuel/vendor/superbalist/flysystem-google-storage" />
+      <path value="$PROJECT_DIR$/fuel/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/fuel/vendor/mtdowling/jmespath.php" />
+      <path value="$PROJECT_DIR$/fuel/vendor/kreait/firebase-tokens" />
+      <path value="$PROJECT_DIR$/fuel/vendor/league/csv" />
+      <path value="$PROJECT_DIR$/fuel/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/fuel/vendor/kreait/gcp-metadata" />
+      <path value="$PROJECT_DIR$/fuel/vendor/kreait/firebase-php" />
     </include_path>
   </component>
   <component name="PhpUnit">
