@@ -29,25 +29,14 @@
                             'hide': !navShow
                             }">
                     <div class="row gutter-5">
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-                            <div class="nav-master-item active">
-                                <img src="assets/img/newspaper-folded.svg"
-                                     alt="">
-                                <span>{{ 'masters' | lang }}</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-
-                            <div class="nav-master-item">
-                                <i class="ft ft-package font-medium-4"></i>
-                                <span>{{ 'sales' | lang: 'Sales' }}</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-
-                            <div class="nav-master-item">
-                                <i class="ft ft-user-x font-medium-4"></i>
-                                <span>{{ 'management' | lang: 'Management' }}</span>
+                        <div class="col-xs-12 col-sm-6 col-md-4"
+                             *ngFor="let masterNav of masterNavGroups">
+                            <div class="nav-master-item"
+                                 [ngClass]="{'active': masterNavSelectedRouteGroupKey == masterNav.routeKey}"
+                                 (click)="masterNavNavigate(masterNav)">
+                                <i class="ft font-medium-4"
+                                   [ngClass]="masterNav.icon"></i>
+                                <span>{{ masterNav.langKey | lang: masterNav.title }}</span>
                             </div>
                         </div>
                     </div>
@@ -127,11 +116,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="right-nav nav-mobile-more">
             <div class="n-item">
@@ -159,13 +146,13 @@
                      aria-labelledby="tourDropdown"
                      class="">
                     <!--<a class="dropdown-item"-->
-                       <!--*ngIf="isTourAvailable"-->
-                       <!--(click)="startTour()"-->
-                       <!--href="javascript:;">-->
-                        <!--<i class="ft-play mr-1"></i>-->
-                        <!--<span>-->
-                                    <!--Page tour-->
-                                <!--</span>-->
+                    <!--*ngIf="isTourAvailable"-->
+                    <!--(click)="startTour()"-->
+                    <!--href="javascript:;">-->
+                    <!--<i class="ft-play mr-1"></i>-->
+                    <!--<span>-->
+                    <!--Page tour-->
+                    <!--</span>-->
                     <!--</a>-->
                     <a class="dropdown-item"
                        href="javascript:;">

@@ -79,7 +79,6 @@ export class LanguagePipe implements PipeTransform {
 
     transform(value, defaultValue?) {
         let a = this.languageService.key(value, defaultValue);
-        console.log('lang', value, a);
         return a;
     }
 }

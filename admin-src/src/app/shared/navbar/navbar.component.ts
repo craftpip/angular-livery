@@ -3,10 +3,11 @@ import {AuthService} from "../auth/auth.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {TourService} from "../tours/tours.service";
 import {AppEvents, HttpHelper, KeyboardListener, SearchRequest, SearchResult, SearchService, Utils} from "../helper.service";
-import {ROUTES} from "../sidebar/sidebar-routes.config";
+import {ROUTE_GROUPS, ROUTES} from "../sidebar/sidebar-routes.config";
 import {ChatComponent} from "../../chat/chat.component";
 import {JConfirm} from "../jconfirm";
 import {LanguageService} from "../language.service";
+import {RouteGroupInfo, RouteInfo} from "../sidebar/sidebar.metadata";
 
 declare var $: any;
 
@@ -93,20 +94,20 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
         this.instance = this;
         this.user = authService.getUser();
         this.keyboardListener = KeyboardListener.getListener();
+        this.masterNavInit();
 
         this.router.events.subscribe((e: any) => {
             if (e instanceof NavigationEnd) {
                 let url = e.urlAfterRedirects;
-                console.log(url);
                 this.isTourAvailable = !!this.tourService.isAvailableForPath(url);
                 this.currentTourPath = url;
+                this.masterNavUpdate(url);
             }
         })
     }
 
     startTour() {
         if (this.isTourAvailable) {
-
             this.tourService.createForPath(this.currentTourPath);
         }
     }
@@ -158,10 +159,14 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
             this.navShow = false;
         });
 
-        this.initSearch();
-        this.initSidebarSearch();
-        this.initLedgerSearch();
-        this.initShortcuts();
+        // avoiding the after view check error
+        setTimeout(() => {
+            this.searchInit();
+            this.sidebarSearchInit();
+            // this.initLedgerSearch();
+            this.initShortcuts();
+        }, 100);
+
     }
 
     keyboardListenerIds: any[] = [];
@@ -183,6 +188,9 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
         // });
         // this.keyboardListenerIds.push(id3);
 
+        /**
+         * Global escape button?
+         */
         let id4 = this.keyboardListener.register('ESC', () => {
             if (this.searchShow) {
                 this.closeSearch();
@@ -195,42 +203,107 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
         this.keyboardListenerIds.push(id4);
     }
 
-    initLedgerSearch() {
-        this.searchService.onSearch('sidebar', (request: SearchRequest) => {
-            let loading_id = this.searchService.showLoading();
-            this.httpHelper.post('sec/ledger/ledger/search', {
-                term: request.term
-            }).subscribe((response: any) => {
-                this.searchService.hideLoading(loading_id);
-                if (response.status) {
-                    let searchedResults: SearchResult[] = [];
-                    for (let l of response.data) {
-                        searchedResults.push({
-                            text: '#' + l.ledger_id + ' ' + l.ledger_name,
-                            subText: 'Ledger',
-                            group: 'Data sets',
-                            type: this.searchService.typeLink,
-                            url: '/ledger/details/' + l.ledger_id,
-                            tag: 'Sheet'
-                        });
-                    }
-                    this.searchService.submitResults(request.term, searchedResults);
-                }
-            }, err => {
-                this.searchService.hideLoading(loading_id);
-            });
-        });
-    }
-
     logout() {
         this.authService.logout();
         this.router.navigate(['login']);
     }
 
+    masterNavGroups: RouteGroupInfo[];
 
-    updateUserRoutes() {
+    /**
+     * Setup routes
+     */
+    masterNavInit() {
+        this.masterNavGroups = ROUTE_GROUPS;
+
+        // create a flat list.
+        let routes: RouteInfo[] = this.utils.copy(ROUTES);
+        this.masterNavRecMakeFlat(routes, this.user.group);
+    }
+
+    /**
+     * Make flat for all level of menu
+     * @param arr
+     */
+    private masterNavRecMakeFlat(arr: RouteInfo[], userGroup) {
+        for (let r of arr) {
+            let r1 = this.utils.copy(r);
+            delete r1.submenu;
+            if (r1.userGroup == userGroup)
+                this.masterNavRoutesFlat.push(r1);
+
+            if (r.submenu.length) {
+                this.masterNavRecMakeFlat(r.submenu, userGroup);
+            }
+        }
+    }
+
+    masterNavSelectedRouteGroupKey: string;
+    masterNavRoutesFlat: RouteInfo[] = [];
+
+    /**
+     * Update high lighting when the route url changes
+     */
+    masterNavUpdate(url: string) {
+        // this.masterNavSelectedRouteGroupKey = url;
+        // find a match, we have a flat list of routes
+
+        url = url.substr(1);
+        let matches = this.masterNavRoutesFlat.filter(r => {
+            if (r.path.trim()) {
+                return (url.indexOf(r.path.substr(1)) != -1);
+            }
+        });
+
+        if (matches.length)
+            this.masterNavSelectedRouteGroupKey = matches[0].routeGroupKey;
+    }
+
+    /**
+     * On click function when group is clicked
+     * @param navGroup
+     */
+    masterNavNavigate(navGroup: RouteGroupInfo) {
+        // get first page in the group.
+        let routes = <RouteInfo[]>this.utils.copy(ROUTES);
+        let groupRoutes = routes.filter(r => {
+            return r.routeGroupKey == navGroup.routeKey;
+        });
+
+        if (groupRoutes.length) {
+            let path = groupRoutes[0].path;
+            if (!path) {
+                // maybe the child has a path.
+                // happens when nested menu is added
+                path = groupRoutes[0].submenu[0].path;
+            }
+            this.router.navigateByUrl(path);
+        }
+    }
+
+    /**
+     * All routes flattened
+     */
+    flatRoutes: RouteInfo[] = [];
+
+
+    /**
+     * Update user routes for global search.
+     * it basically flattens full list of routes for easy search later on.
+     */
+    sideBarUserRoutesUpdate() {
         let user = this.authService.getUser();
-        let pagesRoutes = ROUTES[user.group];
+
+        // Flatten Get routes from all routeGroups
+        let pageRoutes: RouteInfo[] = [];
+        for (let groupKey of Object.keys(ROUTES)) {
+            pageRoutes = pageRoutes.concat(ROUTES[groupKey]);
+        }
+
+        // Get routes for the specific user.
+        let pagesRoutes = pageRoutes.filter(r => {
+            return r.userGroup == user.group;
+        });
         let set: SearchResult[] = [];
         for (let r of pagesRoutes) {
             set.push({
@@ -261,20 +334,22 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
                                 group: 'Sidebar',
                                 type: sm2.isExternalLink ? this.searchService.typeExternalLink : this.searchService.typeLink,
                             });
-
-
                         }
                     }
                 }
             }
         }
+
         this.userRouteResultSet = set;
     }
 
-    initSidebarSearch() {
-        this.updateUserRoutes();
+    /**
+     * Sidebar search for global search
+     */
+    sidebarSearchInit() {
+        this.sideBarUserRoutesUpdate();
         this.appEvents.on(this.authService.userUpdateEvent, () => {
-            this.updateUserRoutes();
+            this.sideBarUserRoutesUpdate();
         }, 'search-events-navbar');
 
         this.searchService.onSearch('sidebar', (request: SearchRequest) => {
@@ -287,7 +362,11 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    initSearch() {
+
+    /**
+     * The actual global search logic.
+     */
+    searchInit() {
         this.appEvents.on('_start-chat', (data) => {
             this.chatIsOpen = true;
             this.chatComponent.chat(data.id, data.type);
@@ -304,10 +383,6 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
             console.log(sr);
             this.searchResults = sr;
         });
-
-        let w = <any>window;
-        console.log(this.searchInput, w.test = this.searchInput);
-
 
         // search result navigation with keyboard.
         $(this.searchInput.nativeElement).on('keydown', (e) => {
@@ -374,7 +449,6 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
 
     }
 
-
     startSearch() {
         this.searchRequestPlaced = false;
         if (!this.searchTerm) {
@@ -421,6 +495,34 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
         // return groupArr;
     }
 
+    /**
+     * Creates grouping in flat, one level hierarchy
+     * @param results
+     */
+    private searchGroupResultsFlat(results: {
+        group: string,
+        options: SearchResult[]
+    }[]) {
+        let flatResults = [];
+
+        for (let g of results) {
+            flatResults.push({
+                'type': 'group',
+                'data': g.group
+            });
+
+            for (let g2 of g.options) {
+                flatResults.push({
+                    'type': 'result',
+                    'data': g2,
+                });
+            }
+        }
+
+        return flatResults;
+    }
+
+
     chatFullWidth: boolean = false;
 
     openChat() {
@@ -432,6 +534,9 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
     }
 
 
+    /**
+     * Change language popup for the user.
+     */
     changeLanguage() {
         let user = this.authService.getUser();
         let lang = user.profile_fields.lang || 'en';
@@ -485,33 +590,4 @@ export class NavbarComponent implements AfterViewInit, OnDestroy {
             }
         })
     }
-
-
-    /**
-     * Creates grouping in flat, one level hierarchy
-     * @param results
-     */
-    private searchGroupResultsFlat(results: {
-        group: string,
-        options: SearchResult[]
-    }[]) {
-        let flatResults = [];
-
-        for (let g of results) {
-            flatResults.push({
-                'type': 'group',
-                'data': g.group
-            });
-
-            for (let g2 of g.options) {
-                flatResults.push({
-                    'type': 'result',
-                    'data': g2,
-                });
-            }
-        }
-
-        return flatResults;
-    }
-
 }
