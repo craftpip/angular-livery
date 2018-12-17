@@ -5,7 +5,7 @@
  */
 
 export var configs: ConfigInfo = {
-    api_url: 'http://localhost/kpmg/api/',
+    api_url: 'http://localhost/ibase-angular/api/',
     colors: [
         '#ff6b6b',
         '#1dd1a1',
