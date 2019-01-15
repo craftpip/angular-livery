@@ -254,6 +254,10 @@ export interface GraphLineMergerOptions {
 @Injectable()
 export class Utils {
 
+    public getBaseUrl() {
+        return this.location.prepareExternalUrl('');
+    }
+
     public graphLineMerger(arr: GraphLinesMergerArg[], options: GraphLineMergerOptions = {}): GraphLineMergerResult {
         let defaultValue = typeof options.defaultValue == undefined ? null : options.defaultValue;
         let length = arr.length;
@@ -359,7 +363,6 @@ export class Utils {
             lines: lines,
         };
     }
-
 
     storagePrefix: string;
 
@@ -503,7 +506,9 @@ export class Utils {
     // ('lll');  // Aug 5, 2018 12:57 PM
     // ('llll'); // Sun, Aug 5, 2018 12:57 PM
 
-    constructor() {
+    constructor(
+        public location: Location,
+    ) {
         this.storagePrefix = 'fame_';
     }
 
