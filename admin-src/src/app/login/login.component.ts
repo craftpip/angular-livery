@@ -64,8 +64,7 @@ export class LoginComponent implements AfterViewInit {
         this.checkLogin();
     }
 
-
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         $('.login-username-input').focus();
     }
 

@@ -41,7 +41,7 @@ export class HomeComponent implements OnDestroy, OnInit {
                     this.authService.setUser(user);
             }
         }, err => {
-        })
+        });
     }
 
     ngOnDestroy() {

@@ -962,7 +962,9 @@ export interface SearchResult {
 
 export interface KeyboardListenerKeyOptions {
     disable_in_input?: boolean,
-    prevent_default?: boolean
+    prevent_default?: boolean,
+    priority?: number, // @todo: to implement,
+    queue?: boolean, // @todo: to implement
 }
 
 interface KeyboardRegisteredCombination {
@@ -971,6 +973,7 @@ interface KeyboardRegisteredCombination {
     prevent_default: boolean,
     combination: string,
     combinationKeys: string[],
+    combinationChars: string[],
 }
 
 /**
@@ -984,10 +987,13 @@ export class KeyboardListener {
     private defaultKeyOptions: KeyboardListenerKeyOptions = {
         disable_in_input: true,
         prevent_default: false,
+        priority: 1,
+        queue: false,
     };
     private listenersCounter: number = 1;
 
     private constructor() {
+        // will not work on IE8. Sorry!
         document.addEventListener('keydown', (event) => {
             this.keyDown(event);
         });
@@ -1050,6 +1056,7 @@ export class KeyboardListener {
             disable_in_input: keyOptions.disable_in_input,
             prevent_default: keyOptions.prevent_default,
             combination: combination,
+            combinationChars: combinationChars,
             combinationKeys: combinationKeys,
         };
         console.debug('registered!', id);
@@ -1186,10 +1193,11 @@ export class KeyboardListener {
         this.isKeyDown = true;
         let key = event.which;
         this.event = event;
+
         // @todo use 'key' instead of 'which', apparently which is deprecated
         // key gives string name of the key instead of its numeric value, it will be easier
         // why didn't i find that earlier!!!!
-
+        // Update: because key is inconsistent!, which works well.
         // let char = String.fromCharCode(key.toString()).toLowerCase();
 
         if (this.keyPressed.indexOf(key) == -1) {

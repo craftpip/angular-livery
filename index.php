@@ -11,8 +11,7 @@
  */
 /** allow response only from angular 5 response */
 //header('Access-Control-Allow-Origin: *', false);
-header('Access-Control-Allow-Origin: http://localhost:4203', false);
-//header('Access-Control-Allow-Origin: http://88.201.64.182:800', false);
+header('Access-Control-Allow-Origin: http://localhost:4200', false);
 header('Access-Control-Allow-Credentials: true', false);
 
 /**
