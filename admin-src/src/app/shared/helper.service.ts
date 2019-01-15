@@ -6,6 +6,7 @@ import {Moment} from "moment";
 import {configs} from "./configs";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {Location} from "@angular/common";
 
 declare const Noty: any;
 declare const $: any;
@@ -748,8 +749,12 @@ export class HttpHelper {
         withCredentials: true,
     };
 
-    constructor(public http: HttpClient) {
-        this.baseUrl = configs.api_url;
+    constructor(
+        public http: HttpClient,
+        public location: Location,
+    ) {
+        this.baseUrl = location.prepareExternalUrl('') + '../' + configs.api_url;
+        console.log('base', this.baseUrl);
     }
 
     post(url: string, data?, options?): Observable<any> {
@@ -1221,7 +1226,7 @@ export class KeyboardListener {
 
                 if (shortcut.prevent_default) {
                     if (this.match(keyPressedTemp, combination) > 1) {
-                        console.log('prevent default', shortcut.combinationKeys);
+                        // console.log('prevent default', shortcut.combinationKeys);
                         event.preventDefault();
                     }
                 }

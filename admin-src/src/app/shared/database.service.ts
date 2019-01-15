@@ -121,7 +121,7 @@ export class Database {
      */
     batchExecuteDirect(statements: string[]) {
         for (let statement of statements) {
-            console.log('SQL: ', statement);
+            // console.log('SQL: ', statement);
             let af = alasql(statement);
         }
     }
@@ -144,7 +144,7 @@ export class Database {
      * @deprecated
      */
     executeDirect(statement: string): any {
-        console.log('SQL: ', statement);
+        // console.log('SQL: ', statement);
         return alasql(statement);
     }
 }

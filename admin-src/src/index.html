@@ -8,7 +8,7 @@
     <!--content="width=device-width, initial-scale=1">-->
     <title> Ibase angular template </title>
     <!--<base href="/assets-mg-portal/admin/">-->
-    <base href="/">
+    <base href="./">
     <link rel="icon"
           type="image/x-icon"
           href="favicon.ico">
@@ -72,7 +72,7 @@
     importScripts('https://cdnjs.cloudflare.com/ajax/libs/alasql/0.4.11/alasql.min.js');
     self.onmessage = function(q){
         var payload = q.data;
-        console.log('Q id: ' + payload.id + ': ', payload.payload);
+        // console.log('Q id: ' + payload.id + ': ', payload.payload);
         var start = (+new Date());
         if(typeof payload.payload == 'string'){
             var result = alasql(payload.payload);
@@ -92,7 +92,7 @@
         }
 
         var end = (+new Date());
-        console.log('Q id: ' + payload.id + ' took ' + (end - start) / 1000 + 's');
+        // console.log('Q id: ' + payload.id + ' took ' + (end - start) / 1000 + 's');
     }
 
 

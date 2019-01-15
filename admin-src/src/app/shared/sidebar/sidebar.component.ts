@@ -55,8 +55,8 @@ export class SidebarComponent implements OnInit {
             }
         });
 
-        console.log(selectedPages);
-        console.log(url);
+        // console.log(selectedPages);
+        // console.log(url);
 
 
         if (selectedPages.length) {
